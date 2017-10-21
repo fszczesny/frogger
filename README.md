@@ -5,7 +5,7 @@
 #Nomes dos componentes:
 Fabricio Szczesny de Almeida
 Luiz Miguel Kruger
-Emanual Novakosk
+Emanuel Novakoski
 Thayná Minuzzo
 
 #Professor: Marcelo Pimenta

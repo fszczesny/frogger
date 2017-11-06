@@ -1,28 +1,4 @@
-﻿//  ---------------------------------------------------------------------------------
-//  Copyright (c) Microsoft Corporation.  All rights reserved.
-// 
-//  The MIT License (MIT)
-// 
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-// 
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-// 
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
-//  ---------------------------------------------------------------------------------
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -33,8 +9,6 @@ namespace MonoGame2D
 {
     public class Game1 : Game
     {
-        // The ratio of the screen that is sky versus ground
-
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         float screenWidth;
@@ -45,71 +19,63 @@ namespace MonoGame2D
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";  // Set the directory where game assets can be found by the ContentManager
+            Content.RootDirectory = "Content";
         }
 
-
-        // Give variables their initial states
-        // Called once when the app is started
+        // Metodo de inicialização
         protected override void Initialize()
         {
             base.Initialize();
 
-            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen; // Attempt to launch in fullscreen mode
-
-            // Get screen height and width, scaling them up if running on a high-DPI monitor.
+            // Inicializa escala de frames da tela utilizada
+            // Inicializa em tela cheia
+            // Inicializa com ponteiro do mouse oculto
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
             screenHeight = ScaleToHighDPI((float)ApplicationView.GetForCurrentView().VisibleBounds.Height);
             screenWidth = ScaleToHighDPI((float)ApplicationView.GetForCurrentView().VisibleBounds.Width);
-
-            this.IsMouseVisible = false; // Hide the mouse within the app window
+            this.IsMouseVisible = false;
 
         }
 
-
-        // Load content (eg.sprite textures) before the app runs
-        // Called once when the app is started
+        // Metodo de carga de elementos externos
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // Load textures
+            // Carrega textura de background do jogo
             background = Content.Load<Texture2D>("background");
-
-            // Construct SpriteClass objects
         }
 
-
-        // Unloads any non ContentManager content
+        // Metodo de descarga de elementos externos
         protected override void UnloadContent()
         {
         }
 
-
-        // Updates the logic of the game state each frame, checking for collision, gathering input, etc.
+        // Metodo de atualização do estatus dos elementos
         protected override void Update(GameTime gameTime)
         {
-            float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds; // Get time elapsed since last Update iteration
+            float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             base.Update(gameTime);
         }
 
-
-        // Draw the updated game state each frame
+        // Metodo de desenho dos elementos graficos
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue); // Clear the screen
+            GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin(); // Begin drawing
+            // Inicializa o ambente de operações de desenho na tela
+            spriteBatch.Begin();
 
-            // Draw grass
+            // Desenha o background carregado
             spriteBatch.Draw(background, new Rectangle(0, 0, (int)screenWidth, (int)screenHeight), Color.White);
 
-            spriteBatch.End(); // Stop drawing
+            spriteBatch.End();
+            // Encerra o ambente de operações de desenho na tela
 
             base.Draw(gameTime);
         }
 
-
-        // Scale a number of pixels so that it displays properly on a High-DPI screen, such as a Surface Pro or Studio
+        // Metodo de identificação e escalonamento conforme dpis da tela utilizada
         public float ScaleToHighDPI(float f)
         {
             DisplayInformation d = DisplayInformation.GetForCurrentView();

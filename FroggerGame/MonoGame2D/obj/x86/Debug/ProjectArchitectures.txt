@@ -1,0 +1,1 @@
+D:\Trabalhos\frogger\FroggerGame\MonoGame2D\MonoGame2D.csproj;x86

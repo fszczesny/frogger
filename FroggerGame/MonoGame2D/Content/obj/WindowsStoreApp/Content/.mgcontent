@@ -5,5 +5,7 @@
   <Config />
   <SourceFiles>
     <File>D:/Trabalhos/frogger/FroggerGame/MonoGame2D/Content/background.png</File>
+    <File>D:/Trabalhos/frogger/FroggerGame/MonoGame2D/Content/GameState.spritefont</File>
+    <File>D:/Trabalhos/frogger/FroggerGame/MonoGame2D/Content/start-splash.png</File>
   </SourceFiles>
 </SourceFileCollection>

@@ -4,6 +4,8 @@
   <Platform>WindowsStoreApp</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/FabricioSzczesny/Documents/Windows-appsample-get-started-mg2d-master/MonoGame2D/Content/background.png</File>
+    <File>D:/Trabalhos/frogger/FroggerGame/MonoGame2D/Content/background.png</File>
+    <File>D:/Trabalhos/frogger/FroggerGame/MonoGame2D/Content/GameState.spritefont</File>
+    <File>D:/Trabalhos/frogger/FroggerGame/MonoGame2D/Content/start-splash.png</File>
   </SourceFiles>
 </SourceFileCollection>

@@ -839,3 +839,4 @@ D:\Trabalhos\frogger\FroggerGame\MonoGame2D\obj\x86\Debug\ProjectArchitectures.t
 D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Content\start-splash.xnb
 D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Content\GameState.xnb
 D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Content\Score.xnb
+D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Content\game-over.xnb

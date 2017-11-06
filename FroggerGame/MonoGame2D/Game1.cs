@@ -21,6 +21,7 @@ namespace MonoGame2D
         SpriteFont stateFont;
         SpriteFont scoreFont;
         Texture2D startGameSplash;
+        Texture2D gameOverTexture;
 
 
         public Game1()
@@ -58,6 +59,7 @@ namespace MonoGame2D
             // Carrega textura de background do jogo
             background = Content.Load<Texture2D>("background");
             startGameSplash = Content.Load<Texture2D>("start-splash");
+            gameOverTexture = Content.Load<Texture2D>("game-over");
 
             // Carrega estilo de fontes
             stateFont = Content.Load<SpriteFont>("GameState");
@@ -118,6 +120,18 @@ namespace MonoGame2D
 
                 // Desenha o timer
                 spriteBatch.DrawString(scoreFont, "Timer: ", new Vector2(screenWidth - 1850, 50), Color.Black);
+
+                // Se game over
+                if (gameOver)
+                {
+                    // Desenha gameover na tela de forma centralizada
+                    spriteBatch.Draw(gameOverTexture, new Vector2(screenWidth / 2 - gameOverTexture.Width / 2, screenHeight / 4 - gameOverTexture.Width / 2), Color.White);
+                    String pressEnter = "Press Enter to restart!";
+                    // Determina tamanho de fonte para reinicio
+                    Vector2 pressEnterSize = stateFont.MeasureString(pressEnter);
+                    // Desenha centralizado horizontalmente a escrita
+                    spriteBatch.DrawString(stateFont, pressEnter, new Vector2(screenWidth / 2 - pressEnterSize.X / 2, screenHeight - 200), Color.White);
+                }
             }
 
             spriteBatch.End();
@@ -155,6 +169,13 @@ namespace MonoGame2D
                     gameOver = false;
                 }
                 return;
+            }
+            // Reinicia se for precionado enter após game over
+            if (gameOver && state.IsKeyDown(Keys.Enter))
+            {
+                StartGame();
+                gameStarted = true;
+                gameOver = false;
             }
             
             // Controla teclas de direção

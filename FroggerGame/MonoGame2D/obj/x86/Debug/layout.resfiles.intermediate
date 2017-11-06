@@ -8,6 +8,7 @@ Assets\StoreLogo.png
 Assets\Wide310x150Logo.scale-200.png
 MonoGame2D.xr.xml
 Content\background.xnb
+Content\game-over.xnb
 Content\GameState.xnb
 Content\Score.xnb
 Content\start-splash.xnb

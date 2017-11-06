@@ -838,3 +838,4 @@ D:\Trabalhos\frogger\FroggerGame\MonoGame2D\obj\x86\Debug\MultipleQualifiersPerD
 D:\Trabalhos\frogger\FroggerGame\MonoGame2D\obj\x86\Debug\ProjectArchitectures.txt
 D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Content\start-splash.xnb
 D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Content\GameState.xnb
+D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Content\Score.xnb

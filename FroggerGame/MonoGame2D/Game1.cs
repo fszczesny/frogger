@@ -19,6 +19,7 @@ namespace MonoGame2D
         int score;
         int lives;
         SpriteFont stateFont;
+        SpriteFont scoreFont;
         Texture2D startGameSplash;
 
 
@@ -60,6 +61,7 @@ namespace MonoGame2D
 
             // Carrega estilo de fontes
             stateFont = Content.Load<SpriteFont>("GameState");
+            scoreFont = Content.Load<SpriteFont>("Score");
         }
 
         // Metodo de descarga de elementos externos
@@ -86,6 +88,7 @@ namespace MonoGame2D
             // Desenha o background carregado
             spriteBatch.Draw(background, new Rectangle(0, 0, (int)screenWidth, (int)screenHeight), Color.White);
 
+
             // Se o jogo ainda não começou fica em tela de inicio
             if (!gameStarted)
             {
@@ -98,12 +101,23 @@ namespace MonoGame2D
                 Vector2 titleSize = stateFont.MeasureString(title);
                 Vector2 pressSpaceSize = stateFont.MeasureString(pressSpace);
                 // Escreve centralizado
-                spriteBatch.DrawString(stateFont, title,
-                new Vector2(screenWidth / 2 - titleSize.X / 2, screenHeight / 3),
+                spriteBatch.DrawString(stateFont, title,new Vector2(screenWidth / 2 - titleSize.X / 2, screenHeight / 3),
                 Color.ForestGreen);
-                spriteBatch.DrawString(stateFont, pressSpace,
-                new Vector2(screenWidth / 2 - pressSpaceSize.X / 2,
+                spriteBatch.DrawString(stateFont, pressSpace,new Vector2(screenWidth / 2 - pressSpaceSize.X / 2,
                 screenHeight / 2), Color.White);
+            }
+            else
+            {
+                // Desenha a pontuação
+                spriteBatch.DrawString(scoreFont, "Score: ",new Vector2(screenWidth - 350, 50), Color.Black);
+                spriteBatch.DrawString(scoreFont, score.ToString(),new Vector2(screenWidth - 175, 50), Color.Black);
+
+                // Desenha a quantidade de vidas
+                spriteBatch.DrawString(scoreFont, "Lives: ", new Vector2(screenWidth - 725, 50), Color.Black);
+                spriteBatch.DrawString(scoreFont, lives.ToString(), new Vector2(screenWidth - 575, 50), Color.Black);
+
+                // Desenha o timer
+                spriteBatch.DrawString(scoreFont, "Timer: ", new Vector2(screenWidth - 1850, 50), Color.Black);
             }
 
             spriteBatch.End();

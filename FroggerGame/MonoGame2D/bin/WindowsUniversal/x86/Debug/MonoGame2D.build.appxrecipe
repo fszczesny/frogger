@@ -387,6 +387,9 @@
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\GameState.xnb">
       <PackagePath>Content\GameState.xnb</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\Score.xnb">
+      <PackagePath>Content\Score.xnb</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\start-splash.xnb">
       <PackagePath>Content\start-splash.xnb</PackagePath>
     </AppxPackagedFile>

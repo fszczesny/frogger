@@ -12,9 +12,15 @@ Content\background.xnb
 Content\frooger.xnb
 Content\game-over.xnb
 Content\GameState.xnb
+Content\green_cart.xnb
+Content\purple_cart.xnb
+Content\red_cart.xnb
 Content\Score.xnb
 Content\start-splash.xnb
 Content\frooger.png
 Content\game-over.png
+Content\green_cart.png
+Content\purple_cart.png
+Content\red_cart.png
 Content\start-splash.png
 Properties\Default.rd.xml

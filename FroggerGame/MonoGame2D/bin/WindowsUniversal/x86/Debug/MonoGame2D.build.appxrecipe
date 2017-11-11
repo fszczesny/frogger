@@ -364,6 +364,15 @@
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\game-over.png">
       <PackagePath>Content\game-over.png</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\green_cart.png">
+      <PackagePath>Content\green_cart.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\purple_cart.png">
+      <PackagePath>Content\purple_cart.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\red_cart.png">
+      <PackagePath>Content\red_cart.png</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\start-splash.png">
       <PackagePath>Content\start-splash.png</PackagePath>
     </AppxPackagedFile>
@@ -404,6 +413,15 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\GameState.xnb">
       <PackagePath>Content\GameState.xnb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\green_cart.xnb">
+      <PackagePath>Content\green_cart.xnb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\purple_cart.xnb">
+      <PackagePath>Content\purple_cart.xnb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\red_cart.xnb">
+      <PackagePath>Content\red_cart.xnb</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\Score.xnb">
       <PackagePath>Content\Score.xnb</PackagePath>

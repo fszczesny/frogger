@@ -119,8 +119,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\background.png" />
+    <Content Include="Content\blue_cart.png" />
     <Content Include="Content\frooger.png" />
     <Content Include="Content\game-over.png" />
+    <Content Include="Content\purple_cart.png" />
+    <Content Include="Content\red_cart.png" />
     <Content Include="Content\start-splash.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />

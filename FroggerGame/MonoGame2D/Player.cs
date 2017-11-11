@@ -10,88 +10,59 @@ namespace MonoGame2D
 {
     class Player
     {
-        const float HITBOXSCALE = .5f; // experiment with this value to make the collision detection more or less forgiving
-
-        // sprite texture
         public Texture2D texture
         {
             get;
         }
 
-        // x coordinate of the center of the sprite
+        // coordenada x do centro do player
         public float x
         {
             get;
             set;
         }
 
-        // y coordinate of the center of the sprite
+        // coordenada y do centro do player
         public float y
         {
             get;
             set;
         }
 
-        // Angle of the sprite around central axis
+        // Angulo central do player
         public float angle
         {
             get;
             set;
         }
 
-        // Rate of change of x per second
-        public float dX
-        {
-            get;
-            set;
-        }
-
-        // Rate of change of y per second
-        public float dY
-        {
-            get;
-            set;
-        }
-
-        // Rate of change of angle per second
-        public float dA
-        {
-            get;
-            set;
-        }
-
-        // Scale of the texture, where 1 is its true size
+        // Escala do sprite do player
         public float scale
         {
             get;
             set;
         }
 
-        // Constructor
+        // Construtor da classe
         public Player(GraphicsDevice graphicsDevice, string textureName, float scale)
         {
             this.scale = scale;
-
-            // Load the specified texture
             var stream = TitleContainer.OpenStream(textureName);
             texture = Texture2D.FromStream(graphicsDevice, stream);
         }
 
-        // Update the position and angle of the sprite based on each rate of change and the time elapsed
+        // Função de atualização do estado do player (Até então não utilizada)
         public void Update(float elapsedTime)
         {
-            this.x += this.dX * elapsedTime;
-            this.y += this.dY * elapsedTime;
-            this.angle += this.dA * elapsedTime;
+
         }
 
-        // Draw the sprite with the given SpriteBatch
+        // Desenha o player
         public void Draw(SpriteBatch spriteBatch)
         {
-            // Determine the position vector of the sprite
+            // Determina posição do player
             Vector2 spritePosition = new Vector2(this.x, this.y);
-
-            // Draw the sprite
+            // Desenha o sprite
             spriteBatch.Draw(texture, spritePosition, null, Color.White, this.angle, new Vector2(texture.Width / 2, texture.Height / 2), new Vector2(scale, scale), SpriteEffects.None, 0f);
         }
     }

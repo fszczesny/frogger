@@ -184,23 +184,35 @@ namespace MonoGame2D
                 gameStarted = true;
                 gameOver = false;
             }
-            
-            // Controla teclas de direção
-            if (state.IsKeyDown(Keys.Left))
-            {
 
+            // Controla teclas de direção com controle de area da tela a ser usada
+            if (state.IsKeyDown(Keys.Left) || (state.IsKeyDown(Keys.A)))
+            {
+                if (frooger.x > screenWidth/20)
+                {
+                    frooger.x = frooger.x - 6;
+                }
             }
-            else if (state.IsKeyDown(Keys.Right))
+            else if (state.IsKeyDown(Keys.Right) || state.IsKeyDown(Keys.D))
             {
-
+                if (frooger.x < (screenWidth - (screenWidth / 20)))
+                {
+                    frooger.x = frooger.x + 6;
+                }
             }
-            else if (state.IsKeyDown(Keys.Up))
+            else if (state.IsKeyDown(Keys.Up) || state.IsKeyDown(Keys.W) )
             {
-
+                if (frooger.y > (screenHeight/5))
+                {
+                    frooger.y = frooger.y - 6;
+                }
             }
-            else if (state.IsKeyDown(Keys.Down))
+            else if (state.IsKeyDown(Keys.Down) || state.IsKeyDown(Keys.S))
             {
-
+                if (frooger.y < (screenHeight - (screenHeight / 8)))
+                {
+                    frooger.y = frooger.y + 6;
+                }
             }
         }
 

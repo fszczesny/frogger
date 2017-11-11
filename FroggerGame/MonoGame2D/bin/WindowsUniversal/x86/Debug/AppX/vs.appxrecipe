@@ -28,13 +28,13 @@
     <AppXManifest Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-11-06T01:41:37.659</Modified>
+      <Modified>2017-11-11T01:35:07.433</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\MonoGame2D.exe">
       <PackagePath>entrypoint\MonoGame2D.exe</PackagePath>
-      <Modified>2017-11-06T01:41:37.061</Modified>
+      <Modified>2017-11-11T01:35:07.250</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\FabricioSzczesny\.nuget\packages\Microsoft.CSharp\4.0.0\lib\netcore50\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
@@ -476,8 +476,20 @@
       <PackagePath>SharpDX.XAudio2.dll</PackagePath>
       <Modified>2017-11-02T09:53:32.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Properties\Default.rd.xml">
-      <PackagePath>Properties\Default.rd.xml</PackagePath>
+    <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\background.png">
+      <PackagePath>Content\background.png</PackagePath>
+      <Modified>2017-11-05T22:09:42.971</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\frooger.png">
+      <PackagePath>Content\frooger.png</PackagePath>
+      <Modified>2017-11-06T01:35:58.694</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\game-over.png">
+      <PackagePath>Content\game-over.png</PackagePath>
+      <Modified>2017-11-06T01:40:09.290</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\start-splash.png">
+      <PackagePath>Content\start-splash.png</PackagePath>
       <Modified>2017-10-26T18:26:38.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Assets\LockScreenLogo.scale-200.png">
@@ -510,9 +522,17 @@
       <PackagePath>Assets\Wide310x150Logo.scale-200.png</PackagePath>
       <Modified>2017-10-26T18:26:38.000</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Properties\Default.rd.xml">
+      <PackagePath>Properties\Default.rd.xml</PackagePath>
+      <Modified>2017-10-26T18:26:38.000</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\background.xnb">
       <PackagePath>Content\background.xnb</PackagePath>
       <Modified>2017-11-06T00:05:22.595</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\frooger.xnb">
+      <PackagePath>Content\frooger.xnb</PackagePath>
+      <Modified>2017-11-11T00:46:34.774</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\game-over.xnb">
       <PackagePath>Content\game-over.xnb</PackagePath>
@@ -541,11 +561,11 @@
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-11-06T01:41:37.485</Modified>
+      <Modified>2017-11-11T01:22:52.530</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Core\MonoGame2D.exe">
       <PackagePath>MonoGame2D.exe</PackagePath>
-      <Modified>2017-11-06T01:41:37.655</Modified>
+      <Modified>2017-11-11T01:35:07.431</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

@@ -22,6 +22,7 @@ namespace MonoGame2D
         SpriteFont scoreFont;
         Texture2D startGameSplash;
         Texture2D gameOverTexture;
+        Player frooger;
 
 
         public Game1()
@@ -61,6 +62,9 @@ namespace MonoGame2D
             startGameSplash = Content.Load<Texture2D>("start-splash");
             gameOverTexture = Content.Load<Texture2D>("game-over");
 
+            // Carrega sprites do jogo
+            frooger = new Player(GraphicsDevice, "Content/frooger.png", ScaleToHighDPI(0.3f));
+
             // Carrega estilo de fontes
             stateFont = Content.Load<SpriteFont>("GameState");
             scoreFont = Content.Load<SpriteFont>("Score");
@@ -76,6 +80,7 @@ namespace MonoGame2D
         {
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             KeyboardHandler();
+            frooger.Update(elapsedTime);
             base.Update(gameTime);
         }
 
@@ -90,6 +95,8 @@ namespace MonoGame2D
             // Desenha o background carregado
             spriteBatch.Draw(background, new Rectangle(0, 0, (int)screenWidth, (int)screenHeight), Color.White);
 
+             // Desenha o sapo
+            frooger.Draw(spriteBatch);
 
             // Se o jogo ainda não começou fica em tela de inicio
             if (!gameStarted)
@@ -200,6 +207,8 @@ namespace MonoGame2D
         // Metodo de inicio do jogo
         public void StartGame()
         {
+            frooger.x = screenWidth / 2;
+            frooger.y = screenHeight -(screenHeight / 8);
             // Inicializa as variaveis de jogo
             lives = 5;
             score = 0;

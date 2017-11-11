@@ -7,9 +7,14 @@ Assets\Square44x44Logo.targetsize-24_altform-unplated.png
 Assets\StoreLogo.png
 Assets\Wide310x150Logo.scale-200.png
 MonoGame2D.xr.xml
+Content\background.png
 Content\background.xnb
+Content\frooger.xnb
 Content\game-over.xnb
 Content\GameState.xnb
 Content\Score.xnb
 Content\start-splash.xnb
+Content\frooger.png
+Content\game-over.png
+Content\start-splash.png
 Properties\Default.rd.xml

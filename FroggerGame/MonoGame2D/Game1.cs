@@ -30,8 +30,11 @@ namespace MonoGame2D
         Texture2D background;
         bool gameStarted;
         bool gameOver;
+        bool win;
         int score;
         int lives;
+        int level;
+        int toCompare;
         SpriteFont stateFont;
         Random random;
         SpriteFont scoreFont;
@@ -42,6 +45,9 @@ namespace MonoGame2D
         List<int> lines = new List<int>();
         List<Obstacles> obstacles = new List<Obstacles>();
         int loopControl;
+        Texture2D winTexture;
+        int pontosForWin = 2;
+        float froggerPass;
 
 
         public Game1()
@@ -57,9 +63,13 @@ namespace MonoGame2D
 
             // Iniciaza parametros de jogo
             gameOver = false;
+            win = false;
             gameStarted = false;
-            lives = 0;
+            lives = 5;
             score = 0;
+            level = 0;
+            toCompare = 50;
+            froggerPass = 5;
 
             random = new Random();
 
@@ -82,6 +92,7 @@ namespace MonoGame2D
             background = Content.Load<Texture2D>("background");
             startGameSplash = Content.Load<Texture2D>("start-splash");
             gameOverTexture = Content.Load<Texture2D>("game-over");
+            winTexture = Content.Load<Texture2D>("win");
 
             // Carrega sprites do jogo
             frooger = new Player(GraphicsDevice, "Content/frooger.png", ScaleToHighDPI(0.3f));
@@ -100,20 +111,21 @@ namespace MonoGame2D
         // Metodo de atualização do estatus dos elementos
         protected override void Update(GameTime gameTime)
         {
-            if (loopControl == 50)
-            {
-                loopControl = 0;
-            }
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             KeyboardHandler();
-            if (loopControl == 0)
+            if (loopControl == toCompare)
             {
+                loopControl = 0;
                 spawnNewObstacle();
             }
+            loopControl++;
             frooger.Update(elapsedTime);
             UpdateAllObstacles(elapsedTime);
             VerifyObstacles();
-            loopControl++;
+            if (gameStarted && frooger.y <= screenHeight / 5)
+            {
+                win = true;
+            }
             base.Update(gameTime);
         }
 
@@ -163,16 +175,46 @@ namespace MonoGame2D
                 // Desenha o timer
                 spriteBatch.DrawString(scoreFont, "Timer: ", new Vector2((float)(screenWidth * 0.036), (float)(screenHeight * 0.046)), Color.Black);
 
+                // Se ganhou
+                if (win)
+                {
+                    if (level == 8)
+                    {
+                        // Desenha win na tela de forma centralizada
+                        spriteBatch.Draw(winTexture, new Vector2(screenWidth / 2 - winTexture.Width / 2, screenHeight / 4 - winTexture.Width / 2), Color.White);
+                        String pressEnter = "You win all levels. Press Enter to restart!";
+                        // Determina tamanho de fonte para start
+                        Vector2 pressEnterSize = stateFont.MeasureString(pressEnter);
+                        // Desenha centralizado horizontalmente a escrita
+                        spriteBatch.DrawString(stateFont, pressEnter, new Vector2(screenWidth / 2 - pressEnterSize.X / 2, (float)(screenHeight * 0.81)), Color.White);
+                    }
+                    else
+                    {
+                        // Desenha win na tela de forma centralizada
+                        spriteBatch.Draw(winTexture, new Vector2(screenWidth / 2 - winTexture.Width / 2, screenHeight / 4 - winTexture.Width / 2), Color.White);
+                        String pressEnter = "Press Enter to start the next level!";
+                        // Determina tamanho de fonte para start
+                        Vector2 pressEnterSize = stateFont.MeasureString(pressEnter);
+                        // Desenha centralizado horizontalmente a escrita
+                        spriteBatch.DrawString(stateFont, pressEnter, new Vector2(screenWidth / 2 - pressEnterSize.X / 2, (float)(screenHeight * 0.81)), Color.White);
+                    }
+                }
+
                 // Se game over
                 if (gameOver)
                 {
+                    level = 0;
+                    lives = 5;
+                    toCompare = 50;
+                    score = 0;
+                    froggerPass = 5;
                     // Desenha gameover na tela de forma centralizada
                     spriteBatch.Draw(gameOverTexture, new Vector2(screenWidth / 2 - gameOverTexture.Width / 2, screenHeight / 4 - gameOverTexture.Width / 2), Color.White);
                     String pressEnter = "Press Enter to restart!";
                     // Determina tamanho de fonte para reinicio
                     Vector2 pressEnterSize = stateFont.MeasureString(pressEnter);
                     // Desenha centralizado horizontalmente a escrita
-                    spriteBatch.DrawString(stateFont, pressEnter, new Vector2(screenWidth / 2 - pressEnterSize.X / 2, screenHeight - 200), Color.White);
+                    spriteBatch.DrawString(stateFont, pressEnter, new Vector2(screenWidth / 2 - pressEnterSize.X / 2, (float)(screenHeight * 0.81)), Color.White);
                 }
             }
 
@@ -218,6 +260,15 @@ namespace MonoGame2D
                 StartGame();
                 gameStarted = true;
                 gameOver = false;
+                win = false;
+            }
+
+            if (win && state.IsKeyDown(Keys.Enter))
+            {
+                StartGame();
+                gameStarted = true;
+                gameOver = false;
+                win = false;
             }
 
             // Controla teclas de direção com controle de area da tela a ser usada
@@ -226,7 +277,7 @@ namespace MonoGame2D
                 frooger.angle = 0;
                 if (frooger.y > (screenHeight / 5))
                 {
-                    frooger.y = frooger.y - 6;
+                    frooger.y = frooger.y - froggerPass;
                 }
             }
             else if (state.IsKeyDown(Keys.Down) || state.IsKeyDown(Keys.S))
@@ -234,7 +285,7 @@ namespace MonoGame2D
                 frooger.angle = 600;
                 if (frooger.y < (screenHeight - (screenHeight / 8)))
                 {
-                    frooger.y = frooger.y + 6;
+                    frooger.y = frooger.y + froggerPass;
                 }
             }
             else if (state.IsKeyDown(Keys.Left) || (state.IsKeyDown(Keys.A)))
@@ -242,7 +293,7 @@ namespace MonoGame2D
                 frooger.angle = 300;
                 if (frooger.x > screenWidth/20)
                 {
-                    frooger.x = frooger.x - 6;
+                    frooger.x = frooger.x - froggerPass;
                 }
             }
             else if (state.IsKeyDown(Keys.Right) || state.IsKeyDown(Keys.D))
@@ -250,7 +301,7 @@ namespace MonoGame2D
                 frooger.angle = 900;
                 if (frooger.x < (screenWidth - (screenWidth / 20)))
                 {
-                    frooger.x = frooger.x + 6;
+                    frooger.x = frooger.x + froggerPass;
                 }
             }
         }
@@ -274,9 +325,24 @@ namespace MonoGame2D
             screen.Add(streetSixH);
             frooger.x = screenWidth / 2;
             frooger.y = screenHeight -(screenHeight / 8);
-            // Inicializa as variaveis de jogo
-            lives = 5;
-            score = 0;
+            level++;
+            if (level != 1 && level < 9)
+            {
+                toCompare = toCompare - 5;
+                froggerPass = (float)(froggerPass - 0.5);
+                score = score + (pontosForWin * lives * (level - 1));
+                acelerationToLeft = (float)(acelerationToLeft - 0.2);
+                aceleretionToRigth = (float)(aceleretionToRigth + 0.2);
+            }
+            else
+            {
+                toCompare = 50;
+                froggerPass = 5;
+                score = 0;
+                acelerationToLeft = -1;
+                aceleretionToRigth = 1;
+            }
+            obstacles.Clear();
             loopControl = 0;
         }
 

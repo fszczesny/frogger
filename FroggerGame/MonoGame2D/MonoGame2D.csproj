@@ -125,6 +125,7 @@
     <Content Include="Content\purple_cart.png" />
     <Content Include="Content\red_cart.png" />
     <Content Include="Content\start-splash.png" />
+    <Content Include="Content\win.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

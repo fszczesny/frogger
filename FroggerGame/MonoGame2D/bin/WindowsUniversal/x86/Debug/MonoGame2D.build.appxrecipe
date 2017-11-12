@@ -376,6 +376,9 @@
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\start-splash.png">
       <PackagePath>Content\start-splash.png</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\win.png">
+      <PackagePath>Content\win.png</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Assets\LockScreenLogo.scale-200.png">
       <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>
     </AppxPackagedFile>
@@ -428,6 +431,9 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\start-splash.xnb">
       <PackagePath>Content\start-splash.xnb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\win.xnb">
+      <PackagePath>Content\win.xnb</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\MonoGame2D.xr.xml">
       <PackagePath>MonoGame2D.xr.xml</PackagePath>

@@ -69,7 +69,7 @@ namespace MonoGame2D
         // Atualiza os dados do obstaculo
         public void Update(float elapsedTime)
         {
-
+            this.x = this.x + this.dX * 3;
         }
 
         // Desenha o obstaculo
@@ -79,6 +79,12 @@ namespace MonoGame2D
             Vector2 spritePosition = new Vector2(this.x, this.y);
             // Desenha o obstaculo
             spriteBatch.Draw(texture, spritePosition, null, Color.White, this.angle, new Vector2(texture.Width / 2, texture.Height / 2), new Vector2(scale, scale), SpriteEffects.None, 0f);
+        }
+
+        // Destrutor
+        ~Obstacles()
+        {
+
         }
     }
 }

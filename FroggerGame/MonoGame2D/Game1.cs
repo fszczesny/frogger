@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
 
@@ -13,16 +14,34 @@ namespace MonoGame2D
         SpriteBatch spriteBatch;
         float screenWidth;
         float screenHeight;
+        float streetOneH;
+        float streetTwoH;
+        float streetTreeH;
+        float streetFourH;
+        float streetFiveH;
+        float streetSixH;
+        float streeLeftLimit;
+        float streeRigthLimit;
+        float angleToRight = 0;
+        float angleToLeft = (float)600.05;
+        float aceleretionToRigth = 1;
+        float acelerationToLeft = -1;
+        float scale;
         Texture2D background;
         bool gameStarted;
         bool gameOver;
         int score;
         int lives;
         SpriteFont stateFont;
+        Random random;
         SpriteFont scoreFont;
         Texture2D startGameSplash;
         Texture2D gameOverTexture;
         Player frooger;
+        List<float> screen = new List<float>();
+        List<int> lines = new List<int>();
+        List<Obstacles> obstacles = new List<Obstacles>();
+        int loopControl;
 
 
         public Game1()
@@ -41,6 +60,8 @@ namespace MonoGame2D
             gameStarted = false;
             lives = 0;
             score = 0;
+
+            random = new Random();
 
             // Inicializa escala de frames da tela utilizada
             // Inicializa em tela cheia
@@ -64,6 +85,7 @@ namespace MonoGame2D
 
             // Carrega sprites do jogo
             frooger = new Player(GraphicsDevice, "Content/frooger.png", ScaleToHighDPI(0.3f));
+            scale = ScaleToHighDPI(1.3f);
 
             // Carrega estilo de fontes
             stateFont = Content.Load<SpriteFont>("GameState");
@@ -78,9 +100,20 @@ namespace MonoGame2D
         // Metodo de atualização do estatus dos elementos
         protected override void Update(GameTime gameTime)
         {
+            if (loopControl == 50)
+            {
+                loopControl = 0;
+            }
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             KeyboardHandler();
+            if (loopControl == 0)
+            {
+                spawnNewObstacle();
+            }
             frooger.Update(elapsedTime);
+            UpdateAllObstacles(elapsedTime);
+            VerifyObstacles();
+            loopControl++;
             base.Update(gameTime);
         }
 
@@ -95,8 +128,10 @@ namespace MonoGame2D
             // Desenha o background carregado
             spriteBatch.Draw(background, new Rectangle(0, 0, (int)screenWidth, (int)screenHeight), Color.White);
 
-             // Desenha o sapo
+            // Desenha o sapo e os obstaculos
+            
             frooger.Draw(spriteBatch);
+            DrawAllObstacles(spriteBatch);
 
             // Se o jogo ainda não começou fica em tela de inicio
             if (!gameStarted)
@@ -223,11 +258,130 @@ namespace MonoGame2D
         // Metodo de inicio do jogo
         public void StartGame()
         {
+            streetOneH = (float)(screenHeight - screenHeight / 4.5);
+            streetTwoH = (float)(screenHeight - screenHeight / 3.05);
+            streetTreeH = (float)(screenHeight - screenHeight / 2.475);
+            streetFourH = (float)(screenHeight - screenHeight / 1.975);
+            streetFiveH = (float)(screenHeight - screenHeight / 1.725);
+            streetSixH = (float)(screenHeight - screenHeight / 1.465);
+            streeLeftLimit = -screenWidth / 17;
+            streeRigthLimit = screenWidth + screenWidth / 17;
+            screen.Add(streetOneH);
+            screen.Add(streetTwoH);
+            screen.Add(streetTreeH);
+            screen.Add(streetFourH);
+            screen.Add(streetFiveH);
+            screen.Add(streetSixH);
             frooger.x = screenWidth / 2;
             frooger.y = screenHeight -(screenHeight / 8);
             // Inicializa as variaveis de jogo
             lives = 5;
             score = 0;
+            loopControl = 0;
+        }
+
+        // Metodo de inserção aleatoria de tipo e rua dos obstaculos
+        public void spawnNewObstacle()
+        {
+            Obstacles cart;
+
+            // Seleciona aleatoriamente um tipo de carroça
+            int typeOfCart = random.Next(1, 4);
+            switch (typeOfCart)
+            {
+                case 1:
+                    cart = new Obstacles(GraphicsDevice, "Content/red_cart.png", scale);
+                    break;
+                case 2:
+                    cart = new Obstacles(GraphicsDevice, "Content/green_cart.png", scale);
+                    break;
+                default:
+                    cart = new Obstacles(GraphicsDevice, "Content/purple_cart.png", scale);
+                    break;
+            }
+            int streeat = random.Next(1, 7);
+
+            //Seleciona aleatoriamente uma rua para a coarroça
+            // Cuida pra não por duas carroças seguidas na mesma rua
+            if (lines.Count != 0)
+            {
+                while (lines[lines.Count -1] == streeat)
+                {
+                    streeat = random.Next(1, 7);
+                }
+            }
+
+            switch (streeat)
+            {
+                case 1:
+                    cart.x = streeLeftLimit;
+                    cart.y = streetOneH;
+                    cart.dX = (float)(aceleretionToRigth * 0.75);
+                    cart.angle = angleToRight;
+                    break;
+                case 2:
+                    cart.x = streeRigthLimit;
+                    cart.y = streetTwoH;
+                    cart.dX = acelerationToLeft * 1;
+                    cart.angle = angleToLeft;
+                    break;
+                case 3:
+                    cart.x = streeLeftLimit;
+                    cart.y = streetTreeH;
+                    cart.dX = (float)(aceleretionToRigth * 1.25);
+                    cart.angle = angleToRight;
+                    break;
+                case 4:
+                    cart.x = streeRigthLimit;
+                    cart.y = streetFourH;
+                    cart.dX = (float)(acelerationToLeft * 1.5);
+                    cart.angle = angleToLeft;
+                    break;
+                case 5:
+                    cart.x = streeLeftLimit;
+                    cart.y = streetFiveH;
+                    cart.dX = (float)(aceleretionToRigth * 1.75);
+                    cart.angle = angleToRight;
+                    break;
+                default:
+                    cart.x = streeRigthLimit;
+                    cart.y = streetSixH;
+                    cart.dX = acelerationToLeft * 2;
+                    cart.angle = angleToLeft;
+                    break;
+            }
+            if (screen.Contains(cart.y))
+            {
+                lines.Add(streeat);
+                obstacles.Add(cart);
+            }
+        }
+
+        public void UpdateAllObstacles(float elapsedTime)
+        {
+            for (int i = 0 ; i < obstacles.Count ; i++)
+            {
+                obstacles[i].Update(elapsedTime);
+            }
+        }
+
+        public void DrawAllObstacles(SpriteBatch sprite)
+        {
+            for (int i = 0; i < obstacles.Count; i++)
+            {
+                obstacles[i].Draw(sprite);
+            }
+        }
+
+        public void VerifyObstacles()
+        {
+            for (int i = 0; i < obstacles.Count; i++)
+            {
+                if ((obstacles[i].x < streeLeftLimit) || (obstacles[i].x > streeRigthLimit))
+                {
+                    obstacles.RemoveAt(i);
+                }
+            }
         }
     }
 }

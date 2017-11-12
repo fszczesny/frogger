@@ -153,15 +153,15 @@ namespace MonoGame2D
             else
             {
                 // Desenha a pontuação
-                spriteBatch.DrawString(scoreFont, "Score: ",new Vector2(screenWidth - 350, 50), Color.Black);
-                spriteBatch.DrawString(scoreFont, score.ToString(),new Vector2(screenWidth - 175, 50), Color.Black);
+                spriteBatch.DrawString(scoreFont, "Score: ",new Vector2((float)(screenWidth * 0.82), (float)(screenHeight * 0.046)), Color.Black);
+                spriteBatch.DrawString(scoreFont, score.ToString(),new Vector2((float)(screenWidth * 0.9), (float)(screenHeight * 0.046)), Color.Black);
 
                 // Desenha a quantidade de vidas
-                spriteBatch.DrawString(scoreFont, "Lives: ", new Vector2(screenWidth - 725, 50), Color.Black);
-                spriteBatch.DrawString(scoreFont, lives.ToString(), new Vector2(screenWidth - 575, 50), Color.Black);
+                spriteBatch.DrawString(scoreFont, "Lives: ", new Vector2((float)(screenWidth * 0.62), (float)(screenHeight * 0.046)), Color.Black);
+                spriteBatch.DrawString(scoreFont, lives.ToString(), new Vector2((float)(screenWidth * 0.7), (float)(screenHeight * 0.046)), Color.Black);
 
                 // Desenha o timer
-                spriteBatch.DrawString(scoreFont, "Timer: ", new Vector2(screenWidth - 1850, 50), Color.Black);
+                spriteBatch.DrawString(scoreFont, "Timer: ", new Vector2((float)(screenWidth * 0.036), (float)(screenHeight * 0.046)), Color.Black);
 
                 // Se game over
                 if (gameOver)

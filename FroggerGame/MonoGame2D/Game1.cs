@@ -8,47 +8,71 @@ using Windows.UI.ViewManagement;
 
 namespace MonoGame2D
 {
+    static class Constants
+    {
+        public const float rigthAceleration = 1;
+        public const float leftAceleration = -1;
+        public const float angleObstacleToRigth = 0;
+        public const float angleObstacleToLeft = (float)600.05;
+        public const int initialLives = 5;
+        public const int initialLevel = 0;
+        public const int initialScore = 0;
+        public const int initialFroggerPass = 5;
+        public const int intervalBetwenLoop = 50;
+        public const int pointsForWin = 2;
+        public const int maxLevel = 8;
+        public const float acelerationFactor = (float)0.25;
+        public const int decFrequencyObstacle = 5;
+        public const float decAceleration = (float)0.2;
+        public const float decFroggerPass = (float)0.5;
+        public const float angleFrogger0 = 0;
+        public const float angleFrogger90 = 300;
+        public const float angleFrogger180 = 600;
+        public const float angleFrogger270 = 900;
+    }
     public class Game1 : Game
     {
+        // Declaração de variaveis globias dentre a classe
+        // Variaveis de ambiente grafico
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        SpriteFont stateFont;
+        SpriteFont scoreFont;
+        Texture2D startGameSplash;
+        Texture2D gameOverTexture;
+        Texture2D winTexture;
+        Texture2D background;
+        float scale;
+        // Variaveis de posicionamento e limitação do ruas
         float screenWidth;
         float screenHeight;
-        float streetOneH;
-        float streetTwoH;
-        float streetTreeH;
-        float streetFourH;
-        float streetFiveH;
-        float streetSixH;
         float streeLeftLimit;
         float streeRigthLimit;
-        float angleToRight = 0;
-        float angleToLeft = (float)600.05;
-        float aceleretionToRigth = 1;
-        float acelerationToLeft = -1;
-        float scale;
-        Texture2D background;
+        List<float> validLines = new List<float>();
+        // Variaveis posicionamento angular e aceleração todas já iniializadas aqui
+        float angleToRight = Constants.angleObstacleToRigth;
+        float angleToLeft = Constants.angleObstacleToLeft;
+        float aceleretionToRigth = Constants.rigthAceleration;
+        float acelerationToLeft = Constants.leftAceleration;
+        // Variaveis de controle de estado de jogo
         bool gameStarted;
         bool gameOver;
         bool win;
         int score;
         int lives;
         int level;
-        int toCompare;
-        SpriteFont stateFont;
-        Random random;
-        SpriteFont scoreFont;
-        Texture2D startGameSplash;
-        Texture2D gameOverTexture;
-        Player frooger;
-        List<float> screen = new List<float>();
-        List<int> lines = new List<int>();
-        List<Obstacles> obstacles = new List<Obstacles>();
-        int loopControl;
-        Texture2D winTexture;
-        int pontosForWin = 2;
+        int loopNewObstaclesControl;
+        int loooNewObstaclesIncrease;
+        int pointsForWin = Constants.pointsForWin;
         float froggerPass;
-
+        // Variavel para geração ramdomica
+        Random random;
+        // Declaração do objeto Player que representa o frogger
+        Player frooger;
+        // Declaração da lista de obstaculos e sua lista auxiliar de frequencia
+        List<Obstacles> obstacles = new List<Obstacles>();
+        List<int> lastInserts = new List<int>();
+        // Fim da declaração de globais da classe
 
         public Game1()
         {
@@ -60,47 +84,19 @@ namespace MonoGame2D
         protected override void Initialize()
         {
             base.Initialize();
-
-            // Iniciaza parametros de jogo
-            gameOver = false;
-            win = false;
-            gameStarted = false;
-            lives = 5;
-            score = 0;
-            level = 0;
-            toCompare = 50;
-            froggerPass = 5;
-
+            startParametrs(false, false, false, Constants.initialLives, Constants.initialScore, Constants.initialLevel, Constants.intervalBetwenLoop, Constants.initialFroggerPass);
             random = new Random();
-
-            // Inicializa escala de frames da tela utilizada
-            // Inicializa em tela cheia
-            // Inicializa com ponteiro do mouse oculto
-            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
-            screenHeight = ScaleToHighDPI((float)ApplicationView.GetForCurrentView().VisibleBounds.Height);
-            screenWidth = ScaleToHighDPI((float)ApplicationView.GetForCurrentView().VisibleBounds.Width);
-            this.IsMouseVisible = false;
-
+            startScreenConfigs();
         }
 
         // Metodo de carga de elementos externos
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // Carrega textura de background do jogo
-            background = Content.Load<Texture2D>("background");
-            startGameSplash = Content.Load<Texture2D>("start-splash");
-            gameOverTexture = Content.Load<Texture2D>("game-over");
-            winTexture = Content.Load<Texture2D>("win");
-
-            // Carrega sprites do jogo
+            loadTextureAndFontStyles();
+            // Carrega sprite do player
             frooger = new Player(GraphicsDevice, "Content/frooger.png", ScaleToHighDPI(0.3f));
             scale = ScaleToHighDPI(1.3f);
-
-            // Carrega estilo de fontes
-            stateFont = Content.Load<SpriteFont>("GameState");
-            scoreFont = Content.Load<SpriteFont>("Score");
         }
 
         // Metodo de descarga de elementos externos
@@ -113,19 +109,11 @@ namespace MonoGame2D
         {
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             KeyboardHandler();
-            if (loopControl == toCompare)
-            {
-                loopControl = 0;
-                spawnNewObstacle();
-            }
-            loopControl++;
+            verifyIfNeedMoreObstacles();
             frooger.Update(elapsedTime);
             UpdateAllObstacles(elapsedTime);
-            VerifyObstacles();
-            if (gameStarted && frooger.y <= screenHeight / 5)
-            {
-                win = true;
-            }
+            VerifyIfObstaclesIsOutOfScreen();
+            win = thePalyerWin();
             base.Update(gameTime);
         }
 
@@ -133,224 +121,58 @@ namespace MonoGame2D
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // Inicializa o ambente de operações de desenho na tela
             spriteBatch.Begin();
-
-            // Desenha o background carregado
+            // Desenha objetos
             spriteBatch.Draw(background, new Rectangle(0, 0, (int)screenWidth, (int)screenHeight), Color.White);
-
-            // Desenha o sapo e os obstaculos
-            
             frooger.Draw(spriteBatch);
             DrawAllObstacles(spriteBatch);
-
             // Se o jogo ainda não começou fica em tela de inicio
             if (!gameStarted)
             {
-                // Carrega tela preta no inicio de jogo aguardando um espaço para iniciar
-                spriteBatch.Draw(startGameSplash, new Rectangle(0, 0,
-                (int)screenWidth, (int)screenHeight), Color.White);
-                String title = "FROGGER - THE MEDIEVAL EDITION";
-                String pressSpace = "Press Space to start";
-                // Insere temanho de fonte para escrita
-                Vector2 titleSize = stateFont.MeasureString(title);
-                Vector2 pressSpaceSize = stateFont.MeasureString(pressSpace);
-                // Escreve centralizado
-                spriteBatch.DrawString(stateFont, title,new Vector2(screenWidth / 2 - titleSize.X / 2, screenHeight / 3),
-                Color.ForestGreen);
-                spriteBatch.DrawString(stateFont, pressSpace,new Vector2(screenWidth / 2 - pressSpaceSize.X / 2,
-                screenHeight / 2), Color.White);
+                showBeforeStartScreen(spriteBatch);
             }
             else
             {
-                // Desenha a pontuação
-                spriteBatch.DrawString(scoreFont, "Score: ",new Vector2((float)(screenWidth * 0.82), (float)(screenHeight * 0.046)), Color.Black);
-                spriteBatch.DrawString(scoreFont, score.ToString(),new Vector2((float)(screenWidth * 0.9), (float)(screenHeight * 0.046)), Color.Black);
-
-                // Desenha a quantidade de vidas
-                spriteBatch.DrawString(scoreFont, "Lives: ", new Vector2((float)(screenWidth * 0.62), (float)(screenHeight * 0.046)), Color.Black);
-                spriteBatch.DrawString(scoreFont, lives.ToString(), new Vector2((float)(screenWidth * 0.7), (float)(screenHeight * 0.046)), Color.Black);
-
-                // Desenha o timer
-                spriteBatch.DrawString(scoreFont, "Timer: ", new Vector2((float)(screenWidth * 0.036), (float)(screenHeight * 0.046)), Color.Black);
-
+                drawInterfaceOfPontuation();
                 // Se ganhou
                 if (win)
                 {
-                    if (level == 8)
+                    // Verifica se atingiu nivel maximo
+                    if (level == Constants.maxLevel)
                     {
-                        // Desenha win na tela de forma centralizada
-                        spriteBatch.Draw(winTexture, new Vector2(screenWidth / 2 - winTexture.Width / 2, screenHeight / 4 - winTexture.Width / 2), Color.White);
-                        String pressEnter = "You win all levels. Press Enter to restart!";
-                        // Determina tamanho de fonte para start
-                        Vector2 pressEnterSize = stateFont.MeasureString(pressEnter);
-                        // Desenha centralizado horizontalmente a escrita
-                        spriteBatch.DrawString(stateFont, pressEnter, new Vector2(screenWidth / 2 - pressEnterSize.X / 2, (float)(screenHeight * 0.81)), Color.White);
+                        drawStateScreen("You win all levels. Press Enter to restart!", winTexture);
                     }
                     else
                     {
-                        // Desenha win na tela de forma centralizada
-                        spriteBatch.Draw(winTexture, new Vector2(screenWidth / 2 - winTexture.Width / 2, screenHeight / 4 - winTexture.Width / 2), Color.White);
-                        String pressEnter = "Press Enter to start the next level!";
-                        // Determina tamanho de fonte para start
-                        Vector2 pressEnterSize = stateFont.MeasureString(pressEnter);
-                        // Desenha centralizado horizontalmente a escrita
-                        spriteBatch.DrawString(stateFont, pressEnter, new Vector2(screenWidth / 2 - pressEnterSize.X / 2, (float)(screenHeight * 0.81)), Color.White);
+                        drawStateScreen("Press Enter to start the next level!", winTexture);
                     }
                 }
-
                 // Se game over
                 if (gameOver)
                 {
-                    level = 0;
-                    lives = 5;
-                    toCompare = 50;
-                    score = 0;
-                    froggerPass = 5;
-                    // Desenha gameover na tela de forma centralizada
-                    spriteBatch.Draw(gameOverTexture, new Vector2(screenWidth / 2 - gameOverTexture.Width / 2, screenHeight / 4 - gameOverTexture.Width / 2), Color.White);
-                    String pressEnter = "Press Enter to restart!";
-                    // Determina tamanho de fonte para reinicio
-                    Vector2 pressEnterSize = stateFont.MeasureString(pressEnter);
-                    // Desenha centralizado horizontalmente a escrita
-                    spriteBatch.DrawString(stateFont, pressEnter, new Vector2(screenWidth / 2 - pressEnterSize.X / 2, (float)(screenHeight * 0.81)), Color.White);
+                    startParametrs(this.gameOver, this.win, this.gameStarted, Constants.initialLives, Constants.initialScore, Constants.initialLevel, Constants.intervalBetwenLoop, Constants.initialFroggerPass);
+                    drawStateScreen("Press Enter to restart!", gameOverTexture);
                 }
             }
-
             spriteBatch.End();
-            // Encerra o ambente de operações de desenho na tela
-
             base.Draw(gameTime);
-        }
-
-        // Metodo de identificação e escalonamento conforme dpis da tela utilizada
-        public float ScaleToHighDPI(float f)
-        {
-            DisplayInformation d = DisplayInformation.GetForCurrentView();
-            f *= (float)d.RawPixelsPerViewPixel;
-            return f;
-        }
-
-        // Metodo de leitura do teclado
-        void KeyboardHandler()
-        {
-            KeyboardState state = Keyboard.GetState();
-
-            // Encerra o jogo se a tecla esc for precionada
-            if (state.IsKeyDown(Keys.Escape))
-            {
-                Exit();
-            }
-
-            // Inicia o jogo de a tecla espaço for precionada.
-            if (!gameStarted)
-            {
-                if (state.IsKeyDown(Keys.Space))
-                {
-                    StartGame();
-                    gameStarted = true;
-                    gameOver = false;
-                }
-                return;
-            }
-            // Reinicia se for precionado enter após game over
-            if (gameOver && state.IsKeyDown(Keys.Enter))
-            {
-                StartGame();
-                gameStarted = true;
-                gameOver = false;
-                win = false;
-            }
-
-            if (win && state.IsKeyDown(Keys.Enter))
-            {
-                StartGame();
-                gameStarted = true;
-                gameOver = false;
-                win = false;
-            }
-
-            // Controla teclas de direção com controle de area da tela a ser usada
-            if (state.IsKeyDown(Keys.Up) || state.IsKeyDown(Keys.W))
-            {
-                frooger.angle = 0;
-                if (frooger.y > (screenHeight / 5))
-                {
-                    frooger.y = frooger.y - froggerPass;
-                }
-            }
-            else if (state.IsKeyDown(Keys.Down) || state.IsKeyDown(Keys.S))
-            {
-                frooger.angle = 600;
-                if (frooger.y < (screenHeight - (screenHeight / 8)))
-                {
-                    frooger.y = frooger.y + froggerPass;
-                }
-            }
-            else if (state.IsKeyDown(Keys.Left) || (state.IsKeyDown(Keys.A)))
-            {
-                frooger.angle = 300;
-                if (frooger.x > screenWidth/20)
-                {
-                    frooger.x = frooger.x - froggerPass;
-                }
-            }
-            else if (state.IsKeyDown(Keys.Right) || state.IsKeyDown(Keys.D))
-            {
-                frooger.angle = 900;
-                if (frooger.x < (screenWidth - (screenWidth / 20)))
-                {
-                    frooger.x = frooger.x + froggerPass;
-                }
-            }
         }
 
         // Metodo de inicio do jogo
         public void StartGame()
         {
-            streetOneH = (float)(screenHeight - screenHeight / 4.5);
-            streetTwoH = (float)(screenHeight - screenHeight / 3.05);
-            streetTreeH = (float)(screenHeight - screenHeight / 2.475);
-            streetFourH = (float)(screenHeight - screenHeight / 1.975);
-            streetFiveH = (float)(screenHeight - screenHeight / 1.725);
-            streetSixH = (float)(screenHeight - screenHeight / 1.465);
-            streeLeftLimit = -screenWidth / 17;
-            streeRigthLimit = screenWidth + screenWidth / 17;
-            screen.Add(streetOneH);
-            screen.Add(streetTwoH);
-            screen.Add(streetTreeH);
-            screen.Add(streetFourH);
-            screen.Add(streetFiveH);
-            screen.Add(streetSixH);
-            frooger.x = screenWidth / 2;
-            frooger.y = screenHeight -(screenHeight / 8);
             level++;
-            if (level != 1 && level < 9)
-            {
-                toCompare = toCompare - 5;
-                froggerPass = (float)(froggerPass - 0.5);
-                score = score + (pontosForWin * lives * (level - 1));
-                acelerationToLeft = (float)(acelerationToLeft - 0.2);
-                aceleretionToRigth = (float)(aceleretionToRigth + 0.2);
-            }
-            else
-            {
-                toCompare = 50;
-                froggerPass = 5;
-                score = 0;
-                acelerationToLeft = -1;
-                aceleretionToRigth = 1;
-            }
+            frooger.x = screenWidth / 2;
+            frooger.y = screenHeight - (screenHeight / 8);
+            verifyLevel(level);
             obstacles.Clear();
-            loopControl = 0;
+            loopNewObstaclesControl = 0;
         }
 
         // Metodo de inserção aleatoria de tipo e rua dos obstaculos
         public void spawnNewObstacle()
         {
             Obstacles cart;
-
             // Seleciona aleatoriamente um tipo de carroça
             int typeOfCart = random.Next(1, 4);
             switch (typeOfCart)
@@ -366,71 +188,115 @@ namespace MonoGame2D
                     break;
             }
             int streeat = random.Next(1, 7);
-
             //Seleciona aleatoriamente uma rua para a coarroça
             // Cuida pra não por duas carroças seguidas na mesma rua
-            if (lines.Count != 0)
+            if (lastInserts.Count != 0)
             {
-                while (lines[lines.Count -1] == streeat)
+                while (lastInserts[lastInserts.Count - 1] == streeat)
                 {
                     streeat = random.Next(1, 7);
                 }
             }
-
-            switch (streeat)
+            cart.y = validLines[streeat - 1];
+            if (streeat % 2 != 0)
             {
-                case 1:
-                    cart.x = streeLeftLimit;
-                    cart.y = streetOneH;
-                    cart.dX = (float)(aceleretionToRigth * 0.75);
-                    cart.angle = angleToRight;
-                    break;
-                case 2:
-                    cart.x = streeRigthLimit;
-                    cart.y = streetTwoH;
-                    cart.dX = acelerationToLeft * 1;
-                    cart.angle = angleToLeft;
-                    break;
-                case 3:
-                    cart.x = streeLeftLimit;
-                    cart.y = streetTreeH;
-                    cart.dX = (float)(aceleretionToRigth * 1.25);
-                    cart.angle = angleToRight;
-                    break;
-                case 4:
-                    cart.x = streeRigthLimit;
-                    cart.y = streetFourH;
-                    cart.dX = (float)(acelerationToLeft * 1.5);
-                    cart.angle = angleToLeft;
-                    break;
-                case 5:
-                    cart.x = streeLeftLimit;
-                    cart.y = streetFiveH;
-                    cart.dX = (float)(aceleretionToRigth * 1.75);
-                    cart.angle = angleToRight;
-                    break;
-                default:
-                    cart.x = streeRigthLimit;
-                    cart.y = streetSixH;
-                    cart.dX = acelerationToLeft * 2;
-                    cart.angle = angleToLeft;
-                    break;
+                cart.x = streeLeftLimit;
+                cart.dX = (float)(aceleretionToRigth * (Constants.acelerationFactor * (streeat + 2)));
+                cart.angle = angleToRight;
             }
-            if (screen.Contains(cart.y))
+            else
             {
-                lines.Add(streeat);
+                cart.x = streeRigthLimit;
+                cart.dX = (float)(acelerationToLeft * (Constants.acelerationFactor * (streeat + 2)));
+                cart.angle = angleToLeft;
+            }
+            if (validLines.Contains(cart.y))
+            {
+                lastInserts.Add(streeat);
                 obstacles.Add(cart);
             }
         }
 
+        // Metodo de leitura do teclado
+        void KeyboardHandler()
+        {
+            KeyboardState state = Keyboard.GetState();
+            // Encerra o jogo se a tecla esc for precionada
+            if (state.IsKeyDown(Keys.Escape))
+            {
+                Exit();
+            }
+            // Inicia o jogo de a tecla espaço for precionada.
+            if (!gameStarted)
+            {
+                if (state.IsKeyDown(Keys.Space))
+                {
+                    startParametersWhithKeyboard(true, false, false);
+                }
+                return;
+            }
+            // Reinicia se for precionado enter após game over
+            if (gameOver && state.IsKeyDown(Keys.Enter))
+            {
+                startParametersWhithKeyboard(true, false, false);
+            }
+            if (win && state.IsKeyDown(Keys.Enter))
+            {
+                startParametersWhithKeyboard(true, false, false);
+            }
+            // Controla teclas de direção com controle de area da tela a ser usada
+            if (state.IsKeyDown(Keys.Up) || state.IsKeyDown(Keys.W))
+            {
+                frooger.angle = Constants.angleFrogger0;
+                if (frooger.y > (screenHeight / 5))
+                {
+                    frooger.y = frooger.y - froggerPass;
+                }
+            }
+            else if (state.IsKeyDown(Keys.Down) || state.IsKeyDown(Keys.S))
+            {
+                frooger.angle = Constants.angleFrogger180;
+                if (frooger.y < (screenHeight - (screenHeight / 8)))
+                {
+                    frooger.y = frooger.y + froggerPass;
+                }
+            }
+            else if (state.IsKeyDown(Keys.Left) || (state.IsKeyDown(Keys.A)))
+            {
+                frooger.angle = Constants.angleFrogger90;
+                if (frooger.x > screenWidth / 20)
+                {
+                    frooger.x = frooger.x - froggerPass;
+                }
+            }
+            else if (state.IsKeyDown(Keys.Right) || state.IsKeyDown(Keys.D))
+            {
+                frooger.angle = Constants.angleFrogger270;
+                if (frooger.x < (screenWidth - (screenWidth / 20)))
+                {
+                    frooger.x = frooger.x + froggerPass;
+                }
+            }
+        }
+
+        // Metodo de identificação e escalonamento conforme dpis da tela utilizada
+        public float ScaleToHighDPI(float f)
+        {
+            DisplayInformation d = DisplayInformation.GetForCurrentView();
+            f *= (float)d.RawPixelsPerViewPixel;
+            return f;
+        }
+
+        // Metodo de atualização da posição de todos os obstaculos
         public void UpdateAllObstacles(float elapsedTime)
         {
-            for (int i = 0 ; i < obstacles.Count ; i++)
+            for (int i = 0; i < obstacles.Count; i++)
             {
                 obstacles[i].Update(elapsedTime);
             }
         }
 
+        // Metodo de desenho de todos os obstaculos na tela
         public void DrawAllObstacles(SpriteBatch sprite)
         {
             for (int i = 0; i < obstacles.Count; i++)
@@ -439,7 +305,8 @@ namespace MonoGame2D
             }
         }
 
-        public void VerifyObstacles()
+        // Verifica se o obstaculo já está em uma coodernada externa a tela utilizada
+        public void VerifyIfObstaclesIsOutOfScreen()
         {
             for (int i = 0; i < obstacles.Count; i++)
             {
@@ -447,6 +314,138 @@ namespace MonoGame2D
                 {
                     obstacles.RemoveAt(i);
                 }
+            }
+        }
+
+        // Iniciaza parametros de jogo
+        public void startParametrs(bool isGameOver, bool isWin, bool theGameStart, int nunberOfLives, int initialScore, int initialLevel, int initialObstacleFrequency, int initialFroggerPass)
+        {
+            gameOver = isGameOver;
+            win = isWin;
+            gameStarted = theGameStart;
+            lives = nunberOfLives;
+            score = initialScore;
+            level = initialLevel;
+            loooNewObstaclesIncrease = initialObstacleFrequency;
+            froggerPass = initialFroggerPass;
+        }
+
+        public void startParametersWhithKeyboard(bool theGameStarted, bool theGameOver, bool thePlayerWined)
+        {
+            StartGame();
+            gameStarted = theGameStarted;
+            gameOver = theGameOver;
+            win = thePlayerWined;
+        }
+
+        // Carrega textura de background do jogo 
+        // Carrega estilo de fontes 
+        public void loadTextureAndFontStyles()
+        {
+            background = Content.Load<Texture2D>("background");
+            startGameSplash = Content.Load<Texture2D>("start-splash");
+            gameOverTexture = Content.Load<Texture2D>("game-over");
+            winTexture = Content.Load<Texture2D>("win");
+            stateFont = Content.Load<SpriteFont>("GameState");
+            scoreFont = Content.Load<SpriteFont>("Score");
+        }
+
+        // Inicializa escala de frames da tela utilizada
+        // Inicializa em tela cheia
+        // Inicializa com ponteiro do mouse oculto
+        public void startScreenConfigs()
+        {
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
+            screenHeight = ScaleToHighDPI((float)ApplicationView.GetForCurrentView().VisibleBounds.Height);
+            screenWidth = ScaleToHighDPI((float)ApplicationView.GetForCurrentView().VisibleBounds.Width);
+            this.IsMouseVisible = false;
+            streeLeftLimit = -screenWidth / 17;
+            streeRigthLimit = screenWidth + screenWidth / 17;
+            validLines.Clear();
+            validLines.Add((float)(screenHeight - screenHeight / 4.5));
+            validLines.Add((float)(screenHeight - screenHeight / 3.05));
+            validLines.Add((float)(screenHeight - screenHeight / 2.475));
+            validLines.Add((float)(screenHeight - screenHeight / 1.975));
+            validLines.Add((float)(screenHeight - screenHeight / 1.725));
+            validLines.Add((float)(screenHeight - screenHeight / 1.465));
+        }
+
+        // Verifica se tá na hora de por mais obstaculos
+        public void verifyIfNeedMoreObstacles()
+        {
+            if (loopNewObstaclesControl == loooNewObstaclesIncrease)
+            {
+                loopNewObstaclesControl = 0;
+                spawnNewObstacle();
+            }
+            loopNewObstaclesControl++;
+        }
+
+        // Verifica se o jogador ganhou o jogo
+        public bool thePalyerWin()
+        {
+            if (gameStarted && frooger.y <= screenHeight / 5)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        // Carrega tela preta no inicio de jogo aguardando um espaço para iniciar
+        // Insere temanho de fonte para escrita
+        // Escreve centralizado
+        public void showBeforeStartScreen(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(startGameSplash, new Rectangle(0, 0, (int)screenWidth, (int)screenHeight), Color.White);
+            String title = "FROGGER - THE MEDIEVAL EDITION";
+            String pressSpace = "Press Space to start";
+            Vector2 titleSize = stateFont.MeasureString(title);
+            Vector2 pressSpaceSize = stateFont.MeasureString(pressSpace);
+            spriteBatch.DrawString(stateFont, title, new Vector2(screenWidth / 2 - titleSize.X / 2, screenHeight / 3), Color.ForestGreen);
+            spriteBatch.DrawString(stateFont, pressSpace, new Vector2(screenWidth / 2 - pressSpaceSize.X / 2, screenHeight / 2), Color.White);
+        }
+
+        // Desenha a pontuação
+        // Desenha a quantidade de vidas
+        // Desenha o timer
+        public void drawInterfaceOfPontuation()
+        {
+            spriteBatch.DrawString(scoreFont, "Score: ", new Vector2((float)(screenWidth * 0.82), (float)(screenHeight * 0.046)), Color.Black);
+            spriteBatch.DrawString(scoreFont, score.ToString(), new Vector2((float)(screenWidth * 0.9), (float)(screenHeight * 0.046)), Color.Black);
+            spriteBatch.DrawString(scoreFont, "Lives: ", new Vector2((float)(screenWidth * 0.62), (float)(screenHeight * 0.046)), Color.Black);
+            spriteBatch.DrawString(scoreFont, lives.ToString(), new Vector2((float)(screenWidth * 0.7), (float)(screenHeight * 0.046)), Color.Black);
+            spriteBatch.DrawString(scoreFont, "Timer: ", new Vector2((float)(screenWidth * 0.036), (float)(screenHeight * 0.046)), Color.Black);
+        }
+
+        // Desenha tela e escrita centrais na tela de win e game over
+        public void drawStateScreen(string pressEnter, Texture2D texture)
+        {
+            spriteBatch.Draw(winTexture, new Vector2(screenWidth / 2 - texture.Width / 2, screenHeight / 4 - texture.Width / 2), Color.White);
+            Vector2 pressEnterSize = stateFont.MeasureString(pressEnter);
+            spriteBatch.DrawString(stateFont, pressEnter, new Vector2(screenWidth / 2 - pressEnterSize.X / 2, (float)(screenHeight * 0.81)), Color.White);
+        }
+
+        // Metodo de controle do avanço de nivel
+        public void verifyLevel(int levelAux)
+        {
+            if (levelAux > 1 && levelAux< (Constants.maxLevel+1))
+            {
+                loooNewObstaclesIncrease = loooNewObstaclesIncrease - Constants.decFrequencyObstacle;
+                froggerPass = (float)(froggerPass - Constants.decFroggerPass);
+                score = score + (pointsForWin* lives * (levelAux - 1));
+                acelerationToLeft = (float)(acelerationToLeft - Constants.decAceleration);
+                aceleretionToRigth = (float)(aceleretionToRigth + Constants.decAceleration);
+            }
+            else
+            {
+                loooNewObstaclesIncrease = Constants.intervalBetwenLoop;
+                froggerPass = Constants.initialFroggerPass;
+                score = Constants.initialScore;
+                acelerationToLeft = Constants.leftAceleration;
+                aceleretionToRigth = Constants.rigthAceleration;
             }
         }
     }

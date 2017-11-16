@@ -8,28 +8,56 @@ using Windows.UI.ViewManagement;
 
 namespace MonoGame2D
 {
+    //Classe de contantes utilizadas no jogo
     static class Constants
     {
-        public const float rigthAceleration = 1;
-        public const float leftAceleration = -1;
-        public const float angleObstacleToRigth = 0;
-        public const float angleObstacleToLeft = (float)600.05;
-        public const int initialLives = 5;
-        public const int initialLevel = 0;
-        public const int initialScore = 0;
-        public const int initialFroggerPass = 5;
-        public const int intervalBetwenLoop = 50;
-        public const int pointsForWin = 2;
-        public const int maxLevel = 8;
-        public const float acelerationFactor = (float)0.25;
-        public const int decFrequencyObstacle = 5;
-        public const float decAceleration = (float)0.2;
-        public const float decFroggerPass = (float)0.5;
-        public const float angleFrogger0 = 0;
-        public const float angleFrogger90 = 300;
-        public const float angleFrogger180 = 600;
-        public const float angleFrogger270 = 900;
+        // Constante de diretorio ativo
+            public const string directory = "Content";
+        // Constantes de movimentação do Frogger
+            public const int initialFroggerPass = 5;
+            public const float decFroggerPass = (float)0.5;
+            public const float angleFrogger0 = 0;
+            public const float angleFrogger90 = 300;
+            public const float angleFrogger180 = 600;
+            public const float angleFrogger270 = 900;
+        // Contantes de movimentação dos obstaculos
+            public const float acelerationFactor = (float)0.25;          
+            public const float decAceleration = (float)0.2;
+            public const float rigthAceleration = 1;
+            public const float leftAceleration = -1;
+            public const float angleObstacleToRigth = 0;
+            public const float angleObstacleToLeft = (float)600.05;
+        // Constantes de controle de loop do jogo junto a atualização de obstaculos
+            public const int intervalBetwenLoop = 50;
+            public const int decFrequencyObstacle = 5;
+        // Constantes de valores default de vida,nivel, pontos e etc do jogo
+            public const int initialLives = 5;
+            public const int initialLevel = 0;
+            public const int initialScore = 0;       
+            public const int pointsForWin = 2;
+            public const int maxLevel = 8;
+        // Constantes de nome de arquivos a serem caregados
+            public const string froggerSprite = "Content/frooger.png";
+            public const string greenCartSprites = "Content/green_cart.png";
+            public const string redCartSprites = "Content/red_cart.png";
+            public const string purpleCartSprites = "Content/purple_cart.png";
+            public const string backgroundSprite = "background";
+            public const string startSprite = "start-splash";
+            public const string gameoverSprite = "game-over";
+            public const string winSprite = "win";
+            public const string gameMessagesFont = "GameState";
+            public const string valueFonts = "Score";
+        // Constantes strings usadas como mensagens de interface
+            public const string progressLevelMessage = "Press Enter to start the next level!";
+            public const string winAllLevelsMessage = "You win all levels. Press Enter to restart!";
+            public const string restartMessage = "Press Enter to restart!";
+            public const string startMessage = "FROGGER - THE MEDIEVAL EDITION";
+            public const string askForASpaceMessage = "Press Space to start";
+            public const string livesMessage = "Lives: ";
+            public const string timeMessage = "Time: ";
+            public const string scoreMessage = "Score: ";
     }
+
     public class Game1 : Game
     {
         // Declaração de variaveis globias dentre a classe
@@ -77,7 +105,7 @@ namespace MonoGame2D
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
+            Content.RootDirectory = Constants.directory;
         }
 
         // Metodo de inicialização
@@ -95,7 +123,7 @@ namespace MonoGame2D
             spriteBatch = new SpriteBatch(GraphicsDevice);
             loadTextureAndFontStyles();
             // Carrega sprite do player
-            frooger = new Player(GraphicsDevice, "Content/frooger.png", ScaleToHighDPI(0.3f));
+            frooger = new Player(GraphicsDevice, Constants.froggerSprite, ScaleToHighDPI(0.3f));
             scale = ScaleToHighDPI(1.3f);
         }
 
@@ -140,18 +168,18 @@ namespace MonoGame2D
                     // Verifica se atingiu nivel maximo
                     if (level == Constants.maxLevel)
                     {
-                        drawStateScreen("You win all levels. Press Enter to restart!", winTexture);
+                        drawStateScreen(Constants.winAllLevelsMessage, winTexture);
                     }
                     else
                     {
-                        drawStateScreen("Press Enter to start the next level!", winTexture);
+                        drawStateScreen(Constants.progressLevelMessage, winTexture);
                     }
                 }
                 // Se game over
                 if (gameOver)
                 {
                     startParametrs(this.gameOver, this.win, this.gameStarted, Constants.initialLives, Constants.initialScore, Constants.initialLevel, Constants.intervalBetwenLoop, Constants.initialFroggerPass);
-                    drawStateScreen("Press Enter to restart!", gameOverTexture);
+                    drawStateScreen(Constants.restartMessage, gameOverTexture);
                 }
             }
             spriteBatch.End();
@@ -178,13 +206,13 @@ namespace MonoGame2D
             switch (typeOfCart)
             {
                 case 1:
-                    cart = new Obstacles(GraphicsDevice, "Content/red_cart.png", scale);
+                    cart = new Obstacles(GraphicsDevice, Constants.redCartSprites, scale);
                     break;
                 case 2:
-                    cart = new Obstacles(GraphicsDevice, "Content/green_cart.png", scale);
+                    cart = new Obstacles(GraphicsDevice, Constants.greenCartSprites, scale);
                     break;
                 default:
-                    cart = new Obstacles(GraphicsDevice, "Content/purple_cart.png", scale);
+                    cart = new Obstacles(GraphicsDevice, Constants.purpleCartSprites, scale);
                     break;
             }
             int streeat = random.Next(1, 7);
@@ -342,12 +370,12 @@ namespace MonoGame2D
         // Carrega estilo de fontes 
         public void loadTextureAndFontStyles()
         {
-            background = Content.Load<Texture2D>("background");
-            startGameSplash = Content.Load<Texture2D>("start-splash");
-            gameOverTexture = Content.Load<Texture2D>("game-over");
-            winTexture = Content.Load<Texture2D>("win");
-            stateFont = Content.Load<SpriteFont>("GameState");
-            scoreFont = Content.Load<SpriteFont>("Score");
+            background = Content.Load<Texture2D>(Constants.backgroundSprite);
+            startGameSplash = Content.Load<Texture2D>(Constants.startSprite);
+            gameOverTexture = Content.Load<Texture2D>(Constants.gameoverSprite);
+            winTexture = Content.Load<Texture2D>(Constants.winSprite);
+            stateFont = Content.Load<SpriteFont>(Constants.gameMessagesFont);
+            scoreFont = Content.Load<SpriteFont>(Constants.valueFonts);
         }
 
         // Inicializa escala de frames da tela utilizada
@@ -400,8 +428,8 @@ namespace MonoGame2D
         public void showBeforeStartScreen(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(startGameSplash, new Rectangle(0, 0, (int)screenWidth, (int)screenHeight), Color.White);
-            String title = "FROGGER - THE MEDIEVAL EDITION";
-            String pressSpace = "Press Space to start";
+            String title = Constants.startMessage;
+            String pressSpace = Constants.askForASpaceMessage;
             Vector2 titleSize = stateFont.MeasureString(title);
             Vector2 pressSpaceSize = stateFont.MeasureString(pressSpace);
             spriteBatch.DrawString(stateFont, title, new Vector2(screenWidth / 2 - titleSize.X / 2, screenHeight / 3), Color.ForestGreen);
@@ -413,11 +441,11 @@ namespace MonoGame2D
         // Desenha o timer
         public void drawInterfaceOfPontuation()
         {
-            spriteBatch.DrawString(scoreFont, "Score: ", new Vector2((float)(screenWidth * 0.82), (float)(screenHeight * 0.046)), Color.Black);
+            spriteBatch.DrawString(scoreFont, Constants.scoreMessage, new Vector2((float)(screenWidth * 0.82), (float)(screenHeight * 0.046)), Color.Black);
             spriteBatch.DrawString(scoreFont, score.ToString(), new Vector2((float)(screenWidth * 0.9), (float)(screenHeight * 0.046)), Color.Black);
-            spriteBatch.DrawString(scoreFont, "Lives: ", new Vector2((float)(screenWidth * 0.62), (float)(screenHeight * 0.046)), Color.Black);
+            spriteBatch.DrawString(scoreFont, Constants.livesMessage, new Vector2((float)(screenWidth * 0.62), (float)(screenHeight * 0.046)), Color.Black);
             spriteBatch.DrawString(scoreFont, lives.ToString(), new Vector2((float)(screenWidth * 0.7), (float)(screenHeight * 0.046)), Color.Black);
-            spriteBatch.DrawString(scoreFont, "Timer: ", new Vector2((float)(screenWidth * 0.036), (float)(screenHeight * 0.046)), Color.Black);
+            spriteBatch.DrawString(scoreFont, Constants.timeMessage, new Vector2((float)(screenWidth * 0.036), (float)(screenHeight * 0.046)), Color.Black);
         }
 
         // Desenha tela e escrita centrais na tela de win e game over

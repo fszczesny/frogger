@@ -167,8 +167,8 @@ namespace MonoGame2D
                 {
                     // Verifica se atingiu nivel maximo
                     if (level == Constants.maxLevel)
-                    {
-                        drawStateScreen(Constants.winAllLevelsMessage, winTexture);
+                    {                       
+                        drawStateScreen(Constants.winAllLevelsMessage, winTexture);                       
                     }
                     else
                     {
@@ -270,6 +270,10 @@ namespace MonoGame2D
             }
             if (win && state.IsKeyDown(Keys.Enter))
             {
+                if (level == Constants.maxLevel)
+                {
+                    level = 0;
+                }
                 startParametersWhithKeyboard(true, false, false);
             }
             // Controla teclas de direção com controle de area da tela a ser usada

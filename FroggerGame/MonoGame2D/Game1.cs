@@ -56,50 +56,53 @@ namespace MonoGame2D
             public const string livesMessage = "Lives: ";
             public const string timeMessage = "Time: ";
             public const string scoreMessage = "Score: ";
+        // Constantes de controle do loop de ignorar o teclado
+            public const int ignoreKyboardLoop = 200;
     }
 
     public class Game1 : Game
     {
         // Declaração de variaveis globias dentre a classe
         // Variaveis de ambiente grafico
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        SpriteFont stateFont;
-        SpriteFont scoreFont;
-        Texture2D startGameSplash;
-        Texture2D gameOverTexture;
-        Texture2D winTexture;
-        Texture2D background;
-        float scale;
+            GraphicsDeviceManager graphics;
+            SpriteBatch spriteBatch;
+            SpriteFont stateFont;
+            SpriteFont scoreFont;
+            Texture2D startGameSplash;
+            Texture2D gameOverTexture;
+            Texture2D winTexture;
+            Texture2D background;
+            float scale;
         // Variaveis de posicionamento e limitação do ruas
-        float screenWidth;
-        float screenHeight;
-        float streeLeftLimit;
-        float streeRigthLimit;
-        List<float> validLines = new List<float>();
+            float screenWidth;
+            float screenHeight;
+            float streeLeftLimit;
+            float streeRigthLimit;
+            List<float> validLines = new List<float>();
         // Variaveis posicionamento angular e aceleração todas já iniializadas aqui
-        float angleToRight = Constants.angleObstacleToRigth;
-        float angleToLeft = Constants.angleObstacleToLeft;
-        float aceleretionToRigth = Constants.rigthAceleration;
-        float acelerationToLeft = Constants.leftAceleration;
+            float angleToRight = Constants.angleObstacleToRigth;
+            float angleToLeft = Constants.angleObstacleToLeft;
+            float aceleretionToRigth = Constants.rigthAceleration;
+            float acelerationToLeft = Constants.leftAceleration;
         // Variaveis de controle de estado de jogo
-        bool gameStarted;
-        bool gameOver;
-        bool win;
-        int score;
-        int lives;
-        int level;
-        int loopNewObstaclesControl;
-        int loooNewObstaclesIncrease;
-        int pointsForWin = Constants.pointsForWin;
-        float froggerPass;
+            bool gameStarted;
+            bool gameOver;
+            bool win;
+            int score;
+            int lives;
+            int level;
+            int loopNewObstaclesControl;
+            int loooNewObstaclesIncrease;
+            int pointsForWin = Constants.pointsForWin;
+            float froggerPass;
+            int beginPause;
         // Variavel para geração ramdomica
-        Random random;
+            Random random;
         // Declaração do objeto Player que representa o frogger
-        Player frooger;
+            Player frooger;
         // Declaração da lista de obstaculos e sua lista auxiliar de frequencia
-        List<Obstacles> obstacles = new List<Obstacles>();
-        List<int> lastInserts = new List<int>();
+            List<Obstacles> obstacles = new List<Obstacles>();
+            List<int> lastInserts = new List<int>();
         // Fim da declaração de globais da classe
 
         public Game1()
@@ -136,7 +139,14 @@ namespace MonoGame2D
         protected override void Update(GameTime gameTime)
         {
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            KeyboardHandler();
+            if (beginPause > 0)
+            {
+                beginPause--;
+            }
+            else
+            {
+                KeyboardHandler();
+            }
             verifyIfNeedMoreObstacles();
             frooger.Update(elapsedTime);
             UpdateAllObstacles(elapsedTime);
@@ -152,7 +162,10 @@ namespace MonoGame2D
             spriteBatch.Begin();
             // Desenha objetos
             spriteBatch.Draw(background, new Rectangle(0, 0, (int)screenWidth, (int)screenHeight), Color.White);
-            frooger.Draw(spriteBatch);
+            if (beginPause <= 0)
+            {
+                frooger.Draw(spriteBatch);
+            }
             DrawAllObstacles(spriteBatch);
             // Se o jogo ainda não começou fica em tela de inicio
             if (!gameStarted)
@@ -189,6 +202,7 @@ namespace MonoGame2D
         // Metodo de inicio do jogo
         public void StartGame()
         {
+            beginPause = Constants.ignoreKyboardLoop;
             level++;
             frooger.x = screenWidth / 2;
             frooger.y = screenHeight - (screenHeight / 8);

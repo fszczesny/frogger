@@ -10,6 +10,7 @@ namespace MonoGame2D
 {
     class Player
     {
+        const float HITBOXSCALE = 0.25f;
         public Texture2D texture
         {
             get;
@@ -64,6 +65,42 @@ namespace MonoGame2D
             Vector2 spritePosition = new Vector2(this.x, this.y);
             // Desenha o sprite
             spriteBatch.Draw(texture, spritePosition, null, Color.White, this.angle, new Vector2(texture.Width / 2, texture.Height / 2), new Vector2(scale, scale), SpriteEffects.None, 0f);
+        }
+
+        // Verifica colisão do player com um determido obstaculo
+        public bool verifyColisionWithSpecificObstacle(Obstacles obstaclesSprite)
+        {
+            if (this.x + this.texture.Width * this.scale * HITBOXSCALE / 2 < obstaclesSprite.x - obstaclesSprite.texture.Width * obstaclesSprite.scale / 2)
+            {
+                return false;
+            }
+            if (this.y + this.texture.Height * this.scale * HITBOXSCALE / 2 < obstaclesSprite.y - obstaclesSprite.texture.Height * obstaclesSprite.scale / 2)
+            {
+                return false;
+            }
+            if (this.x - this.texture.Width * this.scale * HITBOXSCALE / 2 > obstaclesSprite.x + obstaclesSprite.texture.Width * obstaclesSprite.scale / 2)
+            {
+                return false;
+            }
+            if (this.y - this.texture.Height * this.scale * HITBOXSCALE / 2 > obstaclesSprite.y + obstaclesSprite.texture.Height * obstaclesSprite.scale / 2)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        // Verifica colisão do player com algum obstaculo presente na lista de obstaculos passada
+        public bool verifyColisionWithObstacles(List<Obstacles> obstaclesList)
+        {
+            int i;
+            for (i=0; i < obstaclesList.Count; i++)
+            {
+                if (this.verifyColisionWithSpecificObstacle(obstaclesList.ElementAt(i)))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

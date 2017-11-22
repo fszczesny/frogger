@@ -150,6 +150,7 @@ namespace MonoGame2D
             verifyIfNeedMoreObstacles();
             frooger.Update(elapsedTime);
             UpdateAllObstacles(elapsedTime);
+            //gameOver = frooger.verifyColisionWithObstacles(obstacles);
             VerifyIfObstaclesIsOutOfScreen();
             win = thePalyerWin();
             base.Update(gameTime);

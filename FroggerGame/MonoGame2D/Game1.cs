@@ -474,7 +474,7 @@ namespace MonoGame2D
         // Desenha tela e escrita centrais na tela de win e game over
         public void drawStateScreen(string pressEnter, Texture2D texture)
         {
-            spriteBatch.Draw(winTexture, new Vector2(screenWidth / 2 - texture.Width / 2, screenHeight / 4 - texture.Width / 2), Color.White);
+            spriteBatch.Draw(texture, new Vector2(screenWidth / 2 - texture.Width / 2, screenHeight / 4 - texture.Width / 2), Color.White);
             Vector2 pressEnterSize = stateFont.MeasureString(pressEnter);
             spriteBatch.DrawString(stateFont, pressEnter, new Vector2(screenWidth / 2 - pressEnterSize.X / 2, (float)(screenHeight * 0.81)), Color.White);
         }
@@ -482,7 +482,7 @@ namespace MonoGame2D
         // Metodo de controle do avanço de nivel
         public void verifyLevel(int levelAux)
         {
-            if (levelAux > 1 && levelAux< (Constants.maxLevel+1))
+            if (levelAux > 1 && levelAux < (Constants.maxLevel+1))
             {
                 loooNewObstaclesIncrease = loooNewObstaclesIncrease - Constants.decFrequencyObstacle;
                 froggerPass = (float)(froggerPass - Constants.decFroggerPass);

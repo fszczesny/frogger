@@ -148,7 +148,16 @@ namespace MonoGame2D
             if ( !win && !gameOver )
             {
                 frooger.Update(elapsedTime);           
-                gameOver = frooger.verifyColisionWithObstacles(obstacles);
+                if (frooger.verifyColisionWithObstacles(obstacles))
+                {
+                    lives--;
+                    if (lives == 0)
+                    {
+                        gameOver = true;
+                    }
+                    frooger.x = screenWidth / 2;
+                    frooger.y = screenHeight - (screenHeight / 8);
+                }
                 win = thePalyerWin();
             }
             UpdateAllObstacles(elapsedTime);

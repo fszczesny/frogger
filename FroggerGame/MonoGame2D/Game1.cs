@@ -143,16 +143,16 @@ namespace MonoGame2D
             {
                 beginPause--;
             }
-            else
-            {
-                KeyboardHandler();
-            }
+            KeyboardHandler();
             verifyIfNeedMoreObstacles();
-            frooger.Update(elapsedTime);
+            if ( !win && !gameOver )
+            {
+                frooger.Update(elapsedTime);           
+                gameOver = frooger.verifyColisionWithObstacles(obstacles);
+                win = thePalyerWin();
+            }
             UpdateAllObstacles(elapsedTime);
-            //gameOver = frooger.verifyColisionWithObstacles(obstacles);
-            VerifyIfObstaclesIsOutOfScreen();
-            win = thePalyerWin();
+            VerifyIfObstaclesIsOutOfScreen();         
             base.Update(gameTime);
         }
 
@@ -291,37 +291,41 @@ namespace MonoGame2D
                 }
                 startParametersWhithKeyboard(true, false, false);
             }
-            // Controla teclas de direção com controle de area da tela a ser usada
-            if (state.IsKeyDown(Keys.Up) || state.IsKeyDown(Keys.W))
+            if (beginPause <= 0 && !win && !gameOver)
             {
-                frooger.angle = Constants.angleFrogger0;
-                if (frooger.y > (screenHeight / 5))
+
+                // Controla teclas de direção com controle de area da tela a ser usada
+                if (state.IsKeyDown(Keys.Up) || state.IsKeyDown(Keys.W))
                 {
-                    frooger.y = frooger.y - froggerPass;
+                    frooger.angle = Constants.angleFrogger0;
+                    if (frooger.y > (screenHeight / 5))
+                    {
+                        frooger.y = frooger.y - froggerPass;
+                    }
                 }
-            }
-            else if (state.IsKeyDown(Keys.Down) || state.IsKeyDown(Keys.S))
-            {
-                frooger.angle = Constants.angleFrogger180;
-                if (frooger.y < (screenHeight - (screenHeight / 8)))
+                else if (state.IsKeyDown(Keys.Down) || state.IsKeyDown(Keys.S))
                 {
-                    frooger.y = frooger.y + froggerPass;
+                    frooger.angle = Constants.angleFrogger180;
+                    if (frooger.y < (screenHeight - (screenHeight / 8)))
+                    {
+                        frooger.y = frooger.y + froggerPass;
+                    }
                 }
-            }
-            else if (state.IsKeyDown(Keys.Left) || (state.IsKeyDown(Keys.A)))
-            {
-                frooger.angle = Constants.angleFrogger90;
-                if (frooger.x > screenWidth / 20)
+                else if (state.IsKeyDown(Keys.Left) || (state.IsKeyDown(Keys.A)))
                 {
-                    frooger.x = frooger.x - froggerPass;
+                    frooger.angle = Constants.angleFrogger90;
+                    if (frooger.x > screenWidth / 20)
+                    {
+                        frooger.x = frooger.x - froggerPass;
+                    }
                 }
-            }
-            else if (state.IsKeyDown(Keys.Right) || state.IsKeyDown(Keys.D))
-            {
-                frooger.angle = Constants.angleFrogger270;
-                if (frooger.x < (screenWidth - (screenWidth / 20)))
+                else if (state.IsKeyDown(Keys.Right) || state.IsKeyDown(Keys.D))
                 {
-                    frooger.x = frooger.x + froggerPass;
+                    frooger.angle = Constants.angleFrogger270;
+                    if (frooger.x < (screenWidth - (screenWidth / 20)))
+                    {
+                        frooger.x = frooger.x + froggerPass;
+                    }
                 }
             }
         }

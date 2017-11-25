@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>WindowsStoreApp</Platform>
+  <Config />
+  <SourceFiles>
+    <File>D:/Trabalhos/frogger/FroggerGame/MonoGame2D/Content/background.png</File>
+    <File>D:/Trabalhos/frogger/FroggerGame/MonoGame2D/Content/blood.png</File>
+    <File>D:/Trabalhos/frogger/FroggerGame/MonoGame2D/Content/frooger.png</File>
+    <File>D:/Trabalhos/frogger/FroggerGame/MonoGame2D/Content/game-over.png</File>
+    <File>D:/Trabalhos/frogger/FroggerGame/MonoGame2D/Content/GameState.spritefont</File>
+    <File>D:/Trabalhos/frogger/FroggerGame/MonoGame2D/Content/green_cart.png</File>
+    <File>D:/Trabalhos/frogger/FroggerGame/MonoGame2D/Content/purple_cart.png</File>
+    <File>D:/Trabalhos/frogger/FroggerGame/MonoGame2D/Content/red_cart.png</File>
+    <File>D:/Trabalhos/frogger/FroggerGame/MonoGame2D/Content/Score.spritefont</File>
+    <File>D:/Trabalhos/frogger/FroggerGame/MonoGame2D/Content/skull.png</File>
+    <File>D:/Trabalhos/frogger/FroggerGame/MonoGame2D/Content/start-splash.png</File>
+    <File>D:/Trabalhos/frogger/FroggerGame/MonoGame2D/Content/win.png</File>
+  </SourceFiles>
+</SourceFileCollection>

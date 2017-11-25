@@ -8,6 +8,8 @@ using Windows.UI.ViewManagement;
 
 namespace MonoGame2D
 {
+    // Medieval Frooger Version 1.0 - Versão desiginada a etapas 1 e 2 de definição do trabalho
+
     //Classe de contantes utilizadas no jogo
     static class Constants
     {

@@ -28,13 +28,13 @@
     <AppXManifest Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-11-25T00:01:05.596</Modified>
+      <Modified>2017-11-25T00:19:10.021</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\MonoGame2D.exe">
       <PackagePath>entrypoint\MonoGame2D.exe</PackagePath>
-      <Modified>2017-11-25T00:01:05.246</Modified>
+      <Modified>2017-11-25T00:19:09.684</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\FabricioSzczesny\.nuget\packages\Microsoft.CSharp\4.0.0\lib\netcore50\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
@@ -478,129 +478,129 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\background.png">
       <PackagePath>Content\background.png</PackagePath>
-      <Modified>2017-11-05T22:09:42.971</Modified>
+      <Modified>2017-11-25T00:15:28.950</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\blood.png">
       <PackagePath>Content\blood.png</PackagePath>
-      <Modified>2017-11-24T00:08:02.599</Modified>
+      <Modified>2017-11-25T00:15:29.063</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\frooger.png">
       <PackagePath>Content\frooger.png</PackagePath>
-      <Modified>2017-11-06T01:35:58.694</Modified>
+      <Modified>2017-11-25T00:15:29.071</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\game-over.png">
       <PackagePath>Content\game-over.png</PackagePath>
-      <Modified>2017-11-06T01:40:09.290</Modified>
+      <Modified>2017-11-25T00:15:29.070</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\green_cart.png">
       <PackagePath>Content\green_cart.png</PackagePath>
-      <Modified>2017-11-11T20:59:08.918</Modified>
+      <Modified>2017-11-25T00:15:29.076</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\purple_cart.png">
       <PackagePath>Content\purple_cart.png</PackagePath>
-      <Modified>2017-11-11T21:02:40.272</Modified>
+      <Modified>2017-11-25T00:15:29.125</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\red_cart.png">
       <PackagePath>Content\red_cart.png</PackagePath>
-      <Modified>2017-11-11T20:49:26.351</Modified>
+      <Modified>2017-11-25T00:15:29.126</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\skull.png">
       <PackagePath>Content\skull.png</PackagePath>
-      <Modified>2017-11-24T23:25:16.906</Modified>
+      <Modified>2017-11-25T00:15:29.132</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\start-splash.png">
       <PackagePath>Content\start-splash.png</PackagePath>
-      <Modified>2017-10-26T18:26:38.000</Modified>
+      <Modified>2017-11-25T00:15:29.130</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\win.png">
       <PackagePath>Content\win.png</PackagePath>
-      <Modified>2017-11-12T18:42:42.200</Modified>
+      <Modified>2017-11-25T00:15:29.136</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Assets\LockScreenLogo.scale-200.png">
       <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>
-      <Modified>2017-10-26T18:26:38.000</Modified>
+      <Modified>2017-11-25T00:15:28.591</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Assets\SplashScreen.scale-200.png">
       <PackagePath>Assets\SplashScreen.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-10-26T18:26:38.000</Modified>
+      <Modified>2017-11-25T00:15:28.595</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Assets\Square150x150Logo.scale-200.png">
       <PackagePath>Assets\Square150x150Logo.scale-200.png</PackagePath>
-      <Modified>2017-10-26T18:26:38.000</Modified>
+      <Modified>2017-11-25T00:15:28.596</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Assets\Square44x44Logo.scale-200.png">
       <PackagePath>Assets\Square44x44Logo.scale-200.png</PackagePath>
-      <Modified>2017-10-26T18:26:38.000</Modified>
+      <Modified>2017-11-25T00:15:28.600</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
       <PackagePath>Assets\Square44x44Logo.targetsize-24_altform-unplated.png</PackagePath>
-      <Modified>2017-10-26T18:26:38.000</Modified>
+      <Modified>2017-11-25T00:15:28.608</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Assets\StoreLogo.png">
       <PackagePath>Assets\StoreLogo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-10-26T18:26:38.000</Modified>
+      <Modified>2017-11-25T00:15:28.605</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Assets\Wide310x150Logo.scale-200.png">
       <PackagePath>Assets\Wide310x150Logo.scale-200.png</PackagePath>
-      <Modified>2017-10-26T18:26:38.000</Modified>
+      <Modified>2017-11-25T00:15:28.617</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Properties\Default.rd.xml">
       <PackagePath>Properties\Default.rd.xml</PackagePath>
-      <Modified>2017-10-26T18:26:38.000</Modified>
+      <Modified>2017-11-25T00:15:29.472</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\background.xnb">
       <PackagePath>Content\background.xnb</PackagePath>
-      <Modified>2017-11-06T00:05:22.595</Modified>
+      <Modified>2017-11-25T00:16:10.434</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\blood.xnb">
       <PackagePath>Content\blood.xnb</PackagePath>
-      <Modified>2017-11-24T00:09:23.185</Modified>
+      <Modified>2017-11-25T00:16:10.460</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\frooger.xnb">
       <PackagePath>Content\frooger.xnb</PackagePath>
-      <Modified>2017-11-11T00:46:34.774</Modified>
+      <Modified>2017-11-25T00:16:10.483</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\game-over.xnb">
       <PackagePath>Content\game-over.xnb</PackagePath>
-      <Modified>2017-11-06T01:41:35.412</Modified>
+      <Modified>2017-11-25T00:16:10.499</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\GameState.xnb">
       <PackagePath>Content\GameState.xnb</PackagePath>
-      <Modified>2017-11-06T00:57:51.698</Modified>
+      <Modified>2017-11-25T00:16:10.680</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\green_cart.xnb">
       <PackagePath>Content\green_cart.xnb</PackagePath>
-      <Modified>2017-11-11T21:05:03.745</Modified>
+      <Modified>2017-11-25T00:16:10.692</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\purple_cart.xnb">
       <PackagePath>Content\purple_cart.xnb</PackagePath>
-      <Modified>2017-11-11T21:05:03.758</Modified>
+      <Modified>2017-11-25T00:16:10.704</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\red_cart.xnb">
       <PackagePath>Content\red_cart.xnb</PackagePath>
-      <Modified>2017-11-11T21:05:03.767</Modified>
+      <Modified>2017-11-25T00:16:10.715</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\Score.xnb">
       <PackagePath>Content\Score.xnb</PackagePath>
-      <Modified>2017-11-06T01:09:34.452</Modified>
+      <Modified>2017-11-25T00:16:10.756</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\skull.xnb">
       <PackagePath>Content\skull.xnb</PackagePath>
-      <Modified>2017-11-24T23:50:55.764</Modified>
+      <Modified>2017-11-25T00:16:10.772</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\start-splash.xnb">
       <PackagePath>Content\start-splash.xnb</PackagePath>
-      <Modified>2017-11-06T00:54:33.969</Modified>
+      <Modified>2017-11-25T00:16:10.970</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\win.xnb">
       <PackagePath>Content\win.xnb</PackagePath>
-      <Modified>2017-11-12T18:49:42.349</Modified>
+      <Modified>2017-11-25T00:16:10.996</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\MonoGame2D.xr.xml">
       <PackagePath>MonoGame2D.xr.xml</PackagePath>
-      <Modified>2017-11-05T23:23:51.849</Modified>
+      <Modified>2017-11-25T00:15:29.437</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
@@ -609,11 +609,11 @@
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-11-24T23:50:59.233</Modified>
+      <Modified>2017-11-25T00:16:14.762</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Core\MonoGame2D.exe">
       <PackagePath>MonoGame2D.exe</PackagePath>
-      <Modified>2017-11-25T00:01:05.587</Modified>
+      <Modified>2017-11-25T00:19:10.011</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

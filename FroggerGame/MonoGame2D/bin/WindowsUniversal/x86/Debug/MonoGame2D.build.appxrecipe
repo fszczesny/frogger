@@ -358,6 +358,9 @@
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\background.png">
       <PackagePath>Content\background.png</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\blood.png">
+      <PackagePath>Content\blood.png</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\frooger.png">
       <PackagePath>Content\frooger.png</PackagePath>
     </AppxPackagedFile>
@@ -372,6 +375,9 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\red_cart.png">
       <PackagePath>Content\red_cart.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\skull.png">
+      <PackagePath>Content\skull.png</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\start-splash.png">
       <PackagePath>Content\start-splash.png</PackagePath>
@@ -408,6 +414,9 @@
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\background.xnb">
       <PackagePath>Content\background.xnb</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\blood.xnb">
+      <PackagePath>Content\blood.xnb</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\frooger.xnb">
       <PackagePath>Content\frooger.xnb</PackagePath>
     </AppxPackagedFile>
@@ -428,6 +437,9 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\Score.xnb">
       <PackagePath>Content\Score.xnb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\skull.xnb">
+      <PackagePath>Content\skull.xnb</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\start-splash.xnb">
       <PackagePath>Content\start-splash.xnb</PackagePath>

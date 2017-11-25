@@ -14,6 +14,7 @@ namespace MonoGame2D
         public Texture2D texture
         {
             get;
+            set;
         }
 
         // coordenada x do centro do player

@@ -44,11 +44,15 @@ namespace MonoGame2D
             public const string backgroundSprite = "background";
             public const string startSprite = "start-splash";
             public const string gameoverSprite = "game-over";
+            public const string bloodSprite = "blood";
+            public const string froogerSpriteToTexture = "frooger";
+            public const string skullSprite = "skull";
             public const string winSprite = "win";
             public const string gameMessagesFont = "GameState";
             public const string valueFonts = "Score";
         // Constantes strings usadas como mensagens de interface
             public const string progressLevelMessage = "Press Enter to start the next level!";
+            public const string deadAndNextLiveMessage = "Press Space to use the next live!";
             public const string winAllLevelsMessage = "You win all levels. Press Enter to restart!";
             public const string restartMessage = "Press Enter to restart!";
             public const string startMessage = "FROGGER - THE MEDIEVAL EDITION";
@@ -58,6 +62,7 @@ namespace MonoGame2D
             public const string scoreMessage = "Score: ";
         // Constantes de controle do loop de ignorar o teclado
             public const int ignoreKyboardLoop = 200;
+
     }
 
     public class Game1 : Game
@@ -72,7 +77,10 @@ namespace MonoGame2D
             Texture2D gameOverTexture;
             Texture2D winTexture;
             Texture2D background;
-            float scale;
+            Texture2D bloodTexture;
+            Texture2D froggerTexture;
+            Texture2D skullTexture;
+        float scale;
         // Variaveis de posicionamento e limitação do ruas
             float screenWidth;
             float screenHeight;
@@ -87,6 +95,7 @@ namespace MonoGame2D
         // Variaveis de controle de estado de jogo
             bool gameStarted;
             bool gameOver;
+            bool dead;
             bool win;
             int score;
             int lives;
@@ -115,7 +124,7 @@ namespace MonoGame2D
         protected override void Initialize()
         {
             base.Initialize();
-            startParametrs(false, false, false, Constants.initialLives, Constants.initialScore, Constants.initialLevel, Constants.intervalBetwenLoop, Constants.initialFroggerPass);
+            startParametrs(false, false, false, false, Constants.initialLives, Constants.initialScore, Constants.initialLevel, Constants.intervalBetwenLoop, Constants.initialFroggerPass);
             random = new Random();
             startScreenConfigs();
         }
@@ -139,27 +148,9 @@ namespace MonoGame2D
         protected override void Update(GameTime gameTime)
         {
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (beginPause > 0)
-            {
-                beginPause--;
-            }
             KeyboardHandler();
             verifyIfNeedMoreObstacles();
-            if ( !win && !gameOver )
-            {
-                frooger.Update(elapsedTime);           
-                if (frooger.verifyColisionWithObstacles(obstacles))
-                {
-                    lives--;
-                    if (lives == 0)
-                    {
-                        gameOver = true;
-                    }
-                    frooger.x = screenWidth / 2;
-                    frooger.y = screenHeight - (screenHeight / 8);
-                }
-                win = thePalyerWin();
-            }
+            colisionsControl(elapsedTime);
             UpdateAllObstacles(elapsedTime);
             VerifyIfObstaclesIsOutOfScreen();         
             base.Update(gameTime);
@@ -200,25 +191,73 @@ namespace MonoGame2D
                 }
                 // Se game over
                 if (gameOver)
-                {
-                    startParametrs(this.gameOver, this.win, this.gameStarted, Constants.initialLives, Constants.initialScore, Constants.initialLevel, Constants.intervalBetwenLoop, Constants.initialFroggerPass);
+                {                   
                     drawStateScreen(Constants.restartMessage, gameOverTexture);
+                }
+                // Se morreu, mas tem vida ainda
+                else if (dead)
+                {
+                    drawStateScreen(Constants.deadAndNextLiveMessage, skullTexture);
                 }
             }
             spriteBatch.End();
             base.Draw(gameTime);
         }
 
+
+
         // Metodo de inicio do jogo
         public void StartGame()
         {
             beginPause = Constants.ignoreKyboardLoop;
             level++;
+            frooger.texture = froggerTexture;
             frooger.x = screenWidth / 2;
             frooger.y = screenHeight - (screenHeight / 8);
+            frooger.angle = Constants.angleFrogger0;
             verifyLevel(level);
             obstacles.Clear();
             loopNewObstaclesControl = 0;
+        }
+
+        // Seta parametros para uso da proxima vida
+        public void StartNextLive(bool theGameStarted, bool theGameOver, bool thePlayerWined, bool thePlayerDead)
+        {
+            frooger.angle = Constants.angleFrogger0;
+            frooger.texture = froggerTexture;
+            frooger.x = screenWidth / 2;
+            frooger.y = screenHeight - (screenHeight / 8);
+            gameStarted = theGameStarted;
+            gameOver = theGameOver;
+            win = thePlayerWined;
+            dead = thePlayerDead;
+        }
+
+        // Conjtrola colisões e seus ecos nas ações do jogo
+        public void colisionsControl(float elapsedTime)
+        {
+            if (beginPause > 0)
+            {
+                beginPause--;
+            }
+            else
+            {
+                if (!win && !gameOver && !dead)
+                {
+                    frooger.Update(elapsedTime);
+                    if (frooger.verifyColisionWithObstacles(obstacles))
+                    {
+                        lives--;
+                        frooger.texture = bloodTexture;
+                        if (lives == 0)
+                        {
+                            gameOver = true;
+                        }
+                        dead = true;
+                    }
+                    win = thePalyerWin();
+                }
+            }
         }
 
         // Metodo de inserção aleatoria de tipo e rua dos obstaculos
@@ -283,14 +322,19 @@ namespace MonoGame2D
             {
                 if (state.IsKeyDown(Keys.Space))
                 {
-                    startParametersWhithKeyboard(true, false, false);
+                    startParametersWhithKeyboard(true, false, false, false);
                 }
                 return;
             }
             // Reinicia se for precionado enter após game over
             if (gameOver && state.IsKeyDown(Keys.Enter))
             {
-                startParametersWhithKeyboard(true, false, false);
+                startParametrs(this.gameOver, this.win, this.dead, this.gameStarted, Constants.initialLives, Constants.initialScore, Constants.initialLevel, Constants.intervalBetwenLoop, Constants.initialFroggerPass);
+                startParametersWhithKeyboard(true, false, false, false);
+            }
+            if (dead && state.IsKeyDown(Keys.Space) && !gameOver)
+            {
+                StartNextLive(true, false, false, false);
             }
             if (win && state.IsKeyDown(Keys.Enter))
             {
@@ -298,9 +342,9 @@ namespace MonoGame2D
                 {
                     level = 0;
                 }
-                startParametersWhithKeyboard(true, false, false);
+                startParametersWhithKeyboard(true, false, false, false);
             }
-            if (beginPause <= 0 && !win && !gameOver)
+            if (beginPause <= 0 && !win && !gameOver && !dead)
             {
 
                 // Controla teclas de direção com controle de area da tela a ser usada
@@ -378,10 +422,11 @@ namespace MonoGame2D
         }
 
         // Iniciaza parametros de jogo
-        public void startParametrs(bool isGameOver, bool isWin, bool theGameStart, int nunberOfLives, int initialScore, int initialLevel, int initialObstacleFrequency, int initialFroggerPass)
+        public void startParametrs(bool isGameOver, bool isWin, bool isDead, bool theGameStart, int nunberOfLives, int initialScore, int initialLevel, int initialObstacleFrequency, int initialFroggerPass)
         {
             gameOver = isGameOver;
             win = isWin;
+            dead = isDead;
             gameStarted = theGameStart;
             lives = nunberOfLives;
             score = initialScore;
@@ -390,12 +435,13 @@ namespace MonoGame2D
             froggerPass = initialFroggerPass;
         }
 
-        public void startParametersWhithKeyboard(bool theGameStarted, bool theGameOver, bool thePlayerWined)
+        public void startParametersWhithKeyboard(bool theGameStarted, bool theGameOver, bool thePlayerWined, bool thePlayerDead)
         {
             StartGame();
             gameStarted = theGameStarted;
             gameOver = theGameOver;
             win = thePlayerWined;
+            dead = thePlayerDead;
         }
 
         // Carrega textura de background do jogo 
@@ -405,7 +451,10 @@ namespace MonoGame2D
             background = Content.Load<Texture2D>(Constants.backgroundSprite);
             startGameSplash = Content.Load<Texture2D>(Constants.startSprite);
             gameOverTexture = Content.Load<Texture2D>(Constants.gameoverSprite);
+            skullTexture = Content.Load<Texture2D>(Constants.skullSprite);
             winTexture = Content.Load<Texture2D>(Constants.winSprite);
+            bloodTexture = Content.Load<Texture2D>(Constants.bloodSprite);
+            froggerTexture = Content.Load<Texture2D>(Constants.froogerSpriteToTexture);
             stateFont = Content.Load<SpriteFont>(Constants.gameMessagesFont);
             scoreFont = Content.Load<SpriteFont>(Constants.valueFonts);
         }

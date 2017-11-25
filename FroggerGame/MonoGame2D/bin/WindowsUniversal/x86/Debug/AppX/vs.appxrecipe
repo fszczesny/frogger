@@ -28,13 +28,13 @@
     <AppXManifest Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-11-23T22:52:27.010</Modified>
+      <Modified>2017-11-25T00:01:05.596</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\MonoGame2D.exe">
       <PackagePath>entrypoint\MonoGame2D.exe</PackagePath>
-      <Modified>2017-11-23T22:52:26.665</Modified>
+      <Modified>2017-11-25T00:01:05.246</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\FabricioSzczesny\.nuget\packages\Microsoft.CSharp\4.0.0\lib\netcore50\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
@@ -480,6 +480,10 @@
       <PackagePath>Content\background.png</PackagePath>
       <Modified>2017-11-05T22:09:42.971</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\blood.png">
+      <PackagePath>Content\blood.png</PackagePath>
+      <Modified>2017-11-24T00:08:02.599</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\frooger.png">
       <PackagePath>Content\frooger.png</PackagePath>
       <Modified>2017-11-06T01:35:58.694</Modified>
@@ -499,6 +503,10 @@
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\red_cart.png">
       <PackagePath>Content\red_cart.png</PackagePath>
       <Modified>2017-11-11T20:49:26.351</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\skull.png">
+      <PackagePath>Content\skull.png</PackagePath>
+      <Modified>2017-11-24T23:25:16.906</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\start-splash.png">
       <PackagePath>Content\start-splash.png</PackagePath>
@@ -546,6 +554,10 @@
       <PackagePath>Content\background.xnb</PackagePath>
       <Modified>2017-11-06T00:05:22.595</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\blood.xnb">
+      <PackagePath>Content\blood.xnb</PackagePath>
+      <Modified>2017-11-24T00:09:23.185</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\frooger.xnb">
       <PackagePath>Content\frooger.xnb</PackagePath>
       <Modified>2017-11-11T00:46:34.774</Modified>
@@ -574,6 +586,10 @@
       <PackagePath>Content\Score.xnb</PackagePath>
       <Modified>2017-11-06T01:09:34.452</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\skull.xnb">
+      <PackagePath>Content\skull.xnb</PackagePath>
+      <Modified>2017-11-24T23:50:55.764</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\start-splash.xnb">
       <PackagePath>Content\start-splash.xnb</PackagePath>
       <Modified>2017-11-06T00:54:33.969</Modified>
@@ -593,11 +609,11 @@
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-11-12T18:49:44.996</Modified>
+      <Modified>2017-11-24T23:50:59.233</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Core\MonoGame2D.exe">
       <PackagePath>MonoGame2D.exe</PackagePath>
-      <Modified>2017-11-23T22:52:27.004</Modified>
+      <Modified>2017-11-25T00:01:05.587</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

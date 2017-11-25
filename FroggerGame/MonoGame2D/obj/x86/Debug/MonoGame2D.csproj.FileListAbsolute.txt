@@ -845,3 +845,5 @@ D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Conte
 D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Content\red_cart.xnb
 D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Content\green_cart.xnb
 D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Content\win.xnb
+D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Content\blood.xnb
+D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Content\skull.xnb

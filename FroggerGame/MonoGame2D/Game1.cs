@@ -218,10 +218,10 @@ namespace MonoGame2D
         {
             beginPause = Constants.ignoreKyboardLoop;
             level++;
-            frooger.texture = froggerTexture;
-            frooger.x = screenWidth / 2;
-            frooger.y = screenHeight - (screenHeight / 8);
-            frooger.angle = Constants.angleFrogger0;
+            frooger.setTexture(froggerTexture);
+            frooger.setX(screenWidth / 2);
+            frooger.setY(screenHeight - (screenHeight / 8));
+            frooger.setAngle(Constants.angleFrogger0);
             verifyLevel(level);
             obstacles.Clear();
             loopNewObstaclesControl = 0;
@@ -231,10 +231,10 @@ namespace MonoGame2D
         // Seta parametros para uso da proxima vida
         public void StartNextLive(bool theGameStarted, bool theGameOver, bool thePlayerWined, bool thePlayerDead)
         {
-            frooger.angle = Constants.angleFrogger0;
-            frooger.texture = froggerTexture;
-            frooger.x = screenWidth / 2;
-            frooger.y = screenHeight - (screenHeight / 8);
+            frooger.setAngle(Constants.angleFrogger0);
+            frooger.setTexture(froggerTexture);
+            frooger.setX(screenWidth / 2);
+            frooger.setY(screenHeight - (screenHeight / 8));
             gameStarted = theGameStarted;
             gameOver = theGameOver;
             win = thePlayerWined;
@@ -256,7 +256,7 @@ namespace MonoGame2D
                     if (frooger.verifyColisionWithObstacles(obstacles))
                     {
                         lives--;
-                        frooger.texture = bloodTexture;
+                        frooger.setTexture(bloodTexture);
                         if (lives == 0)
                         {
                             gameOver = true;
@@ -310,34 +310,34 @@ namespace MonoGame2D
                 // Controla teclas de direção com controle de area da tela a ser usada
                 if (state.IsKeyDown(Keys.Up) || state.IsKeyDown(Keys.W))
                 {
-                    frooger.angle = Constants.angleFrogger0;
-                    if (frooger.y > (screenHeight / 5))
+                    frooger.setAngle(Constants.angleFrogger0);
+                    if (frooger.getY() > (screenHeight / 5))
                     {
-                        frooger.y = frooger.y - froggerPass;
+                        frooger.setY(frooger.getY() - froggerPass);
                     }
                 }
                 else if (state.IsKeyDown(Keys.Down) || state.IsKeyDown(Keys.S))
                 {
-                    frooger.angle = Constants.angleFrogger180;
-                    if (frooger.y < (screenHeight - (screenHeight / 8)))
+                    frooger.setAngle(Constants.angleFrogger180);
+                    if (frooger.getY() < (screenHeight - (screenHeight / 8)))
                     {
-                        frooger.y = frooger.y + froggerPass;
+                        frooger.setY(frooger.getY() + froggerPass);
                     }
                 }
                 else if (state.IsKeyDown(Keys.Left) || (state.IsKeyDown(Keys.A)))
                 {
-                    frooger.angle = Constants.angleFrogger90;
-                    if (frooger.x > screenWidth / 20)
+                    frooger.setAngle(Constants.angleFrogger90);
+                    if (frooger.getX() > screenWidth / 20)
                     {
-                        frooger.x = frooger.x - froggerPass;
+                        frooger.setX(frooger.getX() - froggerPass);
                     }
                 }
                 else if (state.IsKeyDown(Keys.Right) || state.IsKeyDown(Keys.D))
                 {
-                    frooger.angle = Constants.angleFrogger270;
-                    if (frooger.x < (screenWidth - (screenWidth / 20)))
+                    frooger.setAngle(Constants.angleFrogger270);
+                    if (frooger.getX() < (screenWidth - (screenWidth / 20)))
                     {
-                        frooger.x = frooger.x + froggerPass;
+                        frooger.setX(frooger.getX() + froggerPass);
                     }
                 }
             }
@@ -374,7 +374,7 @@ namespace MonoGame2D
         {
             for (int i = 0; i < obstacles.Count; i++)
             {
-                if ((obstacles[i].x < streeLeftLimit) || (obstacles[i].x > streeRigthLimit))
+                if ((obstacles[i].getX() < streeLeftLimit) || (obstacles[i].getX() > streeRigthLimit))
                 {
                     obstacles.RemoveAt(i);
                 }
@@ -465,7 +465,7 @@ namespace MonoGame2D
         // Verifica se o jogador ganhou o jogo
         public bool thePalyerWin()
         {
-            if (gameStarted && frooger.y <= screenHeight / 5)
+            if (gameStarted && frooger.getY() <= screenHeight / 5)
             {
                 return true;
             }
@@ -560,21 +560,21 @@ namespace MonoGame2D
                     streeat = random.Next(1, 7);
                 }
             }
-            cart.streat = streeat;
-            cart.y = validLines[streeat - 1];
+            cart.setStreat(streeat);
+            cart.setY(validLines[streeat - 1]);
             if (streeat % 2 != 0)
             {
-                cart.x = streeLeftLimit;
-                cart.dX = (float)(aceleretionToRigth * (Constants.acelerationFactor * (streeat + 2)));
-                cart.angle = angleToRight;
+                cart.setX(streeLeftLimit);
+                cart.setDx((float)(aceleretionToRigth * (Constants.acelerationFactor * (streeat + 2))));
+                cart.setAngle(angleToRight);
             }
             else
             {
-                cart.x = streeRigthLimit;
-                cart.dX = (float)(acelerationToLeft * (Constants.acelerationFactor * (streeat + 2)));
-                cart.angle = angleToLeft;
+                cart.setX(streeRigthLimit);
+                cart.setDx((float)(acelerationToLeft * (Constants.acelerationFactor * (streeat + 2))));
+                cart.setAngle(angleToLeft);
             }
-            if (validLines.Contains(cart.y))
+            if (validLines.Contains(cart.getY()))
             {
                 lastInserts.Add(streeat);
                 obstacles.Add(cart);
@@ -590,32 +590,32 @@ namespace MonoGame2D
                 int position = random.Next(1, limit);
                 int streeat = random.Next(1, 7);
                 Obstacles obstacle = obstacles[position];
-                int originalstreat = obstacle.streat;
-                float originalY = obstacle.y;
-                float originalDx = obstacle.dX;
-                float originalAngle = obstacle.angle;
-                while (obstacle.streat == streeat)
+                int originalstreat = obstacle.getStreat();
+                float originalY = obstacle.getY();
+                float originalDx = obstacle.getDx();
+                float originalAngle = obstacle.getAngle();
+                while (obstacle.getStreat() == streeat)
                 {
                     streeat = random.Next(1, 7);
                 }
-                obstacle.streat = streeat;
-                obstacle.y = validLines[streeat - 1];
+                obstacle.setStreat(streeat);
+                obstacle.setY(validLines[streeat - 1]);
                 if (streeat % 2 != 0)
                 {
-                    obstacle.dX = (float)(aceleretionToRigth * (Constants.acelerationFactor * (streeat + 2)));
-                    obstacle.angle = angleToRight;
+                    obstacle.setX((float)(aceleretionToRigth * (Constants.acelerationFactor * (streeat + 2))));
+                    obstacle.setAngle(angleToRight);
                 }
                 else
                 {
-                    obstacle.dX = (float)(acelerationToLeft * (Constants.acelerationFactor * (streeat + 2)));
-                    obstacle.angle = angleToLeft;
+                    obstacle.setDx((float)(acelerationToLeft * (Constants.acelerationFactor * (streeat + 2))));
+                    obstacle.setAngle(angleToLeft);
                 }
                 if (obstacle.verifyColisionObsttacleWithObstacles(obstacles, position))
                 {
-                    obstacle.streat = originalstreat;
-                    obstacle.y = originalY;
-                    obstacle.dX = originalDx;
-                    obstacle.angle = originalAngle;
+                    obstacle.setStreat(originalstreat);
+                    obstacle.setY(originalY);
+                    obstacle.setDx(originalDx);
+                    obstacle.setAngle(originalAngle);
                 }
             }
         }

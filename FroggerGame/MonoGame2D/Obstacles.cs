@@ -10,59 +10,85 @@ namespace MonoGame2D
 {
     class Obstacles
     {
-        const float HITBOXSCALE = 0.75f;
-        // Imagem do sprite
-        public Texture2D texture
+        private const float HITBOXSCALE = 0.75f;
+        
+        private Texture2D texture;
+        private float x;
+        private float y;
+        private float angle;
+        private float dX;
+        private float dY;
+        private float scale;
+        private int streat;
+
+        public void setTexture(Texture2D texture)
         {
-            get;
+            this.texture = texture;
         }
 
-        // Coordenadas x centrais do obstatulo
-        public float x
+        public void setX(float X)
         {
-            get;
-            set;
+            this.x = X;
         }
 
-        // Coordenadas y centrais do obstaculo
-        public float y
+        public void setY(float Y)
         {
-            get;
-            set;
+            this.y = Y;
         }
 
-        // Angulo central do obstaculo
-        public float angle
+        public void setAngle(float a)
         {
-            get;
-            set;
+            this.angle = a;
+        }
+        public void setScale(float scale)
+        {
+            this.scale = scale;
+        }
+        public void setDx(float dx)
+        {
+            this.dX = dx;
+        }
+        public void setDy(float dy)
+        {
+            this.dY = dy;
+        }
+        public void setStreat(int s)
+        {
+            this.streat = s;
         }
 
-        // Acelearção em x do obstaculo
-        public float dX
+        public Texture2D getTexture()
         {
-            get;
-            set;
+            return this.texture;
         }
 
-        // Aceleração em y do obstaculo
-        public float dY
+        public float getX()
         {
-            get;
-            set;
+            return this.x;
         }
-
-        // Escala do sprite
-        public float scale
+        public float getY()
         {
-            get;
-            set;
+            return this.y;
         }
-
-        public int streat
+        public float getAngle()
         {
-            get;
-            set;
+            return this.angle;
+        }
+        public float getScale()
+        {
+            return this.scale;
+        }
+        public float getDx()
+        {
+            return this.dX;
+        }
+        public float getDy()
+        {
+            return this.dY;
+        }
+        public int getStreat()
+        {
+            return this.streat;
         }
 
         // Construtor
@@ -89,7 +115,7 @@ namespace MonoGame2D
         }
 
         // Verifica colisão do obstaculo com um determido obstaculo
-        public bool verifyColisionWithSpecificObstacle(Obstacles obstaclesSprite)
+        private bool verifyColisionWithSpecificObstacle(Obstacles obstaclesSprite)
         {
             if (this.x + this.texture.Width * this.scale * HITBOXSCALE / 2 < obstaclesSprite.x - obstaclesSprite.texture.Width * obstaclesSprite.scale / 2)
             {

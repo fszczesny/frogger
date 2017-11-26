@@ -30,8 +30,10 @@ namespace MonoGame2D
             public const float angleObstacleToRigth = 0;
             public const float angleObstacleToLeft = (float)600.05;
         // Constantes de controle de loop do jogo junto a atualização de obstaculos
-            public const int intervalBetwenLoop = 50;
+            public const int intervalBetwenNewObstacleLoop = 70;
+            public const int intervalBetwenChangeStreat = 300;
             public const int decFrequencyObstacle = 5;
+            public const int decFrequencyChangeStreat = 20;
             public const int lessNumberToChangeStreat = 5;
         // Constantes de valores default de vida,nivel, pontos e etc do jogo
             public const int initialLives = 5;
@@ -82,7 +84,7 @@ namespace MonoGame2D
             Texture2D bloodTexture;
             Texture2D froggerTexture;
             Texture2D skullTexture;
-        float scale;
+            float scale;
         // Variaveis de posicionamento e limitação do ruas
             float screenWidth;
             float screenHeight;
@@ -103,7 +105,9 @@ namespace MonoGame2D
             int lives;
             int level;
             int loopNewObstaclesControl;
+            int loopChangeStreatControl;
             int loooNewObstaclesIncrease;
+            int loooChangeStreatIncrease;
             int pointsForWin = Constants.pointsForWin;
             float froggerPass;
             int beginPause;
@@ -126,7 +130,7 @@ namespace MonoGame2D
         protected override void Initialize()
         {
             base.Initialize();
-            startParametrs(false, false, false, false, Constants.initialLives, Constants.initialScore, Constants.initialLevel, Constants.intervalBetwenLoop, Constants.initialFroggerPass);
+            startParametrs(false, false, false, false, Constants.initialLives, Constants.initialScore, Constants.initialLevel, Constants.intervalBetwenNewObstacleLoop, Constants.intervalBetwenChangeStreat, Constants.initialFroggerPass);
             random = new Random();
             startScreenConfigs();
         }
@@ -152,6 +156,7 @@ namespace MonoGame2D
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             KeyboardHandler();
             verifyIfNeedMoreObstacles();
+            verifyChangeStreatObstacles();
             colisionsControl(elapsedTime);
             UpdateAllObstacles(elapsedTime);
             VerifyIfObstaclesIsOutOfScreen();         
@@ -220,6 +225,7 @@ namespace MonoGame2D
             verifyLevel(level);
             obstacles.Clear();
             loopNewObstaclesControl = 0;
+            loopChangeStreatControl = 0;
         }
 
         // Seta parametros para uso da proxima vida
@@ -283,7 +289,7 @@ namespace MonoGame2D
             // Reinicia se for precionado enter após game over
             if (gameOver && state.IsKeyDown(Keys.Enter))
             {
-                startParametrs(this.gameOver, this.win, this.dead, this.gameStarted, Constants.initialLives, Constants.initialScore, Constants.initialLevel, Constants.intervalBetwenLoop, Constants.initialFroggerPass);
+                startParametrs(this.gameOver, this.win, this.dead, this.gameStarted, Constants.initialLives, Constants.initialScore, Constants.initialLevel, Constants.intervalBetwenNewObstacleLoop, Constants.intervalBetwenChangeStreat, Constants.initialFroggerPass);
                 startParametersWhithKeyboard(true, false, false, false);
             }
             if (dead && state.IsKeyDown(Keys.Space) && !gameOver)
@@ -376,7 +382,7 @@ namespace MonoGame2D
         }
 
         // Iniciaza parametros de jogo
-        public void startParametrs(bool isGameOver, bool isWin, bool isDead, bool theGameStart, int nunberOfLives, int initialScore, int initialLevel, int initialObstacleFrequency, int initialFroggerPass)
+        public void startParametrs(bool isGameOver, bool isWin, bool isDead, bool theGameStart, int nunberOfLives, int initialScore, int initialLevel, int initialObstacleFrequency, int changeStreatFrequency, int initialFroggerPass)
         {
             gameOver = isGameOver;
             win = isWin;
@@ -386,6 +392,7 @@ namespace MonoGame2D
             score = initialScore;
             level = initialLevel;
             loooNewObstaclesIncrease = initialObstacleFrequency;
+            loooChangeStreatIncrease = changeStreatFrequency;
             froggerPass = initialFroggerPass;
         }
 
@@ -439,10 +446,20 @@ namespace MonoGame2D
             if (loopNewObstaclesControl == loooNewObstaclesIncrease)
             {
                 loopNewObstaclesControl = 0;
-                changeStreet();
                 spawnNewObstacle();
             }
             loopNewObstaclesControl++;
+        }
+
+        // Verifica se tá na hora de trocar a pista do obstaculos
+        public void verifyChangeStreatObstacles()
+        {
+            if (loopChangeStreatControl == loooChangeStreatIncrease)
+            {
+                loopChangeStreatControl = 0;
+                changeStreet();
+            }
+            loopChangeStreatControl++;
         }
 
         // Verifica se o jogador ganhou o jogo
@@ -498,6 +515,7 @@ namespace MonoGame2D
             if (levelAux > 1 && levelAux < (Constants.maxLevel+1))
             {
                 loooNewObstaclesIncrease = loooNewObstaclesIncrease - Constants.decFrequencyObstacle;
+                loooChangeStreatIncrease = loooChangeStreatIncrease - Constants.decFrequencyChangeStreat;
                 froggerPass = (float)(froggerPass - Constants.decFroggerPass);
                 score = score + (pointsForWin* lives * (levelAux - 1));
                 acelerationToLeft = (float)(acelerationToLeft - Constants.decAceleration);
@@ -505,7 +523,8 @@ namespace MonoGame2D
             }
             else
             {
-                loooNewObstaclesIncrease = Constants.intervalBetwenLoop;
+                loooNewObstaclesIncrease = Constants.intervalBetwenNewObstacleLoop;
+                loooChangeStreatIncrease = Constants.intervalBetwenChangeStreat;
                 froggerPass = Constants.initialFroggerPass;
                 score = Constants.initialScore;
                 acelerationToLeft = Constants.leftAceleration;
@@ -562,6 +581,7 @@ namespace MonoGame2D
             }
         }
 
+        // Metodo que realiza a troca de pista de um determinado obstaculo de forma aleatoria
         public void changeStreet()
         {
             int limit = obstacles.Count;

@@ -32,6 +32,7 @@ namespace MonoGame2D
         // Constantes de controle de loop do jogo junto a atualização de obstaculos
             public const int intervalBetwenLoop = 50;
             public const int decFrequencyObstacle = 5;
+            public const int lessNumberToChangeStreat = 5;
         // Constantes de valores default de vida,nivel, pontos e etc do jogo
             public const int initialLives = 5;
             public const int initialLevel = 0;
@@ -64,7 +65,6 @@ namespace MonoGame2D
             public const string scoreMessage = "Score: ";
         // Constantes de controle do loop de ignorar o teclado
             public const int ignoreKyboardLoop = 200;
-
     }
 
     public class Game1 : Game
@@ -260,55 +260,7 @@ namespace MonoGame2D
                     win = thePalyerWin();
                 }
             }
-        }
-
-        // Metodo de inserção aleatoria de tipo e rua dos obstaculos
-        public void spawnNewObstacle()
-        {
-            Obstacles cart;
-            // Seleciona aleatoriamente um tipo de carroça
-            int typeOfCart = random.Next(1, 4);
-            switch (typeOfCart)
-            {
-                case 1:
-                    cart = new Obstacles(GraphicsDevice, Constants.redCartSprites, scale);
-                    break;
-                case 2:
-                    cart = new Obstacles(GraphicsDevice, Constants.greenCartSprites, scale);
-                    break;
-                default:
-                    cart = new Obstacles(GraphicsDevice, Constants.purpleCartSprites, scale);
-                    break;
-            }
-            int streeat = random.Next(1, 7);
-            //Seleciona aleatoriamente uma rua para a coarroça
-            // Cuida pra não por duas carroças seguidas na mesma rua
-            if (lastInserts.Count != 0)
-            {
-                while (lastInserts[lastInserts.Count - 1] == streeat)
-                {
-                    streeat = random.Next(1, 7);
-                }
-            }
-            cart.y = validLines[streeat - 1];
-            if (streeat % 2 != 0)
-            {
-                cart.x = streeLeftLimit;
-                cart.dX = (float)(aceleretionToRigth * (Constants.acelerationFactor * (streeat + 2)));
-                cart.angle = angleToRight;
-            }
-            else
-            {
-                cart.x = streeRigthLimit;
-                cart.dX = (float)(acelerationToLeft * (Constants.acelerationFactor * (streeat + 2)));
-                cart.angle = angleToLeft;
-            }
-            if (validLines.Contains(cart.y))
-            {
-                lastInserts.Add(streeat);
-                obstacles.Add(cart);
-            }
-        }
+        }      
 
         // Metodo de leitura do teclado
         void KeyboardHandler()
@@ -487,6 +439,7 @@ namespace MonoGame2D
             if (loopNewObstaclesControl == loooNewObstaclesIncrease)
             {
                 loopNewObstaclesControl = 0;
+                changeStreet();
                 spawnNewObstacle();
             }
             loopNewObstaclesControl++;
@@ -557,6 +510,93 @@ namespace MonoGame2D
                 score = Constants.initialScore;
                 acelerationToLeft = Constants.leftAceleration;
                 aceleretionToRigth = Constants.rigthAceleration;
+            }
+        }
+
+        // Metodo de inserção aleatoria de tipo e rua dos obstaculos
+        public void spawnNewObstacle()
+        {
+            Obstacles cart;
+            // Seleciona aleatoriamente um tipo de carroça
+            int typeOfCart = random.Next(1, 4);
+            switch (typeOfCart)
+            {
+                case 1:
+                    cart = new Obstacles(GraphicsDevice, Constants.redCartSprites, scale);
+                    break;
+                case 2:
+                    cart = new Obstacles(GraphicsDevice, Constants.greenCartSprites, scale);
+                    break;
+                default:
+                    cart = new Obstacles(GraphicsDevice, Constants.purpleCartSprites, scale);
+                    break;
+            }
+            int streeat = random.Next(1, 7);
+            //Seleciona aleatoriamente uma rua para a coarroça
+            // Cuida pra não por duas carroças seguidas na mesma rua
+            if (lastInserts.Count != 0)
+            {
+                while (lastInserts[lastInserts.Count - 1] == streeat)
+                {
+                    streeat = random.Next(1, 7);
+                }
+            }
+            cart.streat = streeat;
+            cart.y = validLines[streeat - 1];
+            if (streeat % 2 != 0)
+            {
+                cart.x = streeLeftLimit;
+                cart.dX = (float)(aceleretionToRigth * (Constants.acelerationFactor * (streeat + 2)));
+                cart.angle = angleToRight;
+            }
+            else
+            {
+                cart.x = streeRigthLimit;
+                cart.dX = (float)(acelerationToLeft * (Constants.acelerationFactor * (streeat + 2)));
+                cart.angle = angleToLeft;
+            }
+            if (validLines.Contains(cart.y))
+            {
+                lastInserts.Add(streeat);
+                obstacles.Add(cart);
+            }
+        }
+
+        public void changeStreet()
+        {
+            int limit = obstacles.Count;
+            if (limit > Constants.lessNumberToChangeStreat)
+            {
+                int position = random.Next(1, limit);
+                int streeat = random.Next(1, 7);
+                Obstacles obstacle = obstacles[position];
+                int originalstreat = obstacle.streat;
+                float originalY = obstacle.y;
+                float originalDx = obstacle.dX;
+                float originalAngle = obstacle.angle;
+                while (obstacle.streat == streeat)
+                {
+                    streeat = random.Next(1, 7);
+                }
+                obstacle.streat = streeat;
+                obstacle.y = validLines[streeat - 1];
+                if (streeat % 2 != 0)
+                {
+                    obstacle.dX = (float)(aceleretionToRigth * (Constants.acelerationFactor * (streeat + 2)));
+                    obstacle.angle = angleToRight;
+                }
+                else
+                {
+                    obstacle.dX = (float)(acelerationToLeft * (Constants.acelerationFactor * (streeat + 2)));
+                    obstacle.angle = angleToLeft;
+                }
+                if (obstacle.verifyColisionObsttacleWithObstacles(obstacles, position))
+                {
+                    obstacle.streat = originalstreat;
+                    obstacle.y = originalY;
+                    obstacle.dX = originalDx;
+                    obstacle.angle = originalAngle;
+                }
             }
         }
     }

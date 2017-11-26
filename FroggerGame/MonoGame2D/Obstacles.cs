@@ -10,6 +10,7 @@ namespace MonoGame2D
 {
     class Obstacles
     {
+        const float HITBOXSCALE = 0.75f;
         // Imagem do sprite
         public Texture2D texture
         {
@@ -58,6 +59,12 @@ namespace MonoGame2D
             set;
         }
 
+        public int streat
+        {
+            get;
+            set;
+        }
+
         // Construtor
         public Obstacles(GraphicsDevice graphicsDevice, string textureName, float scale)
         {
@@ -79,6 +86,45 @@ namespace MonoGame2D
             Vector2 spritePosition = new Vector2(this.x, this.y);
             // Desenha o obstaculo
             spriteBatch.Draw(texture, spritePosition, null, Color.White, this.angle, new Vector2(texture.Width / 2, texture.Height / 2), new Vector2(scale, scale), SpriteEffects.None, 0f);
+        }
+
+        // Verifica colisão do obstaculo com um determido obstaculo
+        public bool verifyColisionWithSpecificObstacle(Obstacles obstaclesSprite)
+        {
+            if (this.x + this.texture.Width * this.scale * HITBOXSCALE / 2 < obstaclesSprite.x - obstaclesSprite.texture.Width * obstaclesSprite.scale / 2)
+            {
+                return false;
+            }
+            if (this.y + this.texture.Height * this.scale * HITBOXSCALE / 2 < obstaclesSprite.y - obstaclesSprite.texture.Height * obstaclesSprite.scale / 2)
+            {
+                return false;
+            }
+            if (this.x - this.texture.Width * this.scale * HITBOXSCALE / 2 > obstaclesSprite.x + obstaclesSprite.texture.Width * obstaclesSprite.scale / 2)
+            {
+                return false;
+            }
+            if (this.y - this.texture.Height * this.scale * HITBOXSCALE / 2 > obstaclesSprite.y + obstaclesSprite.texture.Height * obstaclesSprite.scale / 2)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        // Verifica colisão do obstaculo com algum obstaculo presente na lista de obstaculos passada
+        public bool verifyColisionObsttacleWithObstacles(List<Obstacles> obstaclesList, int postitionToIgnore)
+        {
+            int i;
+            for (i = 0; i < obstaclesList.Count; i++)
+            {
+                if (i != postitionToIgnore)
+                {
+                    if (this.verifyColisionWithSpecificObstacle(obstaclesList.ElementAt(i)))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         // Destrutor

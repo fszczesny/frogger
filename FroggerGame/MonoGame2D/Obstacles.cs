@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MonoGame2D
 {
-    class Obstacles
+    public class Obstacles
     {
         private const float HITBOXSCALE = 0.75f;
         

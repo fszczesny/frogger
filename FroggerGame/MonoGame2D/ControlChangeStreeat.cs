@@ -49,7 +49,7 @@ namespace MonoGame2D
         }
 
         // Metodo que realiza a troca de pista de um determinado obstaculo de forma aleatoria
-        public void changeStreet(List<Obstacles> obstacles, List<float> validLines, float aceleretionToRigth, float acelerationToLeft)
+        private void changeStreet(List<Obstacles> obstacles, List<float> validLines, float aceleretionToRigth, float acelerationToLeft)
         {
             int limit = obstacles.Count;
             if (limit > Constants.lessNumberToChangeStreat)
@@ -69,7 +69,7 @@ namespace MonoGame2D
                 obstacle.setY(validLines[streeat - 1]);
                 if (streeat % 2 != 0)
                 {
-                    obstacle.setX((float)(aceleretionToRigth * (Constants.acelerationFactor * (streeat + 2))));
+                    obstacle.setDx((float)(aceleretionToRigth * (Constants.acelerationFactor * (streeat + 2))));
                     obstacle.setAngle(Constants.angleObstacleToRigth);
                 }
                 else

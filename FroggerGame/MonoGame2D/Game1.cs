@@ -13,49 +13,48 @@ namespace MonoGame2D
     {
         // Declaração de variaveis globias dentre a classe
         // Variaveis de ambiente grafico
-            GraphicsDeviceManager graphics;
-            SpriteBatch spriteBatch;
-            SpriteFont stateFont;
-            SpriteFont scoreFont;
-            Texture2D startGameSplash;
-            Texture2D gameOverTexture;
-            Texture2D winTexture;
-            Texture2D background;
-            Texture2D bloodTexture;
-            Texture2D froggerTexture;
-            Texture2D skullTexture;
-            float scale;
+        GraphicsDeviceManager graphics;
+        SpriteBatch spriteBatch;
+        SpriteFont stateFont;
+        SpriteFont scoreFont;
+        Texture2D startGameSplash;
+        Texture2D gameOverTexture;
+        Texture2D winTexture;
+        Texture2D background;
+        Texture2D bloodTexture;
+        Texture2D froggerTexture;
+        Texture2D skullTexture;       
         // Variaveis de posicionamento e limitação do ruas
-            float screenWidth;
-            float screenHeight;
-            float streeLeftLimit;
-            float streeRigthLimit;
-            List<float> validLines = new List<float>();
+        float screenWidth;
+        float screenHeight;
+        float streeLeftLimit;
+        float streeRigthLimit;
+        List<float> validLines = new List<float>();
         // Variaveis posicionamento angular e aceleração todas já iniializadas aqui
-            float aceleretionToRigth = Constants.rigthAceleration;
-            float acelerationToLeft = Constants.leftAceleration;
+        float aceleretionToRigth = Constants.rigthAceleration;
+        float acelerationToLeft = Constants.leftAceleration;
         // Variaveis de controle de estado de jogo
-            bool gameStarted;
-            bool gameOver;
-            bool dead;
-            bool win;
-            int score;
-            int lives;
-            int level;
-            int loopNewObstaclesControl;
-            int loooNewObstaclesIncrease;
-            int pointsForWin = Constants.pointsForWin;
-            float froggerPass;
-            int beginPause;
+        bool gameStarted;
+        bool gameOver;
+        bool dead;
+        bool win;
+        int score;
+        int lives;
+        int level;
+        //int loopNewObstaclesControl;
+        //int loooNewObstaclesIncrease;
+        int pointsForWin = Constants.pointsForWin;
+        float froggerPass;
+        int beginPause;
         // Variavel para geração ramdomica
-            Random random;
+        Random random;
         // Declaração do objeto Player que representa o frogger
-            Player frooger;
+        Player frooger;
         // Declaração da lista de obstaculos e sua lista auxiliar de frequencia
-            List<Obstacles> obstacles = new List<Obstacles>();
-            List<int> lastInserts = new List<int>();
+        List<Obstacles> obstacles = new List<Obstacles>();      
         // Declara objeto de controle de troca de rua
-            ControlChangeStreeat controlChangeStreeat = new ControlChangeStreeat();
+        ControlChangeStreeat controlChangeStreeat = new ControlChangeStreeat();
+        ControlNewObstacles controlNewObstacles = new ControlNewObstacles();
         // Fim da declaração de globais da classe
 
         public Game1()
@@ -80,7 +79,7 @@ namespace MonoGame2D
             loadTextureAndFontStyles();
             // Carrega sprite do player
             frooger = new Player(GraphicsDevice, Constants.froggerSprite, ScaleToHighDPI(0.3f));
-            scale = ScaleToHighDPI(1.3f);
+            controlNewObstacles.setScale(ScaleToHighDPI(1.3f));
         }
 
         // Metodo de descarga de elementos externos
@@ -93,11 +92,11 @@ namespace MonoGame2D
         {
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             KeyboardHandler();
-            verifyIfNeedMoreObstacles();
+            controlNewObstacles.verifyIfNeedMoreObstacles(GraphicsDevice, obstacles, validLines, aceleretionToRigth, acelerationToLeft, streeLeftLimit, streeRigthLimit);
             controlChangeStreeat.verifyChangeStreatObstacles(obstacles, validLines, aceleretionToRigth, acelerationToLeft);
             colisionsControl(elapsedTime);
             UpdateAllObstacles(elapsedTime);
-            VerifyIfObstaclesIsOutOfScreen();         
+            VerifyIfObstaclesIsOutOfScreen();
             base.Update(gameTime);
         }
 
@@ -126,8 +125,8 @@ namespace MonoGame2D
                 {
                     // Verifica se atingiu nivel maximo
                     if (level == Constants.maxLevel)
-                    {                       
-                        drawStateScreen(Constants.winAllLevelsMessage, winTexture);                       
+                    {
+                        drawStateScreen(Constants.winAllLevelsMessage, winTexture);
                     }
                     else
                     {
@@ -136,7 +135,7 @@ namespace MonoGame2D
                 }
                 // Se game over
                 if (gameOver)
-                {                   
+                {
                     drawStateScreen(Constants.restartMessage, gameOverTexture);
                 }
                 // Se morreu, mas tem vida ainda
@@ -162,7 +161,7 @@ namespace MonoGame2D
             frooger.setAngle(Constants.angleFrogger0);
             verifyLevel(level);
             obstacles.Clear();
-            loopNewObstaclesControl = 0;
+            controlNewObstacles.setLoopControl(0);
             controlChangeStreeat.setLoopControl(0);
         }
 
@@ -204,7 +203,7 @@ namespace MonoGame2D
                     win = thePalyerWin();
                 }
             }
-        }      
+        }
 
         // Metodo de leitura do teclado
         void KeyboardHandler()
@@ -329,7 +328,7 @@ namespace MonoGame2D
             lives = nunberOfLives;
             score = initialScore;
             level = initialLevel;
-            loooNewObstaclesIncrease = initialObstacleFrequency;
+            controlNewObstacles.setLoopIncrease(initialObstacleFrequency);
             controlChangeStreeat.setLoopIncrease(changeStreatFrequency);
             froggerPass = initialFroggerPass;
         }
@@ -376,17 +375,6 @@ namespace MonoGame2D
             validLines.Add((float)(screenHeight - screenHeight / 1.975));
             validLines.Add((float)(screenHeight - screenHeight / 1.725));
             validLines.Add((float)(screenHeight - screenHeight / 1.465));
-        }
-
-        // Verifica se tá na hora de por mais obstaculos
-        public void verifyIfNeedMoreObstacles()
-        {
-            if (loopNewObstaclesControl == loooNewObstaclesIncrease)
-            {
-                loopNewObstaclesControl = 0;
-                spawnNewObstacle();
-            }
-            loopNewObstaclesControl++;
         }
 
         // Verifica se o jogador ganhou o jogo
@@ -439,72 +427,23 @@ namespace MonoGame2D
         // Metodo de controle do avanço de nivel
         public void verifyLevel(int levelAux)
         {
-            if (levelAux > 1 && levelAux < (Constants.maxLevel+1))
+            if (levelAux > 1 && levelAux < (Constants.maxLevel + 1))
             {
-                loooNewObstaclesIncrease = loooNewObstaclesIncrease - Constants.decFrequencyObstacle;
+                controlNewObstacles.setLoopControl(controlNewObstacles.getLoopIncrease() - Constants.decFrequencyObstacle);
                 controlChangeStreeat.setLoopIncrease(controlChangeStreeat.getLoopIncrease() - Constants.decFrequencyChangeStreat);
                 froggerPass = (float)(froggerPass - Constants.decFroggerPass);
-                score = score + (pointsForWin* lives * (levelAux - 1));
+                score = score + (pointsForWin * lives * (levelAux - 1));
                 acelerationToLeft = (float)(acelerationToLeft - Constants.decAceleration);
                 aceleretionToRigth = (float)(aceleretionToRigth + Constants.decAceleration);
             }
             else
             {
-                loooNewObstaclesIncrease = Constants.intervalBetwenNewObstacleLoop;
+                controlNewObstacles.setLoopIncrease(Constants.intervalBetwenNewObstacleLoop);
                 controlChangeStreeat.setLoopIncrease(Constants.intervalBetwenChangeStreat);
                 froggerPass = Constants.initialFroggerPass;
                 score = Constants.initialScore;
                 acelerationToLeft = Constants.leftAceleration;
                 aceleretionToRigth = Constants.rigthAceleration;
-            }
-        }
-
-        // Metodo de inserção aleatoria de tipo e rua dos obstaculos
-        public void spawnNewObstacle()
-        {
-            Obstacles cart;
-            // Seleciona aleatoriamente um tipo de carroça
-            int typeOfCart = random.Next(1, 4);
-            switch (typeOfCart)
-            {
-                case 1:
-                    cart = new Obstacles(GraphicsDevice, Constants.redCartSprites, scale);
-                    break;
-                case 2:
-                    cart = new Obstacles(GraphicsDevice, Constants.greenCartSprites, scale);
-                    break;
-                default:
-                    cart = new Obstacles(GraphicsDevice, Constants.purpleCartSprites, scale);
-                    break;
-            }
-            int streeat = random.Next(1, 7);
-            //Seleciona aleatoriamente uma rua para a coarroça
-            // Cuida pra não por duas carroças seguidas na mesma rua
-            if (lastInserts.Count != 0)
-            {
-                while (lastInserts[lastInserts.Count - 1] == streeat)
-                {
-                    streeat = random.Next(1, 7);
-                }
-            }
-            cart.setStreat(streeat);
-            cart.setY(validLines[streeat - 1]);
-            if (streeat % 2 != 0)
-            {
-                cart.setX(streeLeftLimit);
-                cart.setDx((float)(aceleretionToRigth * (Constants.acelerationFactor * (streeat + 2))));
-                cart.setAngle(Constants.angleObstacleToRigth);
-            }
-            else
-            {
-                cart.setX(streeRigthLimit);
-                cart.setDx((float)(acelerationToLeft * (Constants.acelerationFactor * (streeat + 2))));
-                cart.setAngle(Constants.angleObstacleToLeft);
-            }
-            if (validLines.Contains(cart.getY()))
-            {
-                lastInserts.Add(streeat);
-                obstacles.Add(cart);
             }
         }
     }

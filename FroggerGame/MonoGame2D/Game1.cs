@@ -27,8 +27,6 @@ namespace MonoGame2D
         // Variaveis de posicionamento e limitação do ruas
         float screenWidth;
         float screenHeight;
-        float streeLeftLimit;
-        float streeRigthLimit;
         List<float> validLines = new List<float>();
         // Variaveis posicionamento angular e aceleração todas já iniializadas aqui
         float aceleretionToRigth = Constants.rigthAceleration;
@@ -92,11 +90,11 @@ namespace MonoGame2D
         {
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             KeyboardHandler();
-            controlNewObstacles.verifyIfNeedMoreObstacles(GraphicsDevice, obstacles, validLines, aceleretionToRigth, acelerationToLeft, streeLeftLimit, streeRigthLimit);
+            controlNewObstacles.verifyIfNeedMoreObstacles(GraphicsDevice, obstacles, validLines, aceleretionToRigth, acelerationToLeft);
             controlChangeStreeat.verifyChangeStreatObstacles(obstacles, validLines, aceleretionToRigth, acelerationToLeft);
             colisionsControl(elapsedTime);
-            UpdateAllObstacles(elapsedTime);
-            VerifyIfObstaclesIsOutOfScreen();
+            controlNewObstacles.UpdateAllObstacles(obstacles, elapsedTime);
+            controlNewObstacles.VerifyIfObstaclesIsOutOfScreen(obstacles);
             base.Update(gameTime);
         }
 
@@ -111,7 +109,7 @@ namespace MonoGame2D
             {
                 frooger.Draw(spriteBatch);
             }
-            DrawAllObstacles(spriteBatch);
+            controlNewObstacles.DrawAllObstacles(obstacles, spriteBatch);
             // Se o jogo ainda não começou fica em tela de inicio
             if (!gameStarted)
             {
@@ -178,7 +176,7 @@ namespace MonoGame2D
             dead = thePlayerDead;
         }
 
-        // Conjtrola colisões e seus ecos nas ações do jogo
+        // Controla colisões e seus ecos nas ações do jogo
         public void colisionsControl(float elapsedTime)
         {
             if (beginPause > 0)
@@ -288,36 +286,6 @@ namespace MonoGame2D
             return f;
         }
 
-        // Metodo de atualização da posição de todos os obstaculos
-        public void UpdateAllObstacles(float elapsedTime)
-        {
-            for (int i = 0; i < obstacles.Count; i++)
-            {
-                obstacles[i].Update(elapsedTime);
-            }
-        }
-
-        // Metodo de desenho de todos os obstaculos na tela
-        public void DrawAllObstacles(SpriteBatch sprite)
-        {
-            for (int i = 0; i < obstacles.Count; i++)
-            {
-                obstacles[i].Draw(sprite);
-            }
-        }
-
-        // Verifica se o obstaculo já está em uma coodernada externa a tela utilizada
-        public void VerifyIfObstaclesIsOutOfScreen()
-        {
-            for (int i = 0; i < obstacles.Count; i++)
-            {
-                if ((obstacles[i].getX() < streeLeftLimit) || (obstacles[i].getX() > streeRigthLimit))
-                {
-                    obstacles.RemoveAt(i);
-                }
-            }
-        }
-
         // Iniciaza parametros de jogo
         public void startParametrs(bool isGameOver, bool isWin, bool isDead, bool theGameStart, int nunberOfLives, int initialScore, int initialLevel, int initialObstacleFrequency, int changeStreatFrequency, int initialFroggerPass)
         {
@@ -366,8 +334,8 @@ namespace MonoGame2D
             screenHeight = ScaleToHighDPI((float)ApplicationView.GetForCurrentView().VisibleBounds.Height);
             screenWidth = ScaleToHighDPI((float)ApplicationView.GetForCurrentView().VisibleBounds.Width);
             this.IsMouseVisible = false;
-            streeLeftLimit = -screenWidth / 17;
-            streeRigthLimit = screenWidth + screenWidth / 17;
+            controlNewObstacles.setStreeLeftLimit(-screenWidth / 17);
+            controlNewObstacles.setStreeRigthLimit(screenWidth + screenWidth / 17);
             validLines.Clear();
             validLines.Add((float)(screenHeight - screenHeight / 4.5));
             validLines.Add((float)(screenHeight - screenHeight / 3.05));

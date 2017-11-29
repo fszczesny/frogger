@@ -16,6 +16,8 @@ namespace MonoGame2D
         private int loopNewObstaclesControl;
         private int loooNewObstaclesIncrease;
         private float scale;
+        private float streeLeftLimit;
+        private float streeRigthLimit;
         private List<int> lastInserts;
         private Random random;
 
@@ -30,6 +32,16 @@ namespace MonoGame2D
             return this.scale;
         }
 
+        public float getStreeLeftLimit()
+        {
+            return this.streeLeftLimit;
+        }
+
+        public float getStreeRigthLimit()
+        {
+            return this.streeRigthLimit;
+        }
+
         public int getLoopControl()
         {
             return this.loopNewObstaclesControl;
@@ -38,6 +50,16 @@ namespace MonoGame2D
         public int getLoopIncrease()
         {
             return this.loooNewObstaclesIncrease;
+        }
+
+        public void setStreeLeftLimit(float toSet)
+        {
+            this.streeLeftLimit = toSet;
+        }
+
+        public void setStreeRigthLimit(float toSet)
+        {
+            this.streeRigthLimit = toSet;
         }
 
         public void setScale(float scaleToSet)
@@ -56,18 +78,18 @@ namespace MonoGame2D
         }
 
         // Verifica se tá na hora de por mais obstaculos
-        public void verifyIfNeedMoreObstacles(GraphicsDevice device, List<Obstacles> obstacles, List<float> validLines, float aceleretionToRigth, float acelerationToLeft, float streeLeftLimit, float streeRigthLimit)
+        public void verifyIfNeedMoreObstacles(GraphicsDevice device, List<Obstacles> obstacles, List<float> validLines, float aceleretionToRigth, float acelerationToLeft)
         {
             if (loopNewObstaclesControl == loooNewObstaclesIncrease)
             {
                 loopNewObstaclesControl = 0;
-                spawnNewObstacle(device, obstacles, validLines, aceleretionToRigth, acelerationToLeft, streeLeftLimit, streeRigthLimit);
+                spawnNewObstacle(device, obstacles, validLines, aceleretionToRigth, acelerationToLeft);
             }
             loopNewObstaclesControl++;
         }
 
         // Metodo de inserção aleatoria de tipo e rua dos obstaculos
-        public void spawnNewObstacle(GraphicsDevice device, List<Obstacles> obstacles, List<float> validLines, float aceleretionToRigth, float acelerationToLeft, float streeLeftLimit, float streeRigthLimit)
+        public void spawnNewObstacle(GraphicsDevice device, List<Obstacles> obstacles, List<float> validLines, float aceleretionToRigth, float acelerationToLeft)
         {
             Obstacles cart;
             // Seleciona aleatoriamente um tipo de carroça
@@ -112,6 +134,36 @@ namespace MonoGame2D
             {
                 lastInserts.Add(streeat);
                 obstacles.Add(cart);
+            }
+        }
+
+        // Verifica se o obstaculo já está em uma coodernada externa a tela utilizada
+        public void VerifyIfObstaclesIsOutOfScreen(List<Obstacles> obstacles)
+        {
+            for (int i = 0; i < obstacles.Count; i++)
+            {
+                if ((obstacles[i].getX() < streeLeftLimit) || (obstacles[i].getX() > streeRigthLimit))
+                {
+                    obstacles.RemoveAt(i);
+                }
+            }
+        }
+
+        // Metodo de atualização da posição de todos os obstaculos
+        public void UpdateAllObstacles(List<Obstacles> obstacles, float elapsedTime)
+        {
+            for (int i = 0; i < obstacles.Count; i++)
+            {
+                obstacles[i].Update(elapsedTime);
+            }
+        }
+
+        // Metodo de desenho de todos os obstaculos na tela
+        public void DrawAllObstacles(List<Obstacles> obstacles, SpriteBatch sprite)
+        {
+            for (int i = 0; i < obstacles.Count; i++)
+            {
+                obstacles[i].Draw(sprite);
             }
         }
     }

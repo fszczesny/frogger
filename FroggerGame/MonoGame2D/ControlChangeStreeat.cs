@@ -8,24 +8,48 @@ namespace MonoGame2D
 {
     public class ControlChangeStreeat
     {
+        private int loopChangeStreatControl;
+        private int loooChangeStreatIncrease;
+        private Random random;
+
         public ControlChangeStreeat()
         {
+            random = new Random();
+        }
 
+        public int getLoopControl()
+        {
+            return this.loopChangeStreatControl;
+        }
+
+        public int getLoopIncrease()
+        {
+            return this.loooChangeStreatIncrease;
+        }
+
+        public void setLoopControl(int control)
+        {
+            this.loopChangeStreatControl = control;
+        }
+
+        public void setLoopIncrease(int increase)
+        {
+            this.loooChangeStreatIncrease = increase;
         }
 
         // Verifica se tá na hora de trocar a pista do obstaculos
-        public void verifyChangeStreatObstacles(List<Obstacles> obstacles, List<float> validLines, float aceleretionToRigth, float acelerationToLeft, Random random, float loopChangeStreatControl, float loooChangeStreatIncrease)
+        public void verifyChangeStreatObstacles(List<Obstacles> obstacles, List<float> validLines, float aceleretionToRigth, float acelerationToLeft)
         {
             if (loopChangeStreatControl == loooChangeStreatIncrease)
             {
                 loopChangeStreatControl = 0;
-                this.changeStreet(obstacles, validLines, aceleretionToRigth, acelerationToLeft, random);
+                changeStreet(obstacles, validLines, aceleretionToRigth, acelerationToLeft);
             }
             loopChangeStreatControl++;
         }
 
         // Metodo que realiza a troca de pista de um determinado obstaculo de forma aleatoria
-        public void changeStreet(List<Obstacles> obstacles, List<float> validLines, float aceleretionToRigth, float acelerationToLeft, Random random)
+        public void changeStreet(List<Obstacles> obstacles, List<float> validLines, float aceleretionToRigth, float acelerationToLeft)
         {
             int limit = obstacles.Count;
             if (limit > Constants.lessNumberToChangeStreat)

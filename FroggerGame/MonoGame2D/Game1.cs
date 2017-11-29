@@ -43,9 +43,7 @@ namespace MonoGame2D
             int lives;
             int level;
             int loopNewObstaclesControl;
-            int loopChangeStreatControl;
             int loooNewObstaclesIncrease;
-            int loooChangeStreatIncrease;
             int pointsForWin = Constants.pointsForWin;
             float froggerPass;
             int beginPause;
@@ -96,7 +94,7 @@ namespace MonoGame2D
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             KeyboardHandler();
             verifyIfNeedMoreObstacles();
-            controlChangeStreeat.verifyChangeStreatObstacles(obstacles, validLines, aceleretionToRigth, acelerationToLeft, random, loopChangeStreatControl, loooChangeStreatIncrease);
+            controlChangeStreeat.verifyChangeStreatObstacles(obstacles, validLines, aceleretionToRigth, acelerationToLeft);
             colisionsControl(elapsedTime);
             UpdateAllObstacles(elapsedTime);
             VerifyIfObstaclesIsOutOfScreen();         
@@ -165,7 +163,7 @@ namespace MonoGame2D
             verifyLevel(level);
             obstacles.Clear();
             loopNewObstaclesControl = 0;
-            loopChangeStreatControl = 0;
+            controlChangeStreeat.setLoopControl(0);
         }
 
         // Seta parametros para uso da proxima vida
@@ -332,7 +330,7 @@ namespace MonoGame2D
             score = initialScore;
             level = initialLevel;
             loooNewObstaclesIncrease = initialObstacleFrequency;
-            loooChangeStreatIncrease = changeStreatFrequency;
+            controlChangeStreeat.setLoopIncrease(changeStreatFrequency);
             froggerPass = initialFroggerPass;
         }
 
@@ -444,7 +442,7 @@ namespace MonoGame2D
             if (levelAux > 1 && levelAux < (Constants.maxLevel+1))
             {
                 loooNewObstaclesIncrease = loooNewObstaclesIncrease - Constants.decFrequencyObstacle;
-                loooChangeStreatIncrease = loooChangeStreatIncrease - Constants.decFrequencyChangeStreat;
+                controlChangeStreeat.setLoopIncrease(controlChangeStreeat.getLoopIncrease() - Constants.decFrequencyChangeStreat);
                 froggerPass = (float)(froggerPass - Constants.decFroggerPass);
                 score = score + (pointsForWin* lives * (levelAux - 1));
                 acelerationToLeft = (float)(acelerationToLeft - Constants.decAceleration);
@@ -453,7 +451,7 @@ namespace MonoGame2D
             else
             {
                 loooNewObstaclesIncrease = Constants.intervalBetwenNewObstacleLoop;
-                loooChangeStreatIncrease = Constants.intervalBetwenChangeStreat;
+                controlChangeStreeat.setLoopIncrease(Constants.intervalBetwenChangeStreat);
                 froggerPass = Constants.initialFroggerPass;
                 score = Constants.initialScore;
                 acelerationToLeft = Constants.leftAceleration;

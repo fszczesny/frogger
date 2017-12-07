@@ -102,6 +102,7 @@
     </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="ControlChangeStreeat.cs" />
+    <Compile Include="ControlGameParameters.cs" />
     <Compile Include="ControlNewObstacles.cs" />
     <Compile Include="GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>

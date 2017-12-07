@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MonoGame2D
 {
-    class Player
+    public class Player
     {
         private const float HITBOXSCALE = 0.25f;
 

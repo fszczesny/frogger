@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MonoGame2D
 {
-    class ControlNewObstacles
+    public class ControlNewObstacles
     {
         private int loopNewObstaclesControl;
         private int loooNewObstaclesIncrease;

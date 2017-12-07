@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace MonoGame2D
 {
     //Classe de contantes utilizadas no jogo
-    static class Constants
+    public static class Constants
     {
         // Constante de diretorio ativo
         public const string directory = "Content";

@@ -28,24 +28,6 @@ namespace MonoGame2D
         float screenWidth;
         float screenHeight;
         List<float> validLines = new List<float>();
-        // Variaveis posicionamento angular e aceleração todas já iniializadas aqui
-        float aceleretionToRigth = Constants.rigthAceleration;
-        float acelerationToLeft = Constants.leftAceleration;
-        // Variaveis de controle de estado de jogo
-        bool gameStarted;
-        bool gameOver;
-        bool dead;
-        bool win;
-        int score;
-        int lives;
-        int level;
-        //int loopNewObstaclesControl;
-        //int loooNewObstaclesIncrease;
-        int pointsForWin = Constants.pointsForWin;
-        float froggerPass;
-        int beginPause;
-        // Variavel para geração ramdomica
-        Random random;
         // Declaração do objeto Player que representa o frogger
         Player frooger;
         // Declaração da lista de obstaculos e sua lista auxiliar de frequencia
@@ -53,6 +35,7 @@ namespace MonoGame2D
         // Declara objeto de controle de troca de rua
         ControlChangeStreeat controlChangeStreeat = new ControlChangeStreeat();
         ControlNewObstacles controlNewObstacles = new ControlNewObstacles();
+        ControlGameParameters controlParameters = new ControlGameParameters();
         // Fim da declaração de globais da classe
 
         public Game1()
@@ -66,7 +49,6 @@ namespace MonoGame2D
         {
             base.Initialize();
             startParametrs(false, false, false, false, Constants.initialLives, Constants.initialScore, Constants.initialLevel, Constants.intervalBetwenNewObstacleLoop, Constants.intervalBetwenChangeStreat, Constants.initialFroggerPass);
-            random = new Random();
             startScreenConfigs();
         }
 
@@ -90,9 +72,9 @@ namespace MonoGame2D
         {
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             KeyboardHandler();
-            controlNewObstacles.verifyIfNeedMoreObstacles(GraphicsDevice, obstacles, validLines, aceleretionToRigth, acelerationToLeft);
-            controlChangeStreeat.verifyChangeStreatObstacles(obstacles, validLines, aceleretionToRigth, acelerationToLeft);
-            colisionsControl(elapsedTime);
+            controlNewObstacles.verifyIfNeedMoreObstacles(GraphicsDevice, obstacles, validLines, controlParameters.getAcelerationToR(), controlParameters.getAcelerationToL());
+            controlChangeStreeat.verifyChangeStreatObstacles(obstacles, validLines, controlParameters.getAcelerationToR(), controlParameters.getAcelerationToL());
+            controlParameters.colisionsControl(elapsedTime, frooger, obstacles, bloodTexture, screenHeight);
             controlNewObstacles.UpdateAllObstacles(obstacles, elapsedTime);
             controlNewObstacles.VerifyIfObstaclesIsOutOfScreen(obstacles);
             base.Update(gameTime);
@@ -105,13 +87,13 @@ namespace MonoGame2D
             spriteBatch.Begin();
             // Desenha objetos
             spriteBatch.Draw(background, new Rectangle(0, 0, (int)screenWidth, (int)screenHeight), Color.White);
-            if (beginPause <= 0)
+            if (controlParameters.getPause() <= 0)
             {
                 frooger.Draw(spriteBatch);
             }
             controlNewObstacles.DrawAllObstacles(obstacles, spriteBatch);
             // Se o jogo ainda não começou fica em tela de inicio
-            if (!gameStarted)
+            if (!controlParameters.getGameStarted())
             {
                 showBeforeStartScreen(spriteBatch);
             }
@@ -119,10 +101,10 @@ namespace MonoGame2D
             {
                 drawInterfaceOfPontuation();
                 // Se ganhou
-                if (win)
+                if (controlParameters.getWin())
                 {
                     // Verifica se atingiu nivel maximo
-                    if (level == Constants.maxLevel)
+                    if (controlParameters.getLevel() == Constants.maxLevel)
                     {
                         drawStateScreen(Constants.winAllLevelsMessage, winTexture);
                     }
@@ -132,12 +114,12 @@ namespace MonoGame2D
                     }
                 }
                 // Se game over
-                if (gameOver)
+                if (controlParameters.getGameOver())
                 {
                     drawStateScreen(Constants.restartMessage, gameOverTexture);
                 }
                 // Se morreu, mas tem vida ainda
-                else if (dead)
+                else if (controlParameters.getDead())
                 {
                     drawStateScreen(Constants.deadAndNextLiveMessage, skullTexture);
                 }
@@ -151,13 +133,13 @@ namespace MonoGame2D
         // Metodo de inicio do jogo
         public void StartGame()
         {
-            beginPause = Constants.ignoreKyboardLoop;
-            level++;
+            controlParameters.setPause(Constants.ignoreKyboardLoop);
+            controlParameters.setLevel(controlParameters.getLevel() + 1);
             frooger.setTexture(froggerTexture);
             frooger.setX(screenWidth / 2);
             frooger.setY(screenHeight - (screenHeight / 8));
             frooger.setAngle(Constants.angleFrogger0);
-            verifyLevel(level);
+            verifyLevel(controlParameters.getLevel());
             obstacles.Clear();
             controlNewObstacles.setLoopControl(0);
             controlChangeStreeat.setLoopControl(0);
@@ -170,37 +152,11 @@ namespace MonoGame2D
             frooger.setTexture(froggerTexture);
             frooger.setX(screenWidth / 2);
             frooger.setY(screenHeight - (screenHeight / 8));
-            gameStarted = theGameStarted;
-            gameOver = theGameOver;
-            win = thePlayerWined;
-            dead = thePlayerDead;
-        }
 
-        // Controla colisões e seus ecos nas ações do jogo
-        public void colisionsControl(float elapsedTime)
-        {
-            if (beginPause > 0)
-            {
-                beginPause--;
-            }
-            else
-            {
-                if (!win && !gameOver && !dead)
-                {
-                    frooger.Update(elapsedTime);
-                    if (frooger.verifyColisionWithObstacles(obstacles))
-                    {
-                        lives--;
-                        frooger.setTexture(bloodTexture);
-                        if (lives == 0)
-                        {
-                            gameOver = true;
-                        }
-                        dead = true;
-                    }
-                    win = thePalyerWin();
-                }
-            }
+            controlParameters.setGameStarted(theGameStarted);
+            controlParameters.setGameOver(theGameOver);
+            controlParameters.setWin(thePlayerWined);
+            controlParameters.setDead(thePlayerDead);
         }
 
         // Metodo de leitura do teclado
@@ -213,7 +169,7 @@ namespace MonoGame2D
                 Exit();
             }
             // Inicia o jogo de a tecla espaço for precionada.
-            if (!gameStarted)
+            if (!controlParameters.getGameStarted())
             {
                 if (state.IsKeyDown(Keys.Space))
                 {
@@ -222,24 +178,24 @@ namespace MonoGame2D
                 return;
             }
             // Reinicia se for precionado enter após game over
-            if (gameOver && state.IsKeyDown(Keys.Enter))
+            if (controlParameters.getGameOver() && state.IsKeyDown(Keys.Enter))
             {
-                startParametrs(this.gameOver, this.win, this.dead, this.gameStarted, Constants.initialLives, Constants.initialScore, Constants.initialLevel, Constants.intervalBetwenNewObstacleLoop, Constants.intervalBetwenChangeStreat, Constants.initialFroggerPass);
+                startParametrs(controlParameters.getGameOver(), controlParameters.getWin(), controlParameters.getDead(), controlParameters.getGameStarted(), Constants.initialLives, Constants.initialScore, Constants.initialLevel, Constants.intervalBetwenNewObstacleLoop, Constants.intervalBetwenChangeStreat, Constants.initialFroggerPass);
                 startParametersWhithKeyboard(true, false, false, false);
             }
-            if (dead && state.IsKeyDown(Keys.Space) && !gameOver)
+            if (controlParameters.getDead() && state.IsKeyDown(Keys.Space) && !controlParameters.getGameOver())
             {
                 StartNextLive(true, false, false, false);
             }
-            if (win && state.IsKeyDown(Keys.Enter))
+            if (controlParameters.getWin() && state.IsKeyDown(Keys.Enter))
             {
-                if (level == Constants.maxLevel)
+                if (controlParameters.getLevel() == Constants.maxLevel)
                 {
-                    level = 0;
+                    controlParameters.setLevel(0);
                 }
                 startParametersWhithKeyboard(true, false, false, false);
             }
-            if (beginPause <= 0 && !win && !gameOver && !dead)
+            if (controlParameters.getPause() <= 0 && !controlParameters.getWin() && !controlParameters.getGameOver() && !controlParameters.getDead())
             {
 
                 // Controla teclas de direção com controle de area da tela a ser usada
@@ -248,7 +204,7 @@ namespace MonoGame2D
                     frooger.setAngle(Constants.angleFrogger0);
                     if (frooger.getY() > (screenHeight / 5))
                     {
-                        frooger.setY(frooger.getY() - froggerPass);
+                        frooger.setY(frooger.getY() - controlParameters.getPass());
                     }
                 }
                 else if (state.IsKeyDown(Keys.Down) || state.IsKeyDown(Keys.S))
@@ -256,7 +212,7 @@ namespace MonoGame2D
                     frooger.setAngle(Constants.angleFrogger180);
                     if (frooger.getY() < (screenHeight - (screenHeight / 8)))
                     {
-                        frooger.setY(frooger.getY() + froggerPass);
+                        frooger.setY(frooger.getY() + controlParameters.getPass());
                     }
                 }
                 else if (state.IsKeyDown(Keys.Left) || (state.IsKeyDown(Keys.A)))
@@ -264,7 +220,7 @@ namespace MonoGame2D
                     frooger.setAngle(Constants.angleFrogger90);
                     if (frooger.getX() > screenWidth / 20)
                     {
-                        frooger.setX(frooger.getX() - froggerPass);
+                        frooger.setX(frooger.getX() - controlParameters.getPass());
                     }
                 }
                 else if (state.IsKeyDown(Keys.Right) || state.IsKeyDown(Keys.D))
@@ -272,7 +228,7 @@ namespace MonoGame2D
                     frooger.setAngle(Constants.angleFrogger270);
                     if (frooger.getX() < (screenWidth - (screenWidth / 20)))
                     {
-                        frooger.setX(frooger.getX() + froggerPass);
+                        frooger.setX(frooger.getX() + controlParameters.getPass());
                     }
                 }
             }
@@ -289,25 +245,16 @@ namespace MonoGame2D
         // Iniciaza parametros de jogo
         public void startParametrs(bool isGameOver, bool isWin, bool isDead, bool theGameStart, int nunberOfLives, int initialScore, int initialLevel, int initialObstacleFrequency, int changeStreatFrequency, int initialFroggerPass)
         {
-            gameOver = isGameOver;
-            win = isWin;
-            dead = isDead;
-            gameStarted = theGameStart;
-            lives = nunberOfLives;
-            score = initialScore;
-            level = initialLevel;
+            controlParameters.startParametrs(isGameOver, isWin, isDead, theGameStart, nunberOfLives, initialScore, initialLevel);
             controlNewObstacles.setLoopIncrease(initialObstacleFrequency);
             controlChangeStreeat.setLoopIncrease(changeStreatFrequency);
-            froggerPass = initialFroggerPass;
+            controlParameters.setPass(initialFroggerPass);
         }
 
         public void startParametersWhithKeyboard(bool theGameStarted, bool theGameOver, bool thePlayerWined, bool thePlayerDead)
         {
             StartGame();
-            gameStarted = theGameStarted;
-            gameOver = theGameOver;
-            win = thePlayerWined;
-            dead = thePlayerDead;
+            controlParameters.startParametersWhithKeyboard(theGameStarted, theGameOver, thePlayerWined, thePlayerDead);
         }
 
         // Carrega textura de background do jogo 
@@ -345,19 +292,6 @@ namespace MonoGame2D
             validLines.Add((float)(screenHeight - screenHeight / 1.465));
         }
 
-        // Verifica se o jogador ganhou o jogo
-        public bool thePalyerWin()
-        {
-            if (gameStarted && frooger.getY() <= screenHeight / 5)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         // Carrega tela preta no inicio de jogo aguardando um espaço para iniciar
         // Insere temanho de fonte para escrita
         // Escreve centralizado
@@ -378,9 +312,9 @@ namespace MonoGame2D
         public void drawInterfaceOfPontuation()
         {
             spriteBatch.DrawString(scoreFont, Constants.scoreMessage, new Vector2((float)(screenWidth * 0.82), (float)(screenHeight * 0.046)), Color.Black);
-            spriteBatch.DrawString(scoreFont, score.ToString(), new Vector2((float)(screenWidth * 0.9), (float)(screenHeight * 0.046)), Color.Black);
+            spriteBatch.DrawString(scoreFont, controlParameters.getscore().ToString(), new Vector2((float)(screenWidth * 0.9), (float)(screenHeight * 0.046)), Color.Black);
             spriteBatch.DrawString(scoreFont, Constants.livesMessage, new Vector2((float)(screenWidth * 0.62), (float)(screenHeight * 0.046)), Color.Black);
-            spriteBatch.DrawString(scoreFont, lives.ToString(), new Vector2((float)(screenWidth * 0.7), (float)(screenHeight * 0.046)), Color.Black);
+            spriteBatch.DrawString(scoreFont, controlParameters.getLives().ToString(), new Vector2((float)(screenWidth * 0.7), (float)(screenHeight * 0.046)), Color.Black);
             spriteBatch.DrawString(scoreFont, Constants.timeMessage, new Vector2((float)(screenWidth * 0.036), (float)(screenHeight * 0.046)), Color.Black);
         }
 
@@ -399,19 +333,13 @@ namespace MonoGame2D
             {
                 controlNewObstacles.setLoopControl(controlNewObstacles.getLoopIncrease() - Constants.decFrequencyObstacle);
                 controlChangeStreeat.setLoopIncrease(controlChangeStreeat.getLoopIncrease() - Constants.decFrequencyChangeStreat);
-                froggerPass = (float)(froggerPass - Constants.decFroggerPass);
-                score = score + (pointsForWin * lives * (levelAux - 1));
-                acelerationToLeft = (float)(acelerationToLeft - Constants.decAceleration);
-                aceleretionToRigth = (float)(aceleretionToRigth + Constants.decAceleration);
+                controlParameters.startNextLevelParameters(levelAux);
             }
             else
             {
                 controlNewObstacles.setLoopIncrease(Constants.intervalBetwenNewObstacleLoop);
                 controlChangeStreeat.setLoopIncrease(Constants.intervalBetwenChangeStreat);
-                froggerPass = Constants.initialFroggerPass;
-                score = Constants.initialScore;
-                acelerationToLeft = Constants.leftAceleration;
-                aceleretionToRigth = Constants.rigthAceleration;
+                controlParameters.startBeginParameters();
             }
         }
     }

@@ -8,41 +8,60 @@ using System.Threading.Tasks;
 
 namespace MonoGame2D
 {
-    class Player
+    public class Player
     {
-        const float HITBOXSCALE = 0.25f;
-        public Texture2D texture
+        // Variaveis de controle 
+        private Texture2D texture;
+        private float x;
+        private float y;
+        private float angle;
+        private float scale;
+
+        // Getters e setters
+        public void setTexture(Texture2D texture)
         {
-            get;
-            set;
+            this.texture = texture;
         }
 
-        // coordenada x do centro do player
-        public float x
+        public void setX(float X)
         {
-            get;
-            set;
+            this.x = X;
         }
 
-        // coordenada y do centro do player
-        public float y
+        public void setY(float Y)
         {
-            get;
-            set;
+            this.y = Y;
         }
 
-        // Angulo central do player
-        public float angle
+        public void setAngle(float a)
         {
-            get;
-            set;
+            this.angle = a;
+        }
+        public void setScale(float scale)
+        {
+            this.scale = scale;
         }
 
-        // Escala do sprite do player
-        public float scale
+        public Texture2D getTexture()
         {
-            get;
-            set;
+            return this.texture;
+        }
+
+        public float getX()
+        {
+            return this.x;
+        }
+        public float getY()
+        {
+            return this.y;
+        }
+        public float getAngle()
+        {
+            return this.angle;
+        }
+        public float getScale()
+        {
+            return this.scale;
         }
 
         // Construtor da classe
@@ -65,36 +84,14 @@ namespace MonoGame2D
             // Determina posição do player
             Vector2 spritePosition = new Vector2(this.x, this.y);
             // Desenha o sprite
-            spriteBatch.Draw(texture, spritePosition, null, Color.White, this.angle, new Vector2(texture.Width / 2, texture.Height / 2), new Vector2(scale, scale), SpriteEffects.None, 0f);
-        }
-
-        // Verifica colisão do player com um determido obstaculo
-        public bool verifyColisionWithSpecificObstacle(Obstacles obstaclesSprite)
-        {
-            if (this.x + this.texture.Width * this.scale * HITBOXSCALE / 2 < obstaclesSprite.x - obstaclesSprite.texture.Width * obstaclesSprite.scale / 2)
-            {
-                return false;
-            }
-            if (this.y + this.texture.Height * this.scale * HITBOXSCALE / 2 < obstaclesSprite.y - obstaclesSprite.texture.Height * obstaclesSprite.scale / 2)
-            {
-                return false;
-            }
-            if (this.x - this.texture.Width * this.scale * HITBOXSCALE / 2 > obstaclesSprite.x + obstaclesSprite.texture.Width * obstaclesSprite.scale / 2)
-            {
-                return false;
-            }
-            if (this.y - this.texture.Height * this.scale * HITBOXSCALE / 2 > obstaclesSprite.y + obstaclesSprite.texture.Height * obstaclesSprite.scale / 2)
-            {
-                return false;
-            }
-            return true;
+            spriteBatch.Draw(texture, spritePosition, null, Color.White, this.angle, new Vector2(texture.Width / Constants.two, texture.Height / Constants.two), new Vector2(scale, scale), SpriteEffects.None, 0f);
         }
 
         // Verifica colisão do player com algum obstaculo presente na lista de obstaculos passada
         public bool verifyColisionWithObstacles(List<Obstacles> obstaclesList)
         {
             int i;
-            for (i=0; i < obstaclesList.Count; i++)
+            for (i= Constants.zero; i < obstaclesList.Count; i++)
             {
                 if (this.verifyColisionWithSpecificObstacle(obstaclesList.ElementAt(i)))
                 {
@@ -102,6 +99,34 @@ namespace MonoGame2D
                 }
             }
             return false;
+        }
+
+        // Verifica colisão do player com um determido obstaculo
+        private bool verifyColisionWithSpecificObstacle(Obstacles obstaclesSprite)
+        {
+            if (this.x + this.texture.Width * this.scale * Constants.HitBoxPlayer / Constants.two < obstaclesSprite.getX() - obstaclesSprite.getTexture().Width * obstaclesSprite.getScale() / Constants.two)
+            {
+                return false;
+            }
+            if (this.y + this.texture.Height * this.scale * Constants.HitBoxPlayer / Constants.two < obstaclesSprite.getY() - obstaclesSprite.getTexture().Height * obstaclesSprite.getScale() / Constants.two)
+            {
+                return false;
+            }
+            if (this.x - this.texture.Width * this.scale * Constants.HitBoxPlayer / Constants.two > obstaclesSprite.getX() + obstaclesSprite.getTexture().Width * obstaclesSprite.getScale() / Constants.two)
+            {
+                return false;
+            }
+            if (this.y - this.texture.Height * this.scale * Constants.HitBoxPlayer / Constants.two > obstaclesSprite.getY() + obstaclesSprite.getTexture().Height * obstaclesSprite.getScale() / Constants.two)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        // Destrutor
+        ~Player()
+        {
+
         }
     }
 }

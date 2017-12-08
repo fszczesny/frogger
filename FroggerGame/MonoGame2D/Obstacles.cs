@@ -8,54 +8,87 @@ using System.Threading.Tasks;
 
 namespace MonoGame2D
 {
-    class Obstacles
-    {
-        // Imagem do sprite
-        public Texture2D texture
+    public class Obstacles
+    {      
+        // Variaveis de controle
+        private Texture2D texture;
+        private float x;
+        private float y;
+        private float angle;
+        private float dX;
+        private float dY;
+        private float scale;
+        private int streat;
+
+        // Getters e setters
+        public void setTexture(Texture2D texture)
         {
-            get;
+            this.texture = texture;
         }
 
-        // Coordenadas x centrais do obstatulo
-        public float x
+        public void setX(float X)
         {
-            get;
-            set;
+            this.x = X;
         }
 
-        // Coordenadas y centrais do obstaculo
-        public float y
+        public void setY(float Y)
         {
-            get;
-            set;
+            this.y = Y;
         }
 
-        // Angulo central do obstaculo
-        public float angle
+        public void setAngle(float a)
         {
-            get;
-            set;
+            this.angle = a;
+        }
+        public void setScale(float scale)
+        {
+            this.scale = scale;
+        }
+        public void setDx(float dx)
+        {
+            this.dX = dx;
+        }
+        public void setDy(float dy)
+        {
+            this.dY = dy;
+        }
+        public void setStreat(int s)
+        {
+            this.streat = s;
         }
 
-        // Acelearção em x do obstaculo
-        public float dX
+        public Texture2D getTexture()
         {
-            get;
-            set;
+            return this.texture;
         }
 
-        // Aceleração em y do obstaculo
-        public float dY
+        public float getX()
         {
-            get;
-            set;
+            return this.x;
         }
-
-        // Escala do sprite
-        public float scale
+        public float getY()
         {
-            get;
-            set;
+            return this.y;
+        }
+        public float getAngle()
+        {
+            return this.angle;
+        }
+        public float getScale()
+        {
+            return this.scale;
+        }
+        public float getDx()
+        {
+            return this.dX;
+        }
+        public float getDy()
+        {
+            return this.dY;
+        }
+        public int getStreat()
+        {
+            return this.streat;
         }
 
         // Construtor
@@ -69,7 +102,7 @@ namespace MonoGame2D
         // Atualiza os dados do obstaculo
         public void Update(float elapsedTime)
         {
-            this.x = this.x + this.dX * 3;
+            this.x = this.x + this.dX * Constants.obstacleAcelerationPar;
         }
 
         // Desenha o obstaculo
@@ -78,7 +111,46 @@ namespace MonoGame2D
             // Determina a posição do obstaculo
             Vector2 spritePosition = new Vector2(this.x, this.y);
             // Desenha o obstaculo
-            spriteBatch.Draw(texture, spritePosition, null, Color.White, this.angle, new Vector2(texture.Width / 2, texture.Height / 2), new Vector2(scale, scale), SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, spritePosition, null, Color.White, this.angle, new Vector2(texture.Width / Constants.two, texture.Height / Constants.two), new Vector2(scale, scale), SpriteEffects.None, 0f);
+        }
+
+        // Verifica colisão do obstaculo com um determido obstaculo
+        private bool verifyColisionWithSpecificObstacle(Obstacles obstaclesSprite)
+        {
+            if (this.x + this.texture.Width * this.scale * Constants.HitBoxObstacle / Constants.two < obstaclesSprite.x - obstaclesSprite.texture.Width * obstaclesSprite.scale / Constants.two)
+            {
+                return false;
+            }
+            if (this.y + this.texture.Height * this.scale * Constants.HitBoxObstacle / Constants.two < obstaclesSprite.y - obstaclesSprite.texture.Height * obstaclesSprite.scale / Constants.two)
+            {
+                return false;
+            }
+            if (this.x - this.texture.Width * this.scale * Constants.HitBoxObstacle / Constants.two > obstaclesSprite.x + obstaclesSprite.texture.Width * obstaclesSprite.scale / Constants.two)
+            {
+                return false;
+            }
+            if (this.y - this.texture.Height * this.scale * Constants.HitBoxObstacle / Constants.two > obstaclesSprite.y + obstaclesSprite.texture.Height * obstaclesSprite.scale / Constants.two)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        // Verifica colisão do obstaculo com algum obstaculo presente na lista de obstaculos passada
+        public bool verifyColisionObsttacleWithObstacles(List<Obstacles> obstaclesList, int postitionToIgnore)
+        {
+            int i;
+            for (i = Constants.zero; i < obstaclesList.Count; i++)
+            {
+                if (i != postitionToIgnore)
+                {
+                    if (this.verifyColisionWithSpecificObstacle(obstaclesList.ElementAt(i)))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         // Destrutor

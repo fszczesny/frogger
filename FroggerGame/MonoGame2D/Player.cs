@@ -10,8 +10,6 @@ namespace MonoGame2D
 {
     public class Player
     {
-        private const float HITBOXSCALE = 0.25f;
-
         private Texture2D texture;
         private float x;
         private float y;
@@ -84,14 +82,14 @@ namespace MonoGame2D
             // Determina posição do player
             Vector2 spritePosition = new Vector2(this.x, this.y);
             // Desenha o sprite
-            spriteBatch.Draw(texture, spritePosition, null, Color.White, this.angle, new Vector2(texture.Width / 2, texture.Height / 2), new Vector2(scale, scale), SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, spritePosition, null, Color.White, this.angle, new Vector2(texture.Width / Constants.two, texture.Height / Constants.two), new Vector2(scale, scale), SpriteEffects.None, 0f);
         }
 
         // Verifica colisão do player com algum obstaculo presente na lista de obstaculos passada
         public bool verifyColisionWithObstacles(List<Obstacles> obstaclesList)
         {
             int i;
-            for (i=0; i < obstaclesList.Count; i++)
+            for (i= Constants.zero; i < obstaclesList.Count; i++)
             {
                 if (this.verifyColisionWithSpecificObstacle(obstaclesList.ElementAt(i)))
                 {
@@ -104,19 +102,19 @@ namespace MonoGame2D
         // Verifica colisão do player com um determido obstaculo
         private bool verifyColisionWithSpecificObstacle(Obstacles obstaclesSprite)
         {
-            if (this.x + this.texture.Width * this.scale * HITBOXSCALE / 2 < obstaclesSprite.getX() - obstaclesSprite.getTexture().Width * obstaclesSprite.getScale() / 2)
+            if (this.x + this.texture.Width * this.scale * Constants.HitBoxPlayer / Constants.two < obstaclesSprite.getX() - obstaclesSprite.getTexture().Width * obstaclesSprite.getScale() / Constants.two)
             {
                 return false;
             }
-            if (this.y + this.texture.Height * this.scale * HITBOXSCALE / 2 < obstaclesSprite.getY() - obstaclesSprite.getTexture().Height * obstaclesSprite.getScale() / 2)
+            if (this.y + this.texture.Height * this.scale * Constants.HitBoxPlayer / Constants.two < obstaclesSprite.getY() - obstaclesSprite.getTexture().Height * obstaclesSprite.getScale() / Constants.two)
             {
                 return false;
             }
-            if (this.x - this.texture.Width * this.scale * HITBOXSCALE / 2 > obstaclesSprite.getX() + obstaclesSprite.getTexture().Width * obstaclesSprite.getScale() / 2)
+            if (this.x - this.texture.Width * this.scale * Constants.HitBoxPlayer / Constants.two > obstaclesSprite.getX() + obstaclesSprite.getTexture().Width * obstaclesSprite.getScale() / Constants.two)
             {
                 return false;
             }
-            if (this.y - this.texture.Height * this.scale * HITBOXSCALE / 2 > obstaclesSprite.getY() + obstaclesSprite.getTexture().Height * obstaclesSprite.getScale() / 2)
+            if (this.y - this.texture.Height * this.scale * Constants.HitBoxPlayer / Constants.two > obstaclesSprite.getY() + obstaclesSprite.getTexture().Height * obstaclesSprite.getScale() / Constants.two)
             {
                 return false;
             }

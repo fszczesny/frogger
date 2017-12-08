@@ -25,6 +25,7 @@ namespace MonoGame2D
         public const float leftAceleration = -1;
         public const float angleObstacleToRigth = 0;
         public const float angleObstacleToLeft = (float)600.05;
+        public const int obstacleAcelerationPar = 3;
         // Constantes de controle de loop do jogo junto a atualização de obstaculos
         public const int intervalBetwenNewObstacleLoop = 70;
         public const int intervalBetwenChangeStreat = 100;
@@ -63,5 +64,48 @@ namespace MonoGame2D
         public const string scoreMessage = "Score: ";
         // Constantes de controle do loop de ignorar o teclado
         public const int ignoreKyboardLoop = 200;
+        // Volres contantes
+        public const int zero = 0;
+        public const int one = 1;
+        public const int two = 2;
+        public const int tree = 3;
+        public const int four = 4;
+        // Contantes magicas de posicionamento de elementos
+            public const int verticalBeginPositionOfFrogger = 5;
+            // Valores de limite dos randomicos de pista e tipo de carro;
+            public const int beginStreat = 1;
+            public const int endStreat = 7;
+            public const int beginType = 1;
+            public const int endType = 4;
+            // Valores do box de colisão
+            public const float HitBoxPlayer = 0.25f;
+            public const float HitBoxObstacle = 0.75f;
+            // Constantes de limites
+            public const int maxLimit = 20;
+            public const int minLimit = 8;
+            public const int leftAndRigthLimit = 17;
+            public const int beginPosition = 5;
+            // Constantes de determinação de ruas validas
+            public const float streat1 = (float)4.5;
+            public const float streat2 = (float)3.05;
+            public const float streat3 = (float)2.475;
+            public const float streat4 = (float)1.975;
+            public const float streat5 = (float)1.725;
+            public const float streat6 = (float)1.465;
+             // Constante de proporção escrita de mensagem
+            public const float messageConst = (float)0.81;
+            // Constantes de posicionamento feedback de pontos, vidas e tempo
+            public const float livesNameWidth = (float)0.62;
+            public const float livesNameHeigth = (float)0.046;
+            public const float timeNameWidth = (float)0.036;
+            public const float timeNameHeigth = (float)0.046;
+            public const float scoreNameWidth = (float)0.82;
+            public const float scoreNameHeigth = (float)0.046;
+            public const float livesValueWidth = (float)0.7;
+            public const float livesValueHeigth = (float)0.046;
+            public const float timeValueWidth = (float)0.045;
+            public const float timeValueHeigth = (float)0.046;
+            public const float scoreValueWidth = (float)0.9;
+            public const float scoreValueHeigth = (float)0.046;
     }
 }

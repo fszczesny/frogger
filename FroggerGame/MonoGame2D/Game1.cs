@@ -27,7 +27,6 @@ namespace MonoGame2D
         // Variaveis de posicionamento e limitação do ruas
         float screenWidth;
         float screenHeight;
-        List<float> validLines = new List<float>();
         // Declaração do objeto Player que representa o frogger
         Player frooger;
         // Declaração da lista de obstaculos e sua lista auxiliar de frequencia
@@ -72,8 +71,8 @@ namespace MonoGame2D
         {
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             KeyboardHandler();
-            controlNewObstacles.verifyIfNeedMoreObstacles(GraphicsDevice, obstacles, validLines, controlParameters.getAcelerationToR(), controlParameters.getAcelerationToL());
-            controlChangeStreeat.verifyChangeStreatObstacles(obstacles, validLines, controlParameters.getAcelerationToR(), controlParameters.getAcelerationToL());
+            controlNewObstacles.verifyIfNeedMoreObstacles(GraphicsDevice, obstacles, controlParameters.getValidLines(), controlParameters.getAcelerationToR(), controlParameters.getAcelerationToL());
+            controlChangeStreeat.verifyChangeStreatObstacles(obstacles, controlParameters.getValidLines(), controlParameters.getAcelerationToR(), controlParameters.getAcelerationToL());
             controlParameters.colisionsControl(elapsedTime, frooger, obstacles, bloodTexture, screenHeight);
             controlNewObstacles.UpdateAllObstacles(obstacles, elapsedTime);
             controlNewObstacles.VerifyIfObstaclesIsOutOfScreen(obstacles);
@@ -86,8 +85,8 @@ namespace MonoGame2D
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
             // Desenha objetos
-            spriteBatch.Draw(background, new Rectangle(0, 0, (int)screenWidth, (int)screenHeight), Color.White);
-            if (controlParameters.getPause() <= 0)
+            spriteBatch.Draw(background, new Rectangle(Constants.zero, Constants.zero, (int)screenWidth, (int)screenHeight), Color.White);
+            if (controlParameters.getPause() <= Constants.zero)
             {
                 frooger.Draw(spriteBatch);
             }
@@ -134,15 +133,15 @@ namespace MonoGame2D
         public void StartGame()
         {
             controlParameters.setPause(Constants.ignoreKyboardLoop);
-            controlParameters.setLevel(controlParameters.getLevel() + 1);
+            controlParameters.setLevel(controlParameters.getLevel() + Constants.one);
             frooger.setTexture(froggerTexture);
-            frooger.setX(screenWidth / 2);
-            frooger.setY(screenHeight - (screenHeight / 8));
+            frooger.setX(screenWidth / Constants.two);
+            frooger.setY(screenHeight - (screenHeight / Constants.minLimit));
             frooger.setAngle(Constants.angleFrogger0);
             verifyLevel(controlParameters.getLevel());
             obstacles.Clear();
-            controlNewObstacles.setLoopControl(0);
-            controlChangeStreeat.setLoopControl(0);
+            controlNewObstacles.setLoopControl(Constants.zero);
+            controlChangeStreeat.setLoopControl(Constants.zero);
         }
 
         // Seta parametros para uso da proxima vida
@@ -150,8 +149,8 @@ namespace MonoGame2D
         {
             frooger.setAngle(Constants.angleFrogger0);
             frooger.setTexture(froggerTexture);
-            frooger.setX(screenWidth / 2);
-            frooger.setY(screenHeight - (screenHeight / 8));
+            frooger.setX(screenWidth / Constants.two);
+            frooger.setY(screenHeight - (screenHeight / Constants.minLimit));
 
             controlParameters.setGameStarted(theGameStarted);
             controlParameters.setGameOver(theGameOver);
@@ -191,18 +190,18 @@ namespace MonoGame2D
             {
                 if (controlParameters.getLevel() == Constants.maxLevel)
                 {
-                    controlParameters.setLevel(0);
+                    controlParameters.setLevel(Constants.zero);
                 }
                 startParametersWhithKeyboard(true, false, false, false);
             }
-            if (controlParameters.getPause() <= 0 && !controlParameters.getWin() && !controlParameters.getGameOver() && !controlParameters.getDead())
+            if (controlParameters.getPause() <= Constants.zero && !controlParameters.getWin() && !controlParameters.getGameOver() && !controlParameters.getDead())
             {
 
                 // Controla teclas de direção com controle de area da tela a ser usada
                 if (state.IsKeyDown(Keys.Up) || state.IsKeyDown(Keys.W))
                 {
                     frooger.setAngle(Constants.angleFrogger0);
-                    if (frooger.getY() > (screenHeight / 5))
+                    if (frooger.getY() > (screenHeight / Constants.beginPosition))
                     {
                         frooger.setY(frooger.getY() - controlParameters.getPass());
                     }
@@ -210,7 +209,7 @@ namespace MonoGame2D
                 else if (state.IsKeyDown(Keys.Down) || state.IsKeyDown(Keys.S))
                 {
                     frooger.setAngle(Constants.angleFrogger180);
-                    if (frooger.getY() < (screenHeight - (screenHeight / 8)))
+                    if (frooger.getY() < (screenHeight - (screenHeight / Constants.minLimit)))
                     {
                         frooger.setY(frooger.getY() + controlParameters.getPass());
                     }
@@ -218,7 +217,7 @@ namespace MonoGame2D
                 else if (state.IsKeyDown(Keys.Left) || (state.IsKeyDown(Keys.A)))
                 {
                     frooger.setAngle(Constants.angleFrogger90);
-                    if (frooger.getX() > screenWidth / 20)
+                    if (frooger.getX() > screenWidth / Constants.maxLimit)
                     {
                         frooger.setX(frooger.getX() - controlParameters.getPass());
                     }
@@ -226,7 +225,7 @@ namespace MonoGame2D
                 else if (state.IsKeyDown(Keys.Right) || state.IsKeyDown(Keys.D))
                 {
                     frooger.setAngle(Constants.angleFrogger270);
-                    if (frooger.getX() < (screenWidth - (screenWidth / 20)))
+                    if (frooger.getX() < (screenWidth - (screenWidth / Constants.maxLimit)))
                     {
                         frooger.setX(frooger.getX() + controlParameters.getPass());
                     }
@@ -281,15 +280,9 @@ namespace MonoGame2D
             screenHeight = ScaleToHighDPI((float)ApplicationView.GetForCurrentView().VisibleBounds.Height);
             screenWidth = ScaleToHighDPI((float)ApplicationView.GetForCurrentView().VisibleBounds.Width);
             this.IsMouseVisible = false;
-            controlNewObstacles.setStreeLeftLimit(-screenWidth / 17);
-            controlNewObstacles.setStreeRigthLimit(screenWidth + screenWidth / 17);
-            validLines.Clear();
-            validLines.Add((float)(screenHeight - screenHeight / 4.5));
-            validLines.Add((float)(screenHeight - screenHeight / 3.05));
-            validLines.Add((float)(screenHeight - screenHeight / 2.475));
-            validLines.Add((float)(screenHeight - screenHeight / 1.975));
-            validLines.Add((float)(screenHeight - screenHeight / 1.725));
-            validLines.Add((float)(screenHeight - screenHeight / 1.465));
+            controlNewObstacles.setStreeLeftLimit(-screenWidth / Constants.leftAndRigthLimit);
+            controlNewObstacles.setStreeRigthLimit(screenWidth + screenWidth / Constants.leftAndRigthLimit);
+            controlParameters.setValidLines(screenHeight);
         }
 
         // Carrega tela preta no inicio de jogo aguardando um espaço para iniciar
@@ -297,13 +290,13 @@ namespace MonoGame2D
         // Escreve centralizado
         public void showBeforeStartScreen(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(startGameSplash, new Rectangle(0, 0, (int)screenWidth, (int)screenHeight), Color.White);
+            spriteBatch.Draw(startGameSplash, new Rectangle(Constants.zero, Constants.zero, (int)screenWidth, (int)screenHeight), Color.White);
             String title = Constants.startMessage;
             String pressSpace = Constants.askForASpaceMessage;
             Vector2 titleSize = stateFont.MeasureString(title);
             Vector2 pressSpaceSize = stateFont.MeasureString(pressSpace);
-            spriteBatch.DrawString(stateFont, title, new Vector2(screenWidth / 2 - titleSize.X / 2, screenHeight / 3), Color.ForestGreen);
-            spriteBatch.DrawString(stateFont, pressSpace, new Vector2(screenWidth / 2 - pressSpaceSize.X / 2, screenHeight / 2), Color.White);
+            spriteBatch.DrawString(stateFont, title, new Vector2(screenWidth / Constants.two - titleSize.X / Constants.two, screenHeight / Constants.tree), Color.ForestGreen);
+            spriteBatch.DrawString(stateFont, pressSpace, new Vector2(screenWidth / Constants.two - pressSpaceSize.X / Constants.two, screenHeight / Constants.two), Color.White);
         }
 
         // Desenha a pontuação
@@ -311,25 +304,26 @@ namespace MonoGame2D
         // Desenha o timer
         public void drawInterfaceOfPontuation()
         {
-            spriteBatch.DrawString(scoreFont, Constants.scoreMessage, new Vector2((float)(screenWidth * 0.82), (float)(screenHeight * 0.046)), Color.Black);
-            spriteBatch.DrawString(scoreFont, controlParameters.getscore().ToString(), new Vector2((float)(screenWidth * 0.9), (float)(screenHeight * 0.046)), Color.Black);
-            spriteBatch.DrawString(scoreFont, Constants.livesMessage, new Vector2((float)(screenWidth * 0.62), (float)(screenHeight * 0.046)), Color.Black);
-            spriteBatch.DrawString(scoreFont, controlParameters.getLives().ToString(), new Vector2((float)(screenWidth * 0.7), (float)(screenHeight * 0.046)), Color.Black);
-            spriteBatch.DrawString(scoreFont, Constants.timeMessage, new Vector2((float)(screenWidth * 0.036), (float)(screenHeight * 0.046)), Color.Black);
+            spriteBatch.DrawString(scoreFont, Constants.scoreMessage, new Vector2((float)(screenWidth * Constants.scoreNameWidth), (float)(screenHeight * Constants.scoreNameHeigth)), Color.Black);
+            spriteBatch.DrawString(scoreFont, controlParameters.getscore().ToString(), new Vector2((float)(screenWidth * Constants.scoreValueWidth), (float)(screenHeight * Constants.scoreValueHeigth)), Color.Black);
+            spriteBatch.DrawString(scoreFont, Constants.livesMessage, new Vector2((float)(screenWidth * Constants.livesNameWidth), (float)(screenHeight * Constants.livesNameHeigth)), Color.Black);
+            spriteBatch.DrawString(scoreFont, controlParameters.getLives().ToString(), new Vector2((float)(screenWidth * Constants.livesValueWidth), (float)(screenHeight * Constants.livesValueHeigth)), Color.Black);
+            spriteBatch.DrawString(scoreFont, Constants.timeMessage, new Vector2((float)(screenWidth * Constants.timeNameWidth), (float)(screenHeight * Constants.timeNameHeigth )), Color.Black);
+            // Aqui vai o print do timer
         }
 
         // Desenha tela e escrita centrais na tela de win e game over
         public void drawStateScreen(string pressEnter, Texture2D texture)
         {
-            spriteBatch.Draw(texture, new Vector2(screenWidth / 2 - texture.Width / 2, screenHeight / 4 - texture.Width / 2), Color.White);
+            spriteBatch.Draw(texture, new Vector2(screenWidth / Constants.two - texture.Width / Constants.two, screenHeight / Constants.four - texture.Width / Constants.two), Color.White);
             Vector2 pressEnterSize = stateFont.MeasureString(pressEnter);
-            spriteBatch.DrawString(stateFont, pressEnter, new Vector2(screenWidth / 2 - pressEnterSize.X / 2, (float)(screenHeight * 0.81)), Color.White);
+            spriteBatch.DrawString(stateFont, pressEnter, new Vector2(screenWidth / Constants.two - pressEnterSize.X / Constants.two, (float)(screenHeight * Constants.messageConst)), Color.White);
         }
 
         // Metodo de controle do avanço de nivel
         public void verifyLevel(int levelAux)
         {
-            if (levelAux > 1 && levelAux < (Constants.maxLevel + 1))
+            if (levelAux > Constants.one && levelAux < (Constants.maxLevel + Constants.one))
             {
                 controlNewObstacles.setLoopControl(controlNewObstacles.getLoopIncrease() - Constants.decFrequencyObstacle);
                 controlChangeStreeat.setLoopIncrease(controlChangeStreeat.getLoopIncrease() - Constants.decFrequencyChangeStreat);

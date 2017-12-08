@@ -82,7 +82,7 @@ namespace MonoGame2D
         {
             if (loopNewObstaclesControl == loooNewObstaclesIncrease)
             {
-                loopNewObstaclesControl = 0;
+                loopNewObstaclesControl = Constants.zero;
                 spawnNewObstacle(device, obstacles, validLines, aceleretionToRigth, acelerationToLeft);
             }
             loopNewObstaclesControl++;
@@ -93,7 +93,7 @@ namespace MonoGame2D
         {
             Obstacles cart;
             // Seleciona aleatoriamente um tipo de carroça
-            int typeOfCart = random.Next(1, 4);
+            int typeOfCart = random.Next(Constants.beginType, Constants.endType);
             switch (typeOfCart)
             {
                 case 1:
@@ -106,28 +106,28 @@ namespace MonoGame2D
                     cart = new Obstacles(device, Constants.purpleCartSprites, scale);
                     break;
             }
-            int streeat = random.Next(1, 7);
+            int streeat = random.Next(Constants.beginStreat, Constants.endStreat);
             //Seleciona aleatoriamente uma rua para a coarroça
             // Cuida pra não por duas carroças seguidas na mesma rua
-            if (lastInserts.Count != 0)
+            if (lastInserts.Count != Constants.zero)
             {
-                while (lastInserts[lastInserts.Count - 1] == streeat)
+                while (lastInserts[lastInserts.Count - Constants.one] == streeat)
                 {
-                    streeat = random.Next(1, 7);
+                    streeat = random.Next(Constants.beginStreat, Constants.endStreat);
                 }
             }
             cart.setStreat(streeat);
-            cart.setY(validLines[streeat - 1]);
-            if (streeat % 2 != 0)
+            cart.setY(validLines[streeat - Constants.one]);
+            if (streeat % Constants.two != Constants.zero)
             {
                 cart.setX(streeLeftLimit);
-                cart.setDx((float)(aceleretionToRigth * (Constants.acelerationFactor * (streeat + 2))));
+                cart.setDx((float)(aceleretionToRigth * (Constants.acelerationFactor * (streeat + Constants.two))));
                 cart.setAngle(Constants.angleObstacleToRigth);
             }
             else
             {
                 cart.setX(streeRigthLimit);
-                cart.setDx((float)(acelerationToLeft * (Constants.acelerationFactor * (streeat + 2))));
+                cart.setDx((float)(acelerationToLeft * (Constants.acelerationFactor * (streeat + Constants.two))));
                 cart.setAngle(Constants.angleObstacleToLeft);
             }
             if (validLines.Contains(cart.getY()))
@@ -140,7 +140,7 @@ namespace MonoGame2D
         // Verifica se o obstaculo já está em uma coodernada externa a tela utilizada
         public void VerifyIfObstaclesIsOutOfScreen(List<Obstacles> obstacles)
         {
-            for (int i = 0; i < obstacles.Count; i++)
+            for (int i = Constants.zero; i < obstacles.Count; i++)
             {
                 if ((obstacles[i].getX() < streeLeftLimit) || (obstacles[i].getX() > streeRigthLimit))
                 {
@@ -152,7 +152,7 @@ namespace MonoGame2D
         // Metodo de atualização da posição de todos os obstaculos
         public void UpdateAllObstacles(List<Obstacles> obstacles, float elapsedTime)
         {
-            for (int i = 0; i < obstacles.Count; i++)
+            for (int i = Constants.zero; i < obstacles.Count; i++)
             {
                 obstacles[i].Update(elapsedTime);
             }
@@ -161,7 +161,7 @@ namespace MonoGame2D
         // Metodo de desenho de todos os obstaculos na tela
         public void DrawAllObstacles(List<Obstacles> obstacles, SpriteBatch sprite)
         {
-            for (int i = 0; i < obstacles.Count; i++)
+            for (int i = Constants.zero; i < obstacles.Count; i++)
             {
                 obstacles[i].Draw(sprite);
             }

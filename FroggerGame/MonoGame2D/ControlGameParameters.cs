@@ -25,12 +25,18 @@ namespace MonoGame2D
         private int pointsForWin;
         private float froggerPass;
         private int beginPause;
+        List<float> validLines = new List<float>();
 
         public ControlGameParameters()
         {
             aceleretionToRigth = Constants.rigthAceleration;
             acelerationToLeft = Constants.leftAceleration;
             pointsForWin = Constants.pointsForWin;
+        }
+
+        public List<float> getValidLines()
+        {
+            return this.validLines;
         }
 
         public float getAcelerationToR()
@@ -108,6 +114,11 @@ namespace MonoGame2D
             this.gameOver = b;
         }
 
+        public void setValidLines( List<float> validLines)
+        {
+            this.validLines = validLines;
+        }
+
         public void setGameStarted(bool b)
         {
             this.gameStarted = b;
@@ -156,7 +167,7 @@ namespace MonoGame2D
         public void startNextLevelParameters(int levelAux)
         {
             froggerPass = (float)(froggerPass - Constants.decFroggerPass);
-            score = score + (pointsForWin * lives * (levelAux - 1));
+            score = score + (pointsForWin * lives * (levelAux - Constants.one)); // Ainda não leva em consideração o tempo
             acelerationToLeft = (float)(acelerationToLeft - Constants.decAceleration);
             aceleretionToRigth = (float)(aceleretionToRigth + Constants.decAceleration);
         }
@@ -191,7 +202,7 @@ namespace MonoGame2D
         // Verifica se o jogador ganhou o jogo
         public bool thePalyerWin(Player frooger, float screenHeight)
         {
-            if (gameStarted && frooger.getY() <= screenHeight / 5)
+            if (gameStarted && frooger.getY() <= screenHeight / Constants.verticalBeginPositionOfFrogger)
             {
                 return true;
             }
@@ -204,7 +215,7 @@ namespace MonoGame2D
         // Controla colisões e seus ecos nas ações do jogo
         public void colisionsControl(float elapsedTime, Player frooger, List<Obstacles> obstacles, Texture2D bloodTexture, float screenHeight)
         {
-            if (beginPause > 0)
+            if (beginPause > Constants.zero)
             {
                 beginPause--;
             }
@@ -217,7 +228,7 @@ namespace MonoGame2D
                     {
                         lives--;
                         frooger.setTexture(bloodTexture);
-                        if (lives == 0)
+                        if (lives == Constants.zero)
                         {
                             gameOver = true;
                         }
@@ -226,6 +237,17 @@ namespace MonoGame2D
                     win = thePalyerWin(frooger, screenHeight);
                 }
             }
+        }
+
+        public void setValidLines(float screenHeight)
+        {
+            validLines.Clear();
+            validLines.Add((float)(screenHeight - screenHeight / Constants.streat1));
+            validLines.Add((float)(screenHeight - screenHeight / Constants.streat2));
+            validLines.Add((float)(screenHeight - screenHeight / Constants.streat3));
+            validLines.Add((float)(screenHeight - screenHeight / Constants.streat4));
+            validLines.Add((float)(screenHeight - screenHeight / Constants.streat5));
+            validLines.Add((float)(screenHeight - screenHeight / Constants.streat6));
         }
     }
 }

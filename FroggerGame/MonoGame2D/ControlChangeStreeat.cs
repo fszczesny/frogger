@@ -42,7 +42,7 @@ namespace MonoGame2D
         {
             if (loopChangeStreatControl == loooChangeStreatIncrease)
             {
-                loopChangeStreatControl = 0;
+                loopChangeStreatControl = Constants.zero;
                 changeStreet(obstacles, validLines, aceleretionToRigth, acelerationToLeft);
             }
             loopChangeStreatControl++;
@@ -54,8 +54,8 @@ namespace MonoGame2D
             int limit = obstacles.Count;
             if (limit > Constants.lessNumberToChangeStreat)
             {
-                int position = random.Next(1, limit);
-                int streeat = random.Next(1, 7);
+                int position = random.Next(Constants.beginStreat, limit);
+                int streeat = random.Next(Constants.beginStreat, Constants.endStreat);
                 Obstacles obstacle = obstacles[position];
                 int originalstreat = obstacle.getStreat();
                 float originalY = obstacle.getY();
@@ -63,18 +63,18 @@ namespace MonoGame2D
                 float originalAngle = obstacle.getAngle();
                 while (obstacle.getStreat() == streeat)
                 {
-                    streeat = random.Next(1, 7);
+                    streeat = random.Next(Constants.beginStreat, Constants.endStreat);
                 }
                 obstacle.setStreat(streeat);
-                obstacle.setY(validLines[streeat - 1]);
+                obstacle.setY(validLines[streeat - Constants.one]);
                 if (streeat % 2 != 0)
                 {
-                    obstacle.setDx((float)(aceleretionToRigth * (Constants.acelerationFactor * (streeat + 2))));
+                    obstacle.setDx((float)(aceleretionToRigth * (Constants.acelerationFactor * (streeat + Constants.two))));
                     obstacle.setAngle(Constants.angleObstacleToRigth);
                 }
                 else
                 {
-                    obstacle.setDx((float)(acelerationToLeft * (Constants.acelerationFactor * (streeat + 2))));
+                    obstacle.setDx((float)(acelerationToLeft * (Constants.acelerationFactor * (streeat + Constants.two))));
                     obstacle.setAngle(Constants.angleObstacleToLeft);
                 }
                 if (obstacle.verifyColisionObsttacleWithObstacles(obstacles, position))

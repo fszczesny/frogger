@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 namespace MonoGame2D
 {
     public class Obstacles
-    {
-        private const float HITBOXSCALE = 0.75f;
-        
+    {      
         private Texture2D texture;
         private float x;
         private float y;
@@ -102,7 +100,7 @@ namespace MonoGame2D
         // Atualiza os dados do obstaculo
         public void Update(float elapsedTime)
         {
-            this.x = this.x + this.dX * 3;
+            this.x = this.x + this.dX * Constants.obstacleAcelerationPar;
         }
 
         // Desenha o obstaculo
@@ -111,25 +109,25 @@ namespace MonoGame2D
             // Determina a posição do obstaculo
             Vector2 spritePosition = new Vector2(this.x, this.y);
             // Desenha o obstaculo
-            spriteBatch.Draw(texture, spritePosition, null, Color.White, this.angle, new Vector2(texture.Width / 2, texture.Height / 2), new Vector2(scale, scale), SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, spritePosition, null, Color.White, this.angle, new Vector2(texture.Width / Constants.two, texture.Height / Constants.two), new Vector2(scale, scale), SpriteEffects.None, 0f);
         }
 
         // Verifica colisão do obstaculo com um determido obstaculo
         private bool verifyColisionWithSpecificObstacle(Obstacles obstaclesSprite)
         {
-            if (this.x + this.texture.Width * this.scale * HITBOXSCALE / 2 < obstaclesSprite.x - obstaclesSprite.texture.Width * obstaclesSprite.scale / 2)
+            if (this.x + this.texture.Width * this.scale * Constants.HitBoxObstacle / Constants.two < obstaclesSprite.x - obstaclesSprite.texture.Width * obstaclesSprite.scale / Constants.two)
             {
                 return false;
             }
-            if (this.y + this.texture.Height * this.scale * HITBOXSCALE / 2 < obstaclesSprite.y - obstaclesSprite.texture.Height * obstaclesSprite.scale / 2)
+            if (this.y + this.texture.Height * this.scale * Constants.HitBoxObstacle / Constants.two < obstaclesSprite.y - obstaclesSprite.texture.Height * obstaclesSprite.scale / Constants.two)
             {
                 return false;
             }
-            if (this.x - this.texture.Width * this.scale * HITBOXSCALE / 2 > obstaclesSprite.x + obstaclesSprite.texture.Width * obstaclesSprite.scale / 2)
+            if (this.x - this.texture.Width * this.scale * Constants.HitBoxObstacle / Constants.two > obstaclesSprite.x + obstaclesSprite.texture.Width * obstaclesSprite.scale / Constants.two)
             {
                 return false;
             }
-            if (this.y - this.texture.Height * this.scale * HITBOXSCALE / 2 > obstaclesSprite.y + obstaclesSprite.texture.Height * obstaclesSprite.scale / 2)
+            if (this.y - this.texture.Height * this.scale * Constants.HitBoxObstacle / Constants.two > obstaclesSprite.y + obstaclesSprite.texture.Height * obstaclesSprite.scale / Constants.two)
             {
                 return false;
             }
@@ -140,7 +138,7 @@ namespace MonoGame2D
         public bool verifyColisionObsttacleWithObstacles(List<Obstacles> obstaclesList, int postitionToIgnore)
         {
             int i;
-            for (i = 0; i < obstaclesList.Count; i++)
+            for (i = Constants.zero; i < obstaclesList.Count; i++)
             {
                 if (i != postitionToIgnore)
                 {

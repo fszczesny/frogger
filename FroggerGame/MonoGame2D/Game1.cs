@@ -8,7 +8,7 @@ using Windows.UI.ViewManagement;
 
 namespace MonoGame2D
 {
-    // Medieval Frooger Version 1.0 - Versão desiginada a etapas 1 e 2 de definição do trabalho
+    // Medieval Frooger Version 1.1 - Versão desiginada a etapas 1 e 2 de definição do trabalho + Troca de Pista e Modularização
     public class Game1 : Game
     {
         // Declaração de variaveis globias dentre a classe

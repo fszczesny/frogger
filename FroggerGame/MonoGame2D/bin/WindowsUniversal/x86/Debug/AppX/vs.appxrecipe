@@ -28,13 +28,13 @@
     <AppXManifest Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-12-08T01:15:02.595</Modified>
+      <Modified>2017-12-08T01:27:08.114</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\MonoGame2D.exe">
       <PackagePath>entrypoint\MonoGame2D.exe</PackagePath>
-      <Modified>2017-12-08T01:15:02.098</Modified>
+      <Modified>2017-12-08T01:27:07.433</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\FabricioSzczesny\.nuget\packages\Microsoft.CSharp\4.0.0\lib\netcore50\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
@@ -609,11 +609,11 @@
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-12-07T23:15:44.022</Modified>
+      <Modified>2017-12-08T01:27:07.887</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Core\MonoGame2D.exe">
       <PackagePath>MonoGame2D.exe</PackagePath>
-      <Modified>2017-12-08T01:15:02.585</Modified>
+      <Modified>2017-12-08T01:27:08.106</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

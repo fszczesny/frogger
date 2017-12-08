@@ -10,12 +10,14 @@ namespace MonoGame2D
 {
     public class Player
     {
+        // Variaveis de controle 
         private Texture2D texture;
         private float x;
         private float y;
         private float angle;
         private float scale;
 
+        // Getters e setters
         public void setTexture(Texture2D texture)
         {
             this.texture = texture;
@@ -119,6 +121,12 @@ namespace MonoGame2D
                 return false;
             }
             return true;
+        }
+
+        // Destrutor
+        ~Player()
+        {
+
         }
     }
 }

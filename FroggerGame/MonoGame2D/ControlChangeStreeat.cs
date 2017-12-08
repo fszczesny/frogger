@@ -8,15 +8,18 @@ namespace MonoGame2D
 {
     public class ControlChangeStreeat
     {
+        // Variaveis de controle
         private int loopChangeStreatControl;
         private int loooChangeStreatIncrease;
         private Random random;
 
+        // Construtor
         public ControlChangeStreeat()
         {
             random = new Random();
         }
 
+        // Getters e setters
         public int getLoopControl()
         {
             return this.loopChangeStreatControl;
@@ -85,6 +88,12 @@ namespace MonoGame2D
                     obstacle.setAngle(originalAngle);
                 }
             }
+        }
+
+        // Destrutor
+        ~ControlChangeStreeat()
+        {
+
         }
     }
 }

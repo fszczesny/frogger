@@ -13,6 +13,7 @@ namespace MonoGame2D
 {
     public class ControlNewObstacles
     {
+        // Variaveis de controle
         private int loopNewObstaclesControl;
         private int loooNewObstaclesIncrease;
         private float scale;
@@ -21,12 +22,14 @@ namespace MonoGame2D
         private List<int> lastInserts;
         private Random random;
 
+        // Construtor
         public ControlNewObstacles()
         {
             random = new Random();
             lastInserts = new List<int>();
         }
 
+        // Getters e setters
         public float getScale()
         {
             return this.scale;
@@ -165,6 +168,12 @@ namespace MonoGame2D
             {
                 obstacles[i].Draw(sprite);
             }
+        }
+
+        // Destrutor
+        ~ControlNewObstacles()
+        {
+
         }
     }
 }

@@ -10,6 +10,7 @@ namespace MonoGame2D
 {
     public class Obstacles
     {      
+        // Variaveis de controle
         private Texture2D texture;
         private float x;
         private float y;
@@ -19,6 +20,7 @@ namespace MonoGame2D
         private float scale;
         private int streat;
 
+        // Getters e setters
         public void setTexture(Texture2D texture)
         {
             this.texture = texture;

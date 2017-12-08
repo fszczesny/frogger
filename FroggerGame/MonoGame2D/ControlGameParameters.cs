@@ -13,6 +13,7 @@ namespace MonoGame2D
 {
     public class ControlGameParameters
     {
+        // Variaveis de estado e controle do jogo
         private float aceleretionToRigth;
         private float acelerationToLeft;
         private bool gameStarted;
@@ -27,6 +28,7 @@ namespace MonoGame2D
         private int beginPause;
         List<float> validLines = new List<float>();
 
+        // Construtor
         public ControlGameParameters()
         {
             aceleretionToRigth = Constants.rigthAceleration;
@@ -34,6 +36,7 @@ namespace MonoGame2D
             pointsForWin = Constants.pointsForWin;
         }
 
+        // Getter e setters
         public List<float> getValidLines()
         {
             return this.validLines;
@@ -164,6 +167,7 @@ namespace MonoGame2D
             this.froggerPass = a;
         }
 
+        // Inicia parametros de acordo para o proximo nivel
         public void startNextLevelParameters(int levelAux)
         {
             froggerPass = (float)(froggerPass - Constants.decFroggerPass);
@@ -172,6 +176,7 @@ namespace MonoGame2D
             aceleretionToRigth = (float)(aceleretionToRigth + Constants.decAceleration);
         }
 
+        // Inicia parametros do nivel inicial
         public void startBeginParameters()
         {
             froggerPass = Constants.initialFroggerPass;
@@ -180,6 +185,7 @@ namespace MonoGame2D
             aceleretionToRigth = Constants.rigthAceleration;
         }
 
+        // Atualização dos parametros conforme parametros passados
         public void startParametrs(bool isGameOver, bool isWin, bool isDead, bool theGameStart, int nunberOfLives, int initialScore, int initialLevel)
         {
             gameOver = isGameOver;
@@ -191,6 +197,7 @@ namespace MonoGame2D
             level = initialLevel;
         }
 
+        // Atualização dos parametros por solicitação do teclado
         public void startParametersWhithKeyboard(bool theGameStarted, bool theGameOver, bool thePlayerWined, bool thePlayerDead)
         {
             gameStarted = theGameStarted;
@@ -239,6 +246,7 @@ namespace MonoGame2D
             }
         }
 
+        // Cria lista de ruas validas
         public void setValidLines(float screenHeight)
         {
             validLines.Clear();
@@ -248,6 +256,12 @@ namespace MonoGame2D
             validLines.Add((float)(screenHeight - screenHeight / Constants.streat4));
             validLines.Add((float)(screenHeight - screenHeight / Constants.streat5));
             validLines.Add((float)(screenHeight - screenHeight / Constants.streat6));
+        }
+
+        // Destrutor
+        ~ControlGameParameters()
+        {
+
         }
     }
 }

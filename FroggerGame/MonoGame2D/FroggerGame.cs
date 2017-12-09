@@ -9,7 +9,7 @@ using Windows.UI.ViewManagement;
 namespace MonoGame2D
 {
     // Medieval Frooger Version 1.1 - Versão desiginada a etapas 1 e 2 de definição do trabalho + Troca de Pista e Modularização
-    public class Game1 : Game
+    public class FroggerGame : Game
     {
         // Declaração de variaveis globias dentre a classe
         // Variaveis de ambiente grafico
@@ -31,13 +31,18 @@ namespace MonoGame2D
         Player frooger;
         // Declaração da lista de obstaculos e sua lista auxiliar de frequencia
         List<Obstacles> obstacles = new List<Obstacles>();      
-        // Declara objeto de controle de troca de rua
+        // Declara objeto de controle de troca de rua, de controle de novos obstaculos, controle de parametros e historico
         ControlChangeStreeat controlChangeStreeat = new ControlChangeStreeat();
         ControlNewObstacles controlNewObstacles = new ControlNewObstacles();
         ControlGameParameters controlParameters = new ControlGameParameters();
+        HistoricDocControl controlHistoric = new HistoricDocControl();
+        PlayerDatas playerDatas = new PlayerDatas();
+        List<PlayerDatas> players = new List<PlayerDatas>();
+
+        string name;
         // Fim da declaração de globais da classe
 
-        public Game1()
+        public FroggerGame()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = Constants.directory;
@@ -49,6 +54,7 @@ namespace MonoGame2D
             base.Initialize();
             startParametrs(false, false, false, false, Constants.initialLives, Constants.initialScore, Constants.initialLevel, Constants.intervalBetwenNewObstacleLoop, Constants.intervalBetwenChangeStreat, Constants.initialFroggerPass);
             startScreenConfigs();
+            name = string.Empty;
         }
 
         // Metodo de carga de elementos externos
@@ -115,7 +121,8 @@ namespace MonoGame2D
                 // Se game over
                 if (controlParameters.getGameOver())
                 {
-                    drawStateScreen(Constants.restartMessage, gameOverTexture);
+                    drawStateScreen(name, gameOverTexture);
+                    //drawStateScreen(Constants.restartMessage, gameOverTexture);
                 }
                 // Se morreu, mas tem vida ainda
                 else if (controlParameters.getDead())
@@ -142,6 +149,7 @@ namespace MonoGame2D
             obstacles.Clear();
             controlNewObstacles.setLoopControl(Constants.zero);
             controlChangeStreeat.setLoopControl(Constants.zero);
+            name = string.Empty;
         }
 
         // Seta parametros para uso da proxima vida
@@ -177,10 +185,25 @@ namespace MonoGame2D
                 return;
             }
             // Reinicia se for precionado enter após game over
-            if (controlParameters.getGameOver() && state.IsKeyDown(Keys.Enter))
+            if (controlParameters.getGameOver())
             {
-                startParametrs(controlParameters.getGameOver(), controlParameters.getWin(), controlParameters.getDead(), controlParameters.getGameStarted(), Constants.initialLives, Constants.initialScore, Constants.initialLevel, Constants.intervalBetwenNewObstacleLoop, Constants.intervalBetwenChangeStreat, Constants.initialFroggerPass);
-                startParametersWhithKeyboard(true, false, false, false);
+                if (state.IsKeyDown(Keys.Enter))
+                {
+                    startParametrs(controlParameters.getGameOver(), controlParameters.getWin(), controlParameters.getDead(), controlParameters.getGameStarted(), Constants.initialLives, Constants.initialScore, Constants.initialLevel, Constants.intervalBetwenNewObstacleLoop, Constants.intervalBetwenChangeStreat, Constants.initialFroggerPass);
+                    startParametersWhithKeyboard(true, false, false, false);
+                }
+                else if (state.IsKeyDown(Keys.Insert))
+                {
+                    playerDatas.setName(name);
+                    playerDatas.setPoints(controlParameters.getscore());
+                    // Salva no historico
+                    players = controlHistoric.getTopXPlayers(10, playerDatas);
+                    // Imprime o historico
+                }
+                else
+                {
+                    makeName(state);
+                }
             }
             if (controlParameters.getDead() && state.IsKeyDown(Keys.Space) && !controlParameters.getGameOver())
             {
@@ -335,6 +358,53 @@ namespace MonoGame2D
                 controlChangeStreeat.setLoopIncrease(Constants.intervalBetwenChangeStreat);
                 controlParameters.startBeginParameters();
             }
+        }
+
+        public void makeName(KeyboardState state)
+        {
+            if (state.IsKeyDown(Keys.A)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'A') && (name[name.Length - 1] != 'a')) { name += "A"; } } else { name += "A"; } }
+            if (state.IsKeyDown(Keys.B)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'B') && (name[name.Length - 1] != 'b')) { name += "B"; } } else { name += "B"; } }
+            if (state.IsKeyDown(Keys.C)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'C') && (name[name.Length - 1] != 'c')) { name += "C"; } } else { name += "C"; } }
+            if (state.IsKeyDown(Keys.D)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'D') && (name[name.Length - 1] != 'd')) { name += "D"; } } else { name += "D"; } }
+            if (state.IsKeyDown(Keys.E)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'E') && (name[name.Length - 1] != 'e')) { name += "E"; } } else { name += "E"; } }
+            if (state.IsKeyDown(Keys.F)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'F') && (name[name.Length - 1] != 'f')) { name += "F"; } } else { name += "F"; } }
+            if (state.IsKeyDown(Keys.G)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'G') && (name[name.Length - 1] != 'g')) { name += "G"; } } else { name += "G"; } }
+            if (state.IsKeyDown(Keys.H)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'H') && (name[name.Length - 1] != 'h')) { name += "H"; } } else { name += "H"; } }
+            if (state.IsKeyDown(Keys.I)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'I') && (name[name.Length - 1] != 'i')) { name += "I"; } } else { name += "I"; } }
+            if (state.IsKeyDown(Keys.J)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'J') && (name[name.Length - 1] != 'j')) { name += "J"; } } else { name += "J"; } }
+            if (state.IsKeyDown(Keys.K)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'K') && (name[name.Length - 1] != 'k')) { name += "K"; } } else { name += "K"; } }
+            if (state.IsKeyDown(Keys.L)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'L') && (name[name.Length - 1] != 'l')) { name += "L"; } } else { name += "L"; } }
+            if (state.IsKeyDown(Keys.M)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'M') && (name[name.Length - 1] != 'm')) { name += "M"; } } else { name += "M"; } }
+            if (state.IsKeyDown(Keys.N)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'N') && (name[name.Length - 1] != 'n')) { name += "N"; } } else { name += "N"; } }
+            if (state.IsKeyDown(Keys.O)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'O') && (name[name.Length - 1] != 'o')) { name += "O"; } } else { name += "O"; } }
+            if (state.IsKeyDown(Keys.P)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'P') && (name[name.Length - 1] != 'p')) { name += "P"; } } else { name += "P"; } }
+            if (state.IsKeyDown(Keys.Q)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'Q') && (name[name.Length - 1] != 'q')) { name += "Q"; } } else { name += "Q"; } }
+            if (state.IsKeyDown(Keys.R)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'R') && (name[name.Length - 1] != 'r')) { name += "R"; } } else { name += "R"; } }
+            if (state.IsKeyDown(Keys.S)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'S') && (name[name.Length - 1] != 's')) { name += "S"; } } else { name += "S"; } }
+            if (state.IsKeyDown(Keys.T)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'T') && (name[name.Length - 1] != 't')) { name += "T"; } } else { name += "T"; } }
+            if (state.IsKeyDown(Keys.U)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'U') && (name[name.Length - 1] != 'u')) { name += "U"; } } else { name += "U"; } }
+            if (state.IsKeyDown(Keys.V)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'V') && (name[name.Length - 1] != 'v')) { name += "V"; } } else { name += "V"; } }
+            if (state.IsKeyDown(Keys.X)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'X') && (name[name.Length - 1] != 'x')) { name += "X"; } } else { name += "X"; } }
+            if (state.IsKeyDown(Keys.Y)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'Y') && (name[name.Length - 1] != 'y')) { name += "Y"; } } else { name += "Y"; } }
+            if (state.IsKeyDown(Keys.W)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'W') && (name[name.Length - 1] != 'w')) { name += "W"; } } else { name += "W"; } }
+            if (state.IsKeyDown(Keys.Z)) { if (name.Length > 0) { if ((name[name.Length - 1] != 'Z') && (name[name.Length - 1] != 'z')) { name += "Z"; } } else { name += "Z"; } }
+            if (state.IsKeyDown(Keys.NumPad0)) { if (name.Length > 0) { if ((name[name.Length - 1] != '0')) { name += "0"; } } else { name += "0"; } }
+            if (state.IsKeyDown(Keys.NumPad1)) { if (name.Length > 0) { if ((name[name.Length - 1] != '1')) { name += "1"; } } else { name += "1"; } }
+            if (state.IsKeyDown(Keys.NumPad2)) { if (name.Length > 0) { if ((name[name.Length - 1] != '2')) { name += "2"; } } else { name += "2"; } }
+            if (state.IsKeyDown(Keys.NumPad3)) { if (name.Length > 0) { if ((name[name.Length - 1] != '3')) { name += "3"; } } else { name += "3"; } }
+            if (state.IsKeyDown(Keys.NumPad4)) { if (name.Length > 0) { if ((name[name.Length - 1] != '4')) { name += "4"; } } else { name += "4"; } }
+            if (state.IsKeyDown(Keys.NumPad5)) { if (name.Length > 0) { if ((name[name.Length - 1] != '5')) { name += "5"; } } else { name += "5"; } }
+            if (state.IsKeyDown(Keys.NumPad6)) { if (name.Length > 0) { if ((name[name.Length - 1] != '6')) { name += "6"; } } else { name += "6"; } }
+            if (state.IsKeyDown(Keys.NumPad7)) { if (name.Length > 0) { if ((name[name.Length - 1] != '7')) { name += "7"; } } else { name += "7"; } }
+            if (state.IsKeyDown(Keys.NumPad8)) { if (name.Length > 0) { if ((name[name.Length - 1] != '8')) { name += "8"; } } else { name += "8"; } }
+            if (state.IsKeyDown(Keys.NumPad9)) { if (name.Length > 0) { if ((name[name.Length - 1] != '9')) { name += "9"; } } else { name += "9"; } }
+            if (state.IsKeyDown(Keys.Add)) { if (name.Length > 0) { if ((name[name.Length - 1] != '+')) { name += "+"; } } else { name += "+"; } }
+            if (state.IsKeyDown(Keys.Subtract)) { if (name.Length > 0) { if ((name[name.Length - 1] != '-')) { name += "-"; } } else { name += "-"; } }
+            if (state.IsKeyDown(Keys.Space)) { if (name.Length > 0) { if ((name[name.Length - 1] != ' ')) { name += " "; } } else { name += " "; } }
+            if (state.IsKeyDown(Keys.Divide)) { if (name.Length > 0) { if ((name[name.Length - 1] != '/')) { name += "/"; } } else { name += "/"; } }
+            if (state.IsKeyDown(Keys.Multiply)) { if (name.Length > 0) { if ((name[name.Length - 1] != '*')) { name += "*"; } } else { name += "*"; } }
+            if (state.IsKeyDown(Keys.Separator)) { if (name.Length > 0) { if ((name[name.Length - 1] != '_')) { name += "_"; } } else { name += "_"; } }
+            if (state.IsKeyDown(Keys.Delete) || state.IsKeyDown(Keys.Back)) { name = string.Empty; }
         }
     }
 }

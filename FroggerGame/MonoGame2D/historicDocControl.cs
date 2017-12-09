@@ -73,15 +73,18 @@ namespace MonoGame2D
             byte[] byteArray = Encoding.UTF8.GetBytes("PlayersHistoric.xml");
             MemoryStream stream = new MemoryStream(byteArray);
             XElement xml = XElement.Load("PlayersHistoric.xml");
-            XElement x = xml.Elements().Where(p => p.Attribute("name").Value.Equals(player.getName())).First();
-            if (x != null)
+            if (xml.HasElements)
             {
-                if ( (int.Parse(x.Attribute("points").Value)) < player.getPoints() )
+                XElement x = xml.Elements().Where(p => p.Attribute("name").Value.Equals(player.getName())).First();
+                if (x != null)
                 {
-                    x.Attribute("points").SetValue(player.getPoints().ToString());
+                    if ((int.Parse(x.Attribute("points").Value)) < player.getPoints())
+                    {
+                        x.Attribute("points").SetValue(player.getPoints().ToString());
+                    }
                 }
+                xml.Save(stream);
             }
-            xml.Save(stream);
         }
 
         private static List<PlayerDatas> sort(List<PlayerDatas> list)
@@ -107,10 +110,17 @@ namespace MonoGame2D
             byte[] byteArray = Encoding.UTF8.GetBytes("PlayersHistoric.xml");
             MemoryStream stream = new MemoryStream(byteArray);
             XElement xml = XElement.Load("PlayersHistoric.xml");
-            XElement x = xml.Elements().Where(p => p.Attribute("name").Value.Equals(player.getName())).First();
-            if (x != null)
+            if (xml.HasElements)
             {
-                return true;
+                XElement x = xml.Elements().Where(p => p.Attribute("name").Value.Equals(player.getName())).First();
+                if (x != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {

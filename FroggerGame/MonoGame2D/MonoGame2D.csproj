@@ -107,15 +107,18 @@
     <Compile Include="GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Game1.cs" />
+    <Compile Include="FroggerGame.cs" />
+    <Compile Include="HistoricDocControl.cs" />
     <Compile Include="Obstacles.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="PlayerDatas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram2.cd" />
     <None Include="ClassDiagram3.cd" />
+    <None Include="Content\menor.spritefont" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -135,6 +138,9 @@
     <Content Include="Content\skull.png" />
     <Content Include="Content\start-splash.png" />
     <Content Include="Content\win.png" />
+    <Content Include="PlayersHistoric.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

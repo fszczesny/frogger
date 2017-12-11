@@ -84,7 +84,11 @@ namespace MonoGame2D
             // Determina posição do player
             Vector2 spritePosition = new Vector2(this.x, this.y);
             // Desenha o sprite
-            spriteBatch.Draw(texture, spritePosition, null, Color.White, this.angle, new Vector2(texture.Width / Constants.two, texture.Height / Constants.two), new Vector2(scale, scale), SpriteEffects.None, 0f);
+            //if (angle == 600)
+           // {
+                // Texture2D anotherPosition = Content.Load<Texture2D>(Constants.froogerSpriteToTexture);
+                spriteBatch.Draw(texture, spritePosition, null, Color.White, this.angle, new Vector2(texture.Width / Constants.two, texture.Height / Constants.two), new Vector2(scale, scale), SpriteEffects.None, 0f);
+            //}
         }
 
         // Verifica colisão do player com algum obstaculo presente na lista de obstaculos passada

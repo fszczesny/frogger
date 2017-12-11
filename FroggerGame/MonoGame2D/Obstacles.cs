@@ -111,7 +111,15 @@ namespace MonoGame2D
             // Determina a posição do obstaculo
             Vector2 spritePosition = new Vector2(this.x, this.y);
             // Desenha o obstaculo
-            spriteBatch.Draw(texture, spritePosition, null, Color.White, this.angle, new Vector2(texture.Width / Constants.two, texture.Height / Constants.two), new Vector2(scale, scale), SpriteEffects.None, 0f);
+            if (this.angle == Constants.zero)
+            {
+                spriteBatch.Draw(texture, spritePosition, null, Color.White, 0, new Vector2(texture.Width / Constants.two, texture.Height / Constants.two), new Vector2(scale, scale), SpriteEffects.None, 0f);
+            }
+            else
+            {
+                spriteBatch.Draw(texture, spritePosition, null, Color.White, 0, new Vector2(texture.Width / Constants.two, texture.Height / Constants.two), new Vector2(scale, scale), SpriteEffects.FlipHorizontally, 0f);
+
+            }
         }
 
         // Verifica colisão do obstaculo com um determido obstaculo

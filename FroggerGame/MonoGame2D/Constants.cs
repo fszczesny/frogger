@@ -40,6 +40,7 @@ namespace MonoGame2D
         public const int maxLevel = 8;
         // Constantes de nome de arquivos a serem caregados
         public const string froggerSprite = "Content/frooger.png";
+        public const string froggerSpriteCostas = "Content/frooger-costas.png";
         public const string greenCartSprites = "Content/green_cart.png";
         public const string redCartSprites = "Content/red_cart.png";
         public const string purpleCartSprites = "Content/purple_cart.png";
@@ -97,19 +98,19 @@ namespace MonoGame2D
             public const float streat5 = (float)1.725;
             public const float streat6 = (float)1.465;
              // Constante de proporção escrita de mensagem
-            public const float messageConst = (float)0.81;
+            public const float messageConst = (float)0.4;
             // Constantes de posicionamento feedback de pontos, vidas e tempo
-            public const float livesNameWidth = (float)0.62;
-            public const float livesNameHeigth = (float)0.046;
-            public const float timeNameWidth = (float)0.036;
+            public const float livesNameWidth = (float)0.64;
+            public const float livesNameHeigth = (float)0.042;
+            public const float timeNameWidth = (float)0.085;
             public const float timeNameHeigth = (float)0.046;
-            public const float scoreNameWidth = (float)0.82;
+            public const float scoreNameWidth = (float)0.84;
             public const float scoreNameHeigth = (float)0.046;
-            public const float livesValueWidth = (float)0.7;
+            public const float livesValueWidth = (float)0.72;
             public const float livesValueHeigth = (float)0.046;
             public const float timeValueWidth = (float)0.105;
             public const float timeValueHeigth = (float)0.046;
-            public const float scoreValueWidth = (float)0.9;
+            public const float scoreValueWidth = (float)0.94;
             public const float scoreValueHeigth = (float)0.046;
             public const float spacingMenu = (float)0.075;
             public const float spacingEnter = (float)0.4;

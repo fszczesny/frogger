@@ -30,6 +30,7 @@ namespace MonoGame2D
         float screenHeight;
         // Declaração do objeto Player que representa o frogger
         Player frooger;
+        //Player froggerCostas;
         // Declaração da lista de obstaculos e sua lista auxiliar de frequencia
         List<Obstacles> obstacles = new List<Obstacles>();      
         // Declara objeto de controle de troca de rua, de controle de novos obstaculos, controle de parametros e historico
@@ -64,7 +65,8 @@ namespace MonoGame2D
             spriteBatch = new SpriteBatch(GraphicsDevice);
             loadTextureAndFontStyles();
             // Carrega sprite do player
-            frooger = new Player(GraphicsDevice, Constants.froggerSprite, ScaleToHighDPI(0.3f));
+            frooger = new Player(GraphicsDevice, Constants.froggerSprite, ScaleToHighDPI(1.5f));
+            //froggerCostas = new Player(GraphicsDevice, Constants.froggerSpriteCostas, ScaleToHighDPI(1.5f));
             controlNewObstacles.setScale(ScaleToHighDPI(1.3f));
         }
 
@@ -275,6 +277,7 @@ namespace MonoGame2D
                 if (state.IsKeyDown(Keys.Up) || state.IsKeyDown(Keys.W))
                 {
                     frooger.setAngle(Constants.angleFrogger0);
+                    //frooger.setTexture(Constants.froggerSpriteCostas);
                     if (frooger.getY() > (screenHeight / Constants.beginPosition))
                     {
                         frooger.setY(frooger.getY() - controlParameters.getPass());
@@ -340,7 +343,7 @@ namespace MonoGame2D
             skullTexture = Content.Load<Texture2D>(Constants.skullSprite);
             winTexture = Content.Load<Texture2D>(Constants.winSprite);
             bloodTexture = Content.Load<Texture2D>(Constants.bloodSprite);
-            froggerTexture = Content.Load<Texture2D>(Constants.froogerSpriteToTexture);
+            froggerTexture = Content.Load<Texture2D>(Constants.froogerSpriteToTexture); //carregar todas as de costas etc
             stateFont = Content.Load<SpriteFont>(Constants.gameMessagesFont);
             scoreFont = Content.Load<SpriteFont>(Constants.valueFonts);
             menorFont = Content.Load<SpriteFont>(Constants.menorFont);
@@ -366,12 +369,12 @@ namespace MonoGame2D
         public void showBeforeStartScreen(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(startGameSplash, new Rectangle(Constants.zero, Constants.zero, (int)screenWidth, (int)screenHeight), Color.White);
-            String title = Constants.startMessage;
-            String pressSpace = Constants.askForASpaceMessage;
-            Vector2 titleSize = stateFont.MeasureString(title);
-            Vector2 pressSpaceSize = stateFont.MeasureString(pressSpace);
-            spriteBatch.DrawString(stateFont, title, new Vector2(screenWidth / Constants.two - titleSize.X / Constants.two, screenHeight / Constants.tree), Color.ForestGreen);
-            spriteBatch.DrawString(stateFont, pressSpace, new Vector2(screenWidth / Constants.two - pressSpaceSize.X / Constants.two, screenHeight / Constants.two), Color.White);
+            //String title = Constants.startMessage;
+            //String pressSpace = Constants.askForASpaceMessage;
+            //Vector2 titleSize = stateFont.MeasureString(title);
+            //Vector2 pressSpaceSize = stateFont.MeasureString(pressSpace);
+            //spriteBatch.DrawString(stateFont, title, new Vector2(screenWidth / Constants.two - titleSize.X / Constants.two, screenHeight / Constants.tree), Color.ForestGreen);
+            //spriteBatch.DrawString(stateFont, pressSpace, new Vector2(screenWidth / Constants.two - pressSpaceSize.X / Constants.two, screenHeight / Constants.two), Color.White);
         }
 
         // Desenha a pontuação
@@ -379,11 +382,11 @@ namespace MonoGame2D
         // Desenha o timer
         public void drawInterfaceOfPontuation()
         {
-            spriteBatch.DrawString(scoreFont, Constants.scoreMessage, new Vector2((float)(screenWidth * Constants.scoreNameWidth), (float)(screenHeight * Constants.scoreNameHeigth)), Color.Black);
-            spriteBatch.DrawString(scoreFont, controlParameters.getscore().ToString(), new Vector2((float)(screenWidth * Constants.scoreValueWidth), (float)(screenHeight * Constants.scoreValueHeigth)), Color.Black);
-            spriteBatch.DrawString(scoreFont, Constants.livesMessage, new Vector2((float)(screenWidth * Constants.livesNameWidth), (float)(screenHeight * Constants.livesNameHeigth)), Color.Black);
-            spriteBatch.DrawString(scoreFont, controlParameters.getLives().ToString(), new Vector2((float)(screenWidth * Constants.livesValueWidth), (float)(screenHeight * Constants.livesValueHeigth)), Color.Black);
-            spriteBatch.DrawString(scoreFont, Constants.timeMessage, new Vector2((float)(screenWidth * Constants.timeNameWidth), (float)(screenHeight * Constants.timeNameHeigth )), Color.Black);
+            spriteBatch.DrawString(scoreFont, Constants.scoreMessage, new Vector2((float)(screenWidth * Constants.scoreNameWidth), (float)(screenHeight * Constants.scoreNameHeigth)), Color.SandyBrown);
+            spriteBatch.DrawString(scoreFont, controlParameters.getscore().ToString(), new Vector2((float)(screenWidth * Constants.scoreValueWidth), (float)(screenHeight * Constants.scoreValueHeigth)), Color.SandyBrown);
+            spriteBatch.DrawString(scoreFont, Constants.livesMessage, new Vector2((float)(screenWidth * Constants.livesNameWidth), (float)(screenHeight * Constants.livesNameHeigth)), Color.SandyBrown);
+            spriteBatch.DrawString(scoreFont, controlParameters.getLives().ToString(), new Vector2((float)(screenWidth * Constants.livesValueWidth), (float)(screenHeight * Constants.livesValueHeigth)), Color.SandyBrown);
+            spriteBatch.DrawString(scoreFont, Constants.timeMessage, new Vector2((float)(screenWidth * Constants.timeNameWidth), (float)(screenHeight * Constants.timeNameHeigth )), Color.SandyBrown);
             spriteBatch.DrawString(scoreFont, controlParameters.getLevel().ToString(), new Vector2((float)(screenWidth * Constants.timeValueWidth), (float)(screenHeight * Constants.timeValueHeigth)), Color.Black);
         }
 

@@ -51,16 +51,20 @@ namespace MonoGame2D
         public const string skullSprite = "skull";
         public const string winSprite = "win";
         public const string gameMessagesFont = "GameState";
+        public const string menorFont = "menor";
         public const string valueFonts = "Score";
         // Constantes strings usadas como mensagens de interface
         public const string progressLevelMessage = "Press Enter to start the next level!";
         public const string deadAndNextLiveMessage = "Press Space to use the next live!";
         public const string winAllLevelsMessage = "You win all levels. Press Enter to restart!";
-        public const string restartMessage = "Press Enter to restart!";
+        public const string restartMessage = "Press Enter to restart without saving!";
+        public const string restartMessageTwo = "Enter your name and press insert to save your score!";
         public const string startMessage = "FROGGER - THE MEDIEVAL EDITION";
+        public const string bestMessage = "Bast Players Historic:";
+        public const string pressEnterMessage = "Press Enter to restart!";
         public const string askForASpaceMessage = "Press Space to start";
         public const string livesMessage = "Lives: ";
-        public const string timeMessage = "Time: ";
+        public const string timeMessage = "Level: ";
         public const string scoreMessage = "Score: ";
         // Constantes de controle do loop de ignorar o teclado
         public const int ignoreKyboardLoop = 200;
@@ -103,9 +107,13 @@ namespace MonoGame2D
             public const float scoreNameHeigth = (float)0.046;
             public const float livesValueWidth = (float)0.7;
             public const float livesValueHeigth = (float)0.046;
-            public const float timeValueWidth = (float)0.045;
+            public const float timeValueWidth = (float)0.105;
             public const float timeValueHeigth = (float)0.046;
             public const float scoreValueWidth = (float)0.9;
             public const float scoreValueHeigth = (float)0.046;
+            public const float spacingMenu = (float)0.075;
+            public const float spacingEnter = (float)0.4;
+            public const float spacingInset = (float)0.5;
+            public const int bestNumbers = 10;
     }
 }

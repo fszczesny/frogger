@@ -25,6 +25,7 @@ namespace MonoGame2D
             List<PlayerDatas> historics = new List<PlayerDatas>();
             List<PlayerDatas> historicsToReturn = new List<PlayerDatas>();
             // insere ou atualiza
+            /*
             if (existThePlayer(PlayerToInsert))
             {
                 editPalyerHistoric(PlayerToInsert);
@@ -33,9 +34,19 @@ namespace MonoGame2D
             {
                 addPlayerToHistoric(PlayerToInsert);
             }
+            */
             historics = getPlayersHistoric();
             historics = sort(historics);
-            for(int i = 0 ; i < numberOfTops ; i++)
+            int control;
+            if (numberOfTops > historics.Count())
+            {
+                control = historics.Count();
+            }
+            else
+            {
+                control = numberOfTops;
+            }
+            for(int i = 0 ; i < control ; i++)
             {
                 historicsToReturn.Add(historics[i]);
             }
@@ -58,7 +69,7 @@ namespace MonoGame2D
 
         private static void addPlayerToHistoric(PlayerDatas p)
         {
-            byte[] byteArray = Encoding.UTF8.GetBytes("PlayersHistoric.xml");
+            byte[] byteArray = Encoding.ASCII.GetBytes("PlayersHistoric.xml");
             MemoryStream stream = new MemoryStream(byteArray);
             XElement x = new XElement("player");
             x.Add(new XAttribute("name", p.getName()));
@@ -70,7 +81,7 @@ namespace MonoGame2D
 
         private static void editPalyerHistoric(PlayerDatas player)
         {
-            byte[] byteArray = Encoding.UTF8.GetBytes("PlayersHistoric.xml");
+            byte[] byteArray = Encoding.ASCII.GetBytes("PlayersHistoric.xml");
             MemoryStream stream = new MemoryStream(byteArray);
             XElement xml = XElement.Load("PlayersHistoric.xml");
             if (xml.HasElements)

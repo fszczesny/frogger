@@ -147,3 +147,10 @@
 /processorParam:TextureFormat=Color
 /build:win.png
 
+#begin menor.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:menor.spritefont
+

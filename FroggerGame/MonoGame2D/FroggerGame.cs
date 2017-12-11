@@ -16,6 +16,7 @@ namespace MonoGame2D
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont stateFont;
+        SpriteFont menorFont;
         SpriteFont scoreFont;
         Texture2D startGameSplash;
         Texture2D gameOverTexture;
@@ -112,12 +113,13 @@ namespace MonoGame2D
                     {
                         if (controlParameters.getShowResults())
                         {
-                            drawStateScreen("", winTexture);
+                            drawBests(players);
                         }
                         else
                         {
+                            drawMessage(Constants.winAllLevelsMessage, Constants.spacingEnter);
+                            drawMessage(Constants.restartMessageTwo, Constants.spacingInset);
                             drawStateScreen(name, winTexture);
-                            drawStateScreen(Constants.winAllLevelsMessage, winTexture);
                         }
                     }
                     else
@@ -132,10 +134,12 @@ namespace MonoGame2D
                     {
                         if (controlParameters.getShowResults())
                         {
-                            drawStateScreen("", gameOverTexture);
+                            drawBests(players);
                         }
                         else
                         {
+                            drawMessage(Constants.restartMessage, Constants.spacingEnter);
+                            drawMessage(Constants.restartMessageTwo, Constants.spacingInset);
                             drawStateScreen(name, gameOverTexture);
                         }
                     }
@@ -218,9 +222,8 @@ namespace MonoGame2D
                     playerDatas.setName(name);
                     playerDatas.setPoints(controlParameters.getscore());
                     // Salva no historico
-                    players = controlHistoric.getTopXPlayers(10, playerDatas);
+                    players = controlHistoric.getTopXPlayers(Constants.bestNumbers, playerDatas);
                     // Imprime o historico
-
                     controlParameters.setShowResults(true);
                 }
                 else
@@ -248,8 +251,9 @@ namespace MonoGame2D
                         playerDatas.setName(name);
                         playerDatas.setPoints(controlParameters.getscore());
                         // Salva no historico
-                        players = controlHistoric.getTopXPlayers(10, playerDatas);
-                        // Imprime o historico
+                        players = controlHistoric.getTopXPlayers(Constants.bestNumbers, playerDatas);
+                        // Imprime o historico   
+                        controlParameters.setShowResults(true);
                     }
                     else
                     {
@@ -339,6 +343,7 @@ namespace MonoGame2D
             froggerTexture = Content.Load<Texture2D>(Constants.froogerSpriteToTexture);
             stateFont = Content.Load<SpriteFont>(Constants.gameMessagesFont);
             scoreFont = Content.Load<SpriteFont>(Constants.valueFonts);
+            menorFont = Content.Load<SpriteFont>(Constants.menorFont);
         }
 
         // Inicializa escala de frames da tela utilizada
@@ -379,15 +384,46 @@ namespace MonoGame2D
             spriteBatch.DrawString(scoreFont, Constants.livesMessage, new Vector2((float)(screenWidth * Constants.livesNameWidth), (float)(screenHeight * Constants.livesNameHeigth)), Color.Black);
             spriteBatch.DrawString(scoreFont, controlParameters.getLives().ToString(), new Vector2((float)(screenWidth * Constants.livesValueWidth), (float)(screenHeight * Constants.livesValueHeigth)), Color.Black);
             spriteBatch.DrawString(scoreFont, Constants.timeMessage, new Vector2((float)(screenWidth * Constants.timeNameWidth), (float)(screenHeight * Constants.timeNameHeigth )), Color.Black);
-            // Aqui vai o print do timer
+            spriteBatch.DrawString(scoreFont, controlParameters.getLevel().ToString(), new Vector2((float)(screenWidth * Constants.timeValueWidth), (float)(screenHeight * Constants.timeValueHeigth)), Color.Black);
         }
 
-        // Desenha tela e escrita centrais na tela de win e game over
+        // Desenha tela e escrita + sprite
         public void drawStateScreen(string pressEnter, Texture2D texture)
         {
             spriteBatch.Draw(texture, new Vector2(screenWidth / Constants.two - texture.Width / Constants.two, screenHeight / Constants.four - texture.Width / Constants.two), Color.White);
             Vector2 pressEnterSize = stateFont.MeasureString(pressEnter);
             spriteBatch.DrawString(stateFont, pressEnter, new Vector2(screenWidth / Constants.two - pressEnterSize.X / Constants.two, (float)(screenHeight * Constants.messageConst)), Color.White);
+        }
+
+        // Desenha tela e escrita
+        public void drawMessage(string pressEnter, double value)
+        {        
+            Vector2 pressEnterSize = stateFont.MeasureString(pressEnter);
+            spriteBatch.DrawString(stateFont, pressEnter, new Vector2(screenWidth / Constants.two - pressEnterSize.X / Constants.two, (float)(screenHeight * value)), Color.White);
+        }
+
+        // Desenha tela e escrita
+        public void drawMessageHistoric(string pressEnter, float value)
+        {
+            Vector2 pressEnterSize = menorFont.MeasureString(pressEnter);
+            spriteBatch.DrawString(menorFont, pressEnter, new Vector2(screenWidth / Constants.two - pressEnterSize.X / Constants.two, (float)(screenHeight * value)), Color.Black);
+        }
+
+        // Desenha na tela todos os historicos
+        public void drawBests (List<PlayerDatas> players)
+        {
+            string toShow;
+            float beginPosition = Constants.spacingMenu;
+            drawMessageHistoric(Constants.bestMessage, beginPosition);
+            beginPosition = (float)(beginPosition + Constants.spacingMenu);
+            for (int i = 0; i < players.Count; i++)
+            {
+                toShow = string.Empty;
+                toShow = (i + 1).ToString() + " : " + players[i].getName() + " / " + (players[i].getPoints()).ToString();
+                drawMessageHistoric(toShow, beginPosition);
+                beginPosition = (float)(beginPosition + Constants.spacingMenu);
+            }
+            drawMessageHistoric(Constants.pressEnterMessage, beginPosition);
         }
 
         // Metodo de controle do avanço de nivel

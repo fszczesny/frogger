@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/TesteClaw/Desktop/GIT/frogNew/frogger/FroggerGame/MonoGame2D/Content/Score.spritefont</SourceFile>
-  <SourceTime>2017-12-10T17:29:02.5041158-02:00</SourceTime>
+  <SourceTime>2017-12-11T20:22:33.7216452-02:00</SourceTime>
   <DestFile>C:/Users/TesteClaw/Desktop/GIT/frogNew/frogger/FroggerGame/MonoGame2D/Content/bin/WindowsStoreApp/Content/Score.xnb</DestFile>
-  <DestTime>2017-12-10T17:29:13.1091637-02:00</DestTime>
+  <DestTime>2017-12-11T20:43:08.8193283-02:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2017-10-15T14:46:32-02:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

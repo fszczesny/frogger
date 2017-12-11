@@ -387,7 +387,7 @@ namespace MonoGame2D
             spriteBatch.DrawString(scoreFont, Constants.livesMessage, new Vector2((float)(screenWidth * Constants.livesNameWidth), (float)(screenHeight * Constants.livesNameHeigth)), Color.SandyBrown);
             spriteBatch.DrawString(scoreFont, controlParameters.getLives().ToString(), new Vector2((float)(screenWidth * Constants.livesValueWidth), (float)(screenHeight * Constants.livesValueHeigth)), Color.SandyBrown);
             spriteBatch.DrawString(scoreFont, Constants.timeMessage, new Vector2((float)(screenWidth * Constants.timeNameWidth), (float)(screenHeight * Constants.timeNameHeigth )), Color.SandyBrown);
-            spriteBatch.DrawString(scoreFont, controlParameters.getLevel().ToString(), new Vector2((float)(screenWidth * Constants.timeValueWidth), (float)(screenHeight * Constants.timeValueHeigth)), Color.Black);
+            spriteBatch.DrawString(scoreFont, controlParameters.getLevel().ToString(), new Vector2((float)(screenWidth * Constants.timeValueWidth), (float)(screenHeight * Constants.timeValueHeigth)), Color.SandyBrown);
         }
 
         // Desenha tela e escrita + sprite

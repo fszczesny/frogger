@@ -18,6 +18,7 @@ namespace MonoGame2D
         private float acelerationToLeft;
         private bool gameStarted;
         private bool gameOver;
+        private bool gameGetName;
         private bool dead;
         private bool win;
         private int score;
@@ -27,6 +28,7 @@ namespace MonoGame2D
         private float froggerPass;
         private int beginPause;
         List<float> validLines = new List<float>();
+        private bool showResults;
 
         // Construtor
         public ControlGameParameters()
@@ -40,6 +42,26 @@ namespace MonoGame2D
         public List<float> getValidLines()
         {
             return this.validLines;
+        }
+
+        public bool getGameGetName()
+        {
+            return this.gameGetName;
+        }
+
+        public bool getShowResults()
+        {
+            return this.showResults;
+        }
+
+        public void setShowResults(bool s)
+        {
+            this.showResults = s;
+        }
+
+        public void setGameName(bool name)
+        {
+            this.gameGetName = name;
         }
 
         public float getAcelerationToR()
@@ -186,8 +208,10 @@ namespace MonoGame2D
         }
 
         // Atualização dos parametros conforme parametros passados
-        public void startParametrs(bool isGameOver, bool isWin, bool isDead, bool theGameStart, int nunberOfLives, int initialScore, int initialLevel)
+        public void startParametrs(bool isGameOver, bool isWin, bool isDead, bool theGameStart, int nunberOfLives, int initialScore, int initialLevel, bool name , bool show)
         {
+            showResults = show;
+            gameGetName = name;
             gameOver = isGameOver;
             win = isWin;
             dead = isDead;
@@ -198,8 +222,10 @@ namespace MonoGame2D
         }
 
         // Atualização dos parametros por solicitação do teclado
-        public void startParametersWhithKeyboard(bool theGameStarted, bool theGameOver, bool thePlayerWined, bool thePlayerDead)
+        public void startParametersWhithKeyboard(bool theGameStarted, bool theGameOver, bool thePlayerWined, bool thePlayerDead, bool name, bool show)
         {
+            showResults = show;
+            gameGetName = name;
             gameStarted = theGameStarted;
             gameOver = theGameOver;
             win = thePlayerWined;
@@ -211,6 +237,7 @@ namespace MonoGame2D
         {
             if (gameStarted && frooger.getY() <= screenHeight / Constants.verticalBeginPositionOfFrogger)
             {
+                gameGetName = true;
                 return true;
             }
             else
@@ -240,6 +267,7 @@ namespace MonoGame2D
                             gameOver = true;
                         }
                         dead = true;
+                        gameGetName = true;
                     }
                     win = thePalyerWin(frooger, screenHeight);
                 }

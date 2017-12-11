@@ -52,7 +52,7 @@ namespace MonoGame2D
         protected override void Initialize()
         {
             base.Initialize();
-            startParametrs(false, false, false, false, Constants.initialLives, Constants.initialScore, Constants.initialLevel, Constants.intervalBetwenNewObstacleLoop, Constants.intervalBetwenChangeStreat, Constants.initialFroggerPass);
+            startParametrs(false, false, false, false, Constants.initialLives, Constants.initialScore, Constants.initialLevel, Constants.intervalBetwenNewObstacleLoop, Constants.intervalBetwenChangeStreat, Constants.initialFroggerPass, false, false);
             startScreenConfigs();
             name = string.Empty;
         }
@@ -108,10 +108,17 @@ namespace MonoGame2D
                 // Se ganhou
                 if (controlParameters.getWin())
                 {
-                    // Verifica se atingiu nivel maximo
-                    if (controlParameters.getLevel() == Constants.maxLevel)
+                    if (controlParameters.getGameGetName() && controlParameters.getLevel() == Constants.maxLevel)
                     {
-                        drawStateScreen(Constants.winAllLevelsMessage, winTexture);
+                        if (controlParameters.getShowResults())
+                        {
+                            drawStateScreen("", winTexture);
+                        }
+                        else
+                        {
+                            drawStateScreen(name, winTexture);
+                            drawStateScreen(Constants.winAllLevelsMessage, winTexture);
+                        }
                     }
                     else
                     {
@@ -121,8 +128,21 @@ namespace MonoGame2D
                 // Se game over
                 if (controlParameters.getGameOver())
                 {
-                    drawStateScreen(name, gameOverTexture);
-                    //drawStateScreen(Constants.restartMessage, gameOverTexture);
+                    if (controlParameters.getGameGetName())
+                    {
+                        if (controlParameters.getShowResults())
+                        {
+                            drawStateScreen("", gameOverTexture);
+                        }
+                        else
+                        {
+                            drawStateScreen(name, gameOverTexture);
+                        }
+                    }
+                    else
+                    {
+                        drawStateScreen(Constants.restartMessage, gameOverTexture);
+                    }
                 }
                 // Se morreu, mas tem vida ainda
                 else if (controlParameters.getDead())
@@ -180,7 +200,7 @@ namespace MonoGame2D
             {
                 if (state.IsKeyDown(Keys.Space))
                 {
-                    startParametersWhithKeyboard(true, false, false, false);
+                    startParametersWhithKeyboard(true, false, false, false, false, false);
                 }
                 return;
             }
@@ -189,8 +209,9 @@ namespace MonoGame2D
             {
                 if (state.IsKeyDown(Keys.Enter))
                 {
-                    startParametrs(controlParameters.getGameOver(), controlParameters.getWin(), controlParameters.getDead(), controlParameters.getGameStarted(), Constants.initialLives, Constants.initialScore, Constants.initialLevel, Constants.intervalBetwenNewObstacleLoop, Constants.intervalBetwenChangeStreat, Constants.initialFroggerPass);
-                    startParametersWhithKeyboard(true, false, false, false);
+                    controlParameters.setGameName(false);
+                    startParametrs(controlParameters.getGameOver(), controlParameters.getWin(), controlParameters.getDead(), controlParameters.getGameStarted(), Constants.initialLives, Constants.initialScore, Constants.initialLevel, Constants.intervalBetwenNewObstacleLoop, Constants.intervalBetwenChangeStreat, Constants.initialFroggerPass, controlParameters.getGameGetName(), controlParameters.getShowResults());
+                    startParametersWhithKeyboard(true, false, false, false, false, false);
                 }
                 else if (state.IsKeyDown(Keys.Insert))
                 {
@@ -199,6 +220,8 @@ namespace MonoGame2D
                     // Salva no historico
                     players = controlHistoric.getTopXPlayers(10, playerDatas);
                     // Imprime o historico
+
+                    controlParameters.setShowResults(true);
                 }
                 else
                 {
@@ -209,13 +232,37 @@ namespace MonoGame2D
             {
                 StartNextLive(true, false, false, false);
             }
-            if (controlParameters.getWin() && state.IsKeyDown(Keys.Enter))
+            if (controlParameters.getWin())
             {
                 if (controlParameters.getLevel() == Constants.maxLevel)
                 {
-                    controlParameters.setLevel(Constants.zero);
+                    if (state.IsKeyDown(Keys.Enter))
+                    {
+                        controlParameters.setGameName(false);
+                        startParametrs(controlParameters.getGameOver(), controlParameters.getWin(), controlParameters.getDead(), controlParameters.getGameStarted(), Constants.initialLives, Constants.initialScore, Constants.initialLevel, Constants.intervalBetwenNewObstacleLoop, Constants.intervalBetwenChangeStreat, Constants.initialFroggerPass, controlParameters.getGameGetName(), controlParameters.getShowResults());
+                        startParametersWhithKeyboard(true, false, false, false, false, false);
+                        controlParameters.setLevel(Constants.zero);
+                    }
+                    else if (state.IsKeyDown(Keys.Insert))
+                    {
+                        playerDatas.setName(name);
+                        playerDatas.setPoints(controlParameters.getscore());
+                        // Salva no historico
+                        players = controlHistoric.getTopXPlayers(10, playerDatas);
+                        // Imprime o historico
+                    }
+                    else
+                    {
+                        makeName(state);
+                    }
                 }
-                startParametersWhithKeyboard(true, false, false, false);
+                else
+                {
+                    if (state.IsKeyDown(Keys.Enter))
+                    {
+                        startParametersWhithKeyboard(true, false, false, false, false, false);
+                    }
+                }
             }
             if (controlParameters.getPause() <= Constants.zero && !controlParameters.getWin() && !controlParameters.getGameOver() && !controlParameters.getDead())
             {
@@ -265,18 +312,18 @@ namespace MonoGame2D
         }
 
         // Iniciaza parametros de jogo
-        public void startParametrs(bool isGameOver, bool isWin, bool isDead, bool theGameStart, int nunberOfLives, int initialScore, int initialLevel, int initialObstacleFrequency, int changeStreatFrequency, int initialFroggerPass)
+        public void startParametrs(bool isGameOver, bool isWin, bool isDead, bool theGameStart, int nunberOfLives, int initialScore, int initialLevel, int initialObstacleFrequency, int changeStreatFrequency, int initialFroggerPass, bool game, bool show)
         {
-            controlParameters.startParametrs(isGameOver, isWin, isDead, theGameStart, nunberOfLives, initialScore, initialLevel);
+            controlParameters.startParametrs(isGameOver, isWin, isDead, theGameStart, nunberOfLives, initialScore, initialLevel, game , show);
             controlNewObstacles.setLoopIncrease(initialObstacleFrequency);
             controlChangeStreeat.setLoopIncrease(changeStreatFrequency);
             controlParameters.setPass(initialFroggerPass);
         }
 
-        public void startParametersWhithKeyboard(bool theGameStarted, bool theGameOver, bool thePlayerWined, bool thePlayerDead)
+        public void startParametersWhithKeyboard(bool theGameStarted, bool theGameOver, bool thePlayerWined, bool thePlayerDead, bool game, bool show)
         {
             StartGame();
-            controlParameters.startParametersWhithKeyboard(theGameStarted, theGameOver, thePlayerWined, thePlayerDead);
+            controlParameters.startParametersWhithKeyboard(theGameStarted, theGameOver, thePlayerWined, thePlayerDead, game, show);
         }
 
         // Carrega textura de background do jogo 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/TesteClaw/Desktop/GIT/frogNew/frogger/FroggerGame/MonoGame2D/Content/game-over.png</SourceFile>
-  <SourceTime>2017-12-11T20:22:34.1039169-02:00</SourceTime>
+  <SourceTime>2017-12-13T21:03:01.6735506-02:00</SourceTime>
   <DestFile>C:/Users/TesteClaw/Desktop/GIT/frogNew/frogger/FroggerGame/MonoGame2D/Content/bin/WindowsStoreApp/Content/game-over.xnb</DestFile>
-  <DestTime>2017-12-11T20:43:08.2779442-02:00</DestTime>
+  <DestTime>2017-12-13T21:07:25.4852659-02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-10-15T14:46:32-02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

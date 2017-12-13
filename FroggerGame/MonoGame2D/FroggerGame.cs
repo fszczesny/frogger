@@ -24,12 +24,16 @@ namespace MonoGame2D
         Texture2D background;
         Texture2D bloodTexture;
         Texture2D froggerTexture;
+        Texture2D froggerTextureBack;
+        Texture2D froggerTextureRight;
+        Texture2D froggerTextureLeft;
         Texture2D skullTexture;       
         // Variaveis de posicionamento e limitação do ruas
         float screenWidth;
         float screenHeight;
         // Declaração do objeto Player que representa o frogger
         Player frooger;
+        Player froogerCostas;
         //Player froggerCostas;
         // Declaração da lista de obstaculos e sua lista auxiliar de frequencia
         List<Obstacles> obstacles = new List<Obstacles>();      
@@ -66,7 +70,6 @@ namespace MonoGame2D
             loadTextureAndFontStyles();
             // Carrega sprite do player
             frooger = new Player(GraphicsDevice, Constants.froggerSprite, ScaleToHighDPI(1.5f));
-            //froggerCostas = new Player(GraphicsDevice, Constants.froggerSpriteCostas, ScaleToHighDPI(1.5f));
             controlNewObstacles.setScale(ScaleToHighDPI(1.3f));
         }
 
@@ -132,23 +135,22 @@ namespace MonoGame2D
                 // Se game over
                 if (controlParameters.getGameOver())
                 {
+                    spriteBatch.Draw(gameOverTexture, new Rectangle(Constants.zero, Constants.zero, (int)screenWidth, (int)screenHeight), Color.White);
+
                     if (controlParameters.getGameGetName())
                     {
                         if (controlParameters.getShowResults())
                         {
+                            spriteBatch.Draw(gameOverTexture, new Rectangle(Constants.zero, Constants.zero, (int)screenWidth, (int)screenHeight), Color.White);
                             drawBests(players);
                         }
                         else
                         {
-                            drawMessage(Constants.restartMessage, Constants.spacingEnter);
-                            drawMessage(Constants.restartMessageTwo, Constants.spacingInset);
-                            drawStateScreen(name, gameOverTexture);
+                            spriteBatch.Draw(gameOverTexture, new Rectangle(Constants.zero, Constants.zero, (int)screenWidth, (int)screenHeight), Color.White);
+
                         }
                     }
-                    else
-                    {
-                        drawStateScreen(Constants.restartMessage, gameOverTexture);
-                    }
+
                 }
                 // Se morreu, mas tem vida ainda
                 else if (controlParameters.getDead())
@@ -276,8 +278,7 @@ namespace MonoGame2D
                 // Controla teclas de direção com controle de area da tela a ser usada
                 if (state.IsKeyDown(Keys.Up) || state.IsKeyDown(Keys.W))
                 {
-                    frooger.setAngle(Constants.angleFrogger0);
-                    //frooger.setTexture(Constants.froggerSpriteCostas);
+                    frooger.setTexture(froggerTextureBack);
                     if (frooger.getY() > (screenHeight / Constants.beginPosition))
                     {
                         frooger.setY(frooger.getY() - controlParameters.getPass());
@@ -285,7 +286,7 @@ namespace MonoGame2D
                 }
                 else if (state.IsKeyDown(Keys.Down) || state.IsKeyDown(Keys.S))
                 {
-                    frooger.setAngle(Constants.angleFrogger180);
+                    frooger.setTexture(froggerTexture);
                     if (frooger.getY() < (screenHeight - (screenHeight / Constants.minLimit)))
                     {
                         frooger.setY(frooger.getY() + controlParameters.getPass());
@@ -293,7 +294,7 @@ namespace MonoGame2D
                 }
                 else if (state.IsKeyDown(Keys.Left) || (state.IsKeyDown(Keys.A)))
                 {
-                    frooger.setAngle(Constants.angleFrogger90);
+                    frooger.setTexture(froggerTextureLeft);
                     if (frooger.getX() > screenWidth / Constants.maxLimit)
                     {
                         frooger.setX(frooger.getX() - controlParameters.getPass());
@@ -301,7 +302,7 @@ namespace MonoGame2D
                 }
                 else if (state.IsKeyDown(Keys.Right) || state.IsKeyDown(Keys.D))
                 {
-                    frooger.setAngle(Constants.angleFrogger270);
+                    frooger.setTexture(froggerTextureRight);
                     if (frooger.getX() < (screenWidth - (screenWidth / Constants.maxLimit)))
                     {
                         frooger.setX(frooger.getX() + controlParameters.getPass());
@@ -344,6 +345,9 @@ namespace MonoGame2D
             winTexture = Content.Load<Texture2D>(Constants.winSprite);
             bloodTexture = Content.Load<Texture2D>(Constants.bloodSprite);
             froggerTexture = Content.Load<Texture2D>(Constants.froogerSpriteToTexture); //carregar todas as de costas etc
+            froggerTextureBack = Content.Load<Texture2D>(Constants.froogerSpriteToTextureBack); //carregar todas as de costas etc
+            froggerTextureRight = Content.Load<Texture2D>(Constants.froogerSpriteToTextureRight); //carregar todas as de costas etc
+            froggerTextureLeft = Content.Load<Texture2D>(Constants.froogerSpriteToTextureLeft); //carregar todas as de costas etc
             stateFont = Content.Load<SpriteFont>(Constants.gameMessagesFont);
             scoreFont = Content.Load<SpriteFont>(Constants.valueFonts);
             menorFont = Content.Load<SpriteFont>(Constants.menorFont);

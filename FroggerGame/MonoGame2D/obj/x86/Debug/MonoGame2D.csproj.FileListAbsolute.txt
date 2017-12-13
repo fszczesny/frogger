@@ -1300,3 +1300,6 @@ C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\obj\x86\De
 C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\obj\x86\Debug\qualifiers.txt.intermediate
 C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\obj\x86\Debug\MultipleQualifiersPerDimensionFound.txt
 C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\obj\x86\Debug\ProjectArchitectures.txt
+C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Content\costas.xnb
+C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Content\direita.xnb
+C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Content\esquerda.xnb

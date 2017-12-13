@@ -10,6 +10,9 @@ MonoGame2D.xr.xml
 Content\background.png
 Content\background.xnb
 Content\blood.xnb
+Content\costas.xnb
+Content\direita.xnb
+Content\esquerda.xnb
 Content\frooger.xnb
 Content\game-over.xnb
 Content\GameState.xnb
@@ -22,6 +25,7 @@ Content\skull.xnb
 Content\start-splash.xnb
 Content\win.xnb
 Content\blood.png
+Content\costas.png
 Content\frooger.png
 Content\game-over.png
 Content\green_cart.png

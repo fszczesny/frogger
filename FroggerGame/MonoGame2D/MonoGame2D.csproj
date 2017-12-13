@@ -130,6 +130,7 @@
   <ItemGroup>
     <Content Include="Content\background.png" />
     <Content Include="Content\blood.png" />
+    <Content Include="Content\costas.png" />
     <Content Include="Content\frooger.png" />
     <Content Include="Content\game-over.png" />
     <Content Include="Content\green_cart.png" />

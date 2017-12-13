@@ -40,7 +40,9 @@ namespace MonoGame2D
         public const int maxLevel = 8;
         // Constantes de nome de arquivos a serem caregados
         public const string froggerSprite = "Content/frooger.png";
-        public const string froggerSpriteCostas = "Content/frooger-costas.png";
+        public const string froggerSpriteCostas = "Content/costas.png";
+        public const string froggerSpriteRight = "Content/direita.png";
+        public const string froggerSpriteLeft = "Content/esquerda.png";
         public const string greenCartSprites = "Content/green_cart.png";
         public const string redCartSprites = "Content/red_cart.png";
         public const string purpleCartSprites = "Content/purple_cart.png";
@@ -49,6 +51,9 @@ namespace MonoGame2D
         public const string gameoverSprite = "game-over";
         public const string bloodSprite = "blood";
         public const string froogerSpriteToTexture = "frooger";
+        public const string froogerSpriteToTextureBack = "costas";
+        public const string froogerSpriteToTextureRight = "direita";
+        public const string froogerSpriteToTextureLeft = "esquerda";
         public const string skullSprite = "skull";
         public const string winSprite = "win";
         public const string gameMessagesFont = "GameState";
@@ -108,7 +113,7 @@ namespace MonoGame2D
             public const float scoreNameHeigth = (float)0.046;
             public const float livesValueWidth = (float)0.72;
             public const float livesValueHeigth = (float)0.046;
-            public const float timeValueWidth = (float)0.105;
+            public const float timeValueWidth = (float)0.18;
             public const float timeValueHeigth = (float)0.046;
             public const float scoreValueWidth = (float)0.94;
             public const float scoreValueHeigth = (float)0.046;

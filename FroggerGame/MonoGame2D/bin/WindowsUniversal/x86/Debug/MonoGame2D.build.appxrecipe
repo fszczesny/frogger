@@ -361,6 +361,9 @@
     <AppxPackagedFile Include="C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\Content\blood.png">
       <PackagePath>Content\blood.png</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\Content\costas.png">
+      <PackagePath>Content\costas.png</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\Content\frooger.png">
       <PackagePath>Content\frooger.png</PackagePath>
     </AppxPackagedFile>
@@ -419,6 +422,15 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\blood.xnb">
       <PackagePath>Content\blood.xnb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\costas.xnb">
+      <PackagePath>Content\costas.xnb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\direita.xnb">
+      <PackagePath>Content\direita.xnb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\esquerda.xnb">
+      <PackagePath>Content\esquerda.xnb</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\frooger.xnb">
       <PackagePath>Content\frooger.xnb</PackagePath>

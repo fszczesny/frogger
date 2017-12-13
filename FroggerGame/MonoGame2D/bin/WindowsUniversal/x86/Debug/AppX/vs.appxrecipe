@@ -28,13 +28,13 @@
     <AppXManifest Include="C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-12-11T23:27:12.933</Modified>
+      <Modified>2017-12-13T23:21:01.127</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\MonoGame2D.exe">
       <PackagePath>entrypoint\MonoGame2D.exe</PackagePath>
-      <Modified>2017-12-11T23:27:12.103</Modified>
+      <Modified>2017-12-13T23:21:00.636</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\TesteClaw\.nuget\packages\Microsoft.CSharp\4.0.0\lib\netcore50\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
@@ -484,13 +484,17 @@
       <PackagePath>Content\blood.png</PackagePath>
       <Modified>2017-12-11T22:22:34.093</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\Content\costas.png">
+      <PackagePath>Content\costas.png</PackagePath>
+      <Modified>2017-12-10T21:47:12.296</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\Content\frooger.png">
       <PackagePath>Content\frooger.png</PackagePath>
       <Modified>2017-12-11T22:22:34.096</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\Content\game-over.png">
       <PackagePath>Content\game-over.png</PackagePath>
-      <Modified>2017-12-11T22:22:34.103</Modified>
+      <Modified>2017-12-13T23:03:01.673</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\Content\green_cart.png">
       <PackagePath>Content\green_cart.png</PackagePath>
@@ -562,13 +566,25 @@
       <PackagePath>Content\blood.xnb</PackagePath>
       <Modified>2017-12-11T22:43:07.889</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\costas.xnb">
+      <PackagePath>Content\costas.xnb</PackagePath>
+      <Modified>2017-12-12T23:55:26.551</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\direita.xnb">
+      <PackagePath>Content\direita.xnb</PackagePath>
+      <Modified>2017-12-13T22:45:32.157</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\esquerda.xnb">
+      <PackagePath>Content\esquerda.xnb</PackagePath>
+      <Modified>2017-12-13T22:45:32.176</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\frooger.xnb">
       <PackagePath>Content\frooger.xnb</PackagePath>
       <Modified>2017-12-11T22:43:07.908</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\game-over.xnb">
       <PackagePath>Content\game-over.xnb</PackagePath>
-      <Modified>2017-12-11T22:43:08.277</Modified>
+      <Modified>2017-12-13T23:07:25.485</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\Content\bin\WindowsStoreApp\Content\GameState.xnb">
       <PackagePath>Content\GameState.xnb</PackagePath>
@@ -617,11 +633,11 @@
     <AppxPackagedFile Include="C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-12-11T22:43:26.863</Modified>
+      <Modified>2017-12-13T22:39:48.550</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Core\MonoGame2D.exe">
       <PackagePath>MonoGame2D.exe</PackagePath>
-      <Modified>2017-12-11T23:27:12.923</Modified>
+      <Modified>2017-12-13T23:21:01.118</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

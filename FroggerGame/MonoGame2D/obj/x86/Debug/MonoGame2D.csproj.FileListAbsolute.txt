@@ -1079,3 +1079,4 @@ C:\Projetos\frogger\FroggerGame\MonoGame2D\obj\x86\Debug\qualifiers.txt.intermed
 C:\Projetos\frogger\FroggerGame\MonoGame2D\obj\x86\Debug\MultipleQualifiersPerDimensionFound.txt
 C:\Projetos\frogger\FroggerGame\MonoGame2D\obj\x86\Debug\ProjectArchitectures.txt
 C:\Projetos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Content\menor.xnb
+D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Content\menor.xnb

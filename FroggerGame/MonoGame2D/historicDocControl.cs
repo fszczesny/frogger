@@ -25,7 +25,6 @@ namespace MonoGame2D
             List<PlayerDatas> historics = new List<PlayerDatas>();
             List<PlayerDatas> historicsToReturn = new List<PlayerDatas>();
             // insere ou atualiza
-            /*
             if (existThePlayer(PlayerToInsert))
             {
                 editPalyerHistoric(PlayerToInsert);
@@ -34,7 +33,6 @@ namespace MonoGame2D
             {
                 addPlayerToHistoric(PlayerToInsert);
             }
-            */
             historics = getPlayersHistoric();
             historics = sort(historics);
             int control;
@@ -84,17 +82,14 @@ namespace MonoGame2D
             byte[] byteArray = Encoding.ASCII.GetBytes("PlayersHistoric.xml");
             MemoryStream stream = new MemoryStream(byteArray);
             XElement xml = XElement.Load("PlayersHistoric.xml");
-            if (xml.HasElements)
+            XElement x = xml.Elements().Where(p => p.Attribute("name").Value.Equals(player.getName())).FirstOrDefault();
+            if (x != null)
             {
-                XElement x = xml.Elements().Where(p => p.Attribute("name").Value.Equals(player.getName())).First();
-                if (x != null)
-                {
-                    if ((int.Parse(x.Attribute("points").Value)) < player.getPoints())
-                    {
-                        x.Attribute("points").SetValue(player.getPoints().ToString());
-                    }
-                }
-                xml.Save(stream);
+               if ((int.Parse(x.Attribute("points").Value)) < player.getPoints())
+               {
+                   x.Attribute("points").SetValue(player.getPoints().ToString());
+               }
+               xml.Save(stream);
             }
         }
 
@@ -121,17 +116,10 @@ namespace MonoGame2D
             byte[] byteArray = Encoding.UTF8.GetBytes("PlayersHistoric.xml");
             MemoryStream stream = new MemoryStream(byteArray);
             XElement xml = XElement.Load("PlayersHistoric.xml");
-            if (xml.HasElements)
+            XElement x = xml.Elements().Where(p => p.Attribute("name").Value.Equals(player.getName())).FirstOrDefault();
+            if (x != null)
             {
-                XElement x = xml.Elements().Where(p => p.Attribute("name").Value.Equals(player.getName())).First();
-                if (x != null)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return true;
             }
             else
             {

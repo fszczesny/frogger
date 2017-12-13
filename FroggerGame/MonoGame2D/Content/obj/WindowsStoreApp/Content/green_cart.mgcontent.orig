@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<<<<<<< HEAD
+  <SourceFile>C:/Users/TesteClaw/Desktop/GIT/frogNew/frogger/FroggerGame/MonoGame2D/Content/green_cart.png</SourceFile>
+  <SourceTime>2017-12-11T20:22:34.1079211-02:00</SourceTime>
+  <DestFile>C:/Users/TesteClaw/Desktop/GIT/frogNew/frogger/FroggerGame/MonoGame2D/Content/bin/WindowsStoreApp/Content/green_cart.xnb</DestFile>
+  <DestTime>2017-12-11T20:43:08.6992432-02:00</DestTime>
+=======
+  <SourceFile>D:/Trabalhos/frogger/FroggerGame/MonoGame2D/Content/green_cart.png</SourceFile>
+  <SourceTime>2017-12-12T21:29:58.2206313-02:00</SourceTime>
+  <DestFile>D:/Trabalhos/frogger/FroggerGame/MonoGame2D/Content/bin/WindowsStoreApp/Content/green_cart.xnb</DestFile>
+  <DestTime>2017-12-12T21:58:15.7594498-02:00</DestTime>
+>>>>>>> 96b92145f1f72457c0115f87b3aa145ccef7a5f4
+  <Importer>TextureImporter</Importer>
+  <ImporterTime>2017-10-15T14:46:32-02:00</ImporterTime>
+  <Processor>TextureProcessor</Processor>
+  <ProcessorTime>2017-10-15T14:46:32-02:00</ProcessorTime>
+  <Parameters>
+    <Key>ColorKeyColor</Key>
+    <Value>255,0,255,255</Value>
+  </Parameters>
+  <Parameters>
+    <Key>ColorKeyEnabled</Key>
+    <Value>True</Value>
+  </Parameters>
+  <Parameters>
+    <Key>GenerateMipmaps</Key>
+    <Value>False</Value>
+  </Parameters>
+  <Parameters>
+    <Key>PremultiplyAlpha</Key>
+    <Value>True</Value>
+  </Parameters>
+  <Parameters>
+    <Key>ResizeToPowerOfTwo</Key>
+    <Value>False</Value>
+  </Parameters>
+  <Parameters>
+    <Key>MakeSquare</Key>
+    <Value>False</Value>
+  </Parameters>
+  <Parameters>
+    <Key>TextureFormat</Key>
+    <Value>Color</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>

@@ -1,1 +1,1 @@
-C:\Users\TesteClaw\Desktop\GIT\frogNew\frogger\FroggerGame\MonoGame2D\MonoGame2D.csproj;x86
+C:\Projetos\frogger\FroggerGame\MonoGame2D\MonoGame2D.csproj;x86

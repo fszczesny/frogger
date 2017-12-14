@@ -27,9 +27,9 @@ namespace MonoGame2D
         public const float angleObstacleToLeft = (float)600.05;
         public const int obstacleAcelerationPar = 3;
         // Constantes de controle de loop do jogo junto a atualização de obstaculos
-        public const int intervalBetwenNewObstacleLoop = 70;
-        public const int intervalBetwenChangeStreat = 100;
-        public const int decFrequencyObstacle = 5;
+        public const int intervalBetwenNewObstacleLoop = 50;
+        public const int intervalBetwenChangeStreat = 75;
+        public const int decFrequencyObstacle = 8;
         public const int decFrequencyChangeStreat = 20;
         public const int lessNumberToChangeStreat = 5;
         // Constantes de valores default de vida,nivel, pontos e etc do jogo
@@ -50,6 +50,7 @@ namespace MonoGame2D
         public const string startSprite = "start-splash";
         public const string gameoverSprite = "game-over";
         public const string bloodSprite = "blood";
+        public const string resultSprite = "results";
         public const string froogerSpriteToTexture = "frooger";
         public const string froogerSpriteToTextureBack = "costas";
         public const string froogerSpriteToTextureRight = "direita";
@@ -66,7 +67,7 @@ namespace MonoGame2D
         public const string restartMessage = "Press Enter to restart without saving!";
         public const string restartMessageTwo = "Enter your name and press insert to save your score!";
         public const string startMessage = "FROGGER - THE MEDIEVAL EDITION";
-        public const string bestMessage = "Bast Players Historic:";
+        public const string bestMessage = "Best Players Historic:";
         public const string pressEnterMessage = "Press Enter to restart!";
         public const string askForASpaceMessage = "Press Space to start";
         public const string livesMessage = "Lives: ";
@@ -115,7 +116,7 @@ namespace MonoGame2D
             public const float livesValueHeigth = (float)0.046;
             public const float timeValueWidth = (float)0.18;
             public const float timeValueHeigth = (float)0.046;
-            public const float scoreValueWidth = (float)0.94;
+            public const float scoreValueWidth = (float)0.92;
             public const float scoreValueHeigth = (float)0.046;
             public const float spacingMenu = (float)0.075;
             public const float spacingEnter = (float)0.4;

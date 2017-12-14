@@ -25,15 +25,16 @@ namespace MonoGame2D
             List<PlayerDatas> historics = new List<PlayerDatas>();
             List<PlayerDatas> historicsToReturn = new List<PlayerDatas>();
             // insere ou atualiza
-            if (existThePlayer(PlayerToInsert))
+            /*if (existThePlayer(PlayerToInsert))
             {
                 editPalyerHistoric(PlayerToInsert);
             }
             else
             {
                 addPlayerToHistoric(PlayerToInsert);
-            }
+            }*/
             historics = getPlayersHistoric();
+            historics.Add(PlayerToInsert);
             historics = sort(historics);
             int control;
             if (numberOfTops > historics.Count())

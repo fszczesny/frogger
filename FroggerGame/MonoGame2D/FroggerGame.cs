@@ -27,7 +27,8 @@ namespace MonoGame2D
         Texture2D froggerTextureBack;
         Texture2D froggerTextureRight;
         Texture2D froggerTextureLeft;
-        Texture2D skullTexture;       
+        Texture2D skullTexture;
+        Texture2D resultsTexture;
         // Variaveis de posicionamento e limitação do ruas
         float screenWidth;
         float screenHeight;
@@ -118,6 +119,7 @@ namespace MonoGame2D
                     {
                         if (controlParameters.getShowResults())
                         {
+                            spriteBatch.Draw(resultsTexture, new Rectangle(Constants.zero, Constants.zero, (int)screenWidth, (int)screenHeight), Color.White);
                             drawBests(players);
                         }
                         else
@@ -141,12 +143,13 @@ namespace MonoGame2D
                     {
                         if (controlParameters.getShowResults())
                         {
-                            spriteBatch.Draw(gameOverTexture, new Rectangle(Constants.zero, Constants.zero, (int)screenWidth, (int)screenHeight), Color.White);
+                            spriteBatch.Draw(resultsTexture, new Rectangle(Constants.zero, Constants.zero, (int)screenWidth, (int)screenHeight), Color.White);
                             drawBests(players);
                         }
                         else
                         {
                             spriteBatch.Draw(gameOverTexture, new Rectangle(Constants.zero, Constants.zero, (int)screenWidth, (int)screenHeight), Color.White);
+                            drawMessageHistoric(name, Constants.scoreNameWidth);
 
                         }
                     }
@@ -351,6 +354,7 @@ namespace MonoGame2D
             stateFont = Content.Load<SpriteFont>(Constants.gameMessagesFont);
             scoreFont = Content.Load<SpriteFont>(Constants.valueFonts);
             menorFont = Content.Load<SpriteFont>(Constants.menorFont);
+            resultsTexture = Content.Load<Texture2D>(Constants.resultSprite);
         }
 
         // Inicializa escala de frames da tela utilizada

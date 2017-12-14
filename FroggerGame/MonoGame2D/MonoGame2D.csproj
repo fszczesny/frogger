@@ -136,6 +136,7 @@
     <Content Include="Content\green_cart.png" />
     <Content Include="Content\purple_cart.png" />
     <Content Include="Content\red_cart.png" />
+    <Content Include="Content\results.png" />
     <Content Include="Content\skull.png" />
     <Content Include="Content\start-splash.png" />
     <Content Include="Content\win.png" />

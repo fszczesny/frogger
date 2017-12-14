@@ -10,6 +10,19 @@ MonoGame2D.xr.xml
 Content\background.png
 Content\background.xnb
 Content\blood.xnb
+Content\Content\background.xnb
+Content\Content\blood.xnb
+Content\Content\frooger.xnb
+Content\Content\game-over.xnb
+Content\Content\GameState.xnb
+Content\Content\green_cart.xnb
+Content\Content\menor.xnb
+Content\Content\purple_cart.xnb
+Content\Content\red_cart.xnb
+Content\Content\Score.xnb
+Content\Content\skull.xnb
+Content\Content\start-splash.xnb
+Content\Content\win.xnb
 Content\frooger.xnb
 Content\game-over.xnb
 Content\GameState.xnb
@@ -30,5 +43,6 @@ Content\red_cart.png
 Content\skull.png
 Content\start-splash.png
 Content\win.png
+datas.txt
 PlayersHistoric.xml
 Properties\Default.rd.xml

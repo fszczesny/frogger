@@ -27,8 +27,8 @@ namespace MonoGame2D
         public const float angleObstacleToLeft = (float)600.05;
         public const int obstacleAcelerationPar = 3;
         // Constantes de controle de loop do jogo junto a atualização de obstaculos
-        public const int intervalBetwenNewObstacleLoop = 70;
-        public const int intervalBetwenChangeStreat = 100;
+        public const int intervalBetwenNewObstacleLoop = 50;
+        public const int intervalBetwenChangeStreat = 70;
         public const int decFrequencyObstacle = 5;
         public const int decFrequencyChangeStreat = 20;
         public const int lessNumberToChangeStreat = 5;

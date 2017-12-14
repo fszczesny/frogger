@@ -1080,3 +1080,4 @@ C:\Projetos\frogger\FroggerGame\MonoGame2D\obj\x86\Debug\MultipleQualifiersPerDi
 C:\Projetos\frogger\FroggerGame\MonoGame2D\obj\x86\Debug\ProjectArchitectures.txt
 C:\Projetos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Content\menor.xnb
 D:\Trabalhos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Content\menor.xnb
+C:\Projetos\frogger\FroggerGame\MonoGame2D\bin\WindowsUniversal\x86\Debug\Content\Content\menor.xnb

@@ -138,6 +138,7 @@
     <Content Include="Content\skull.png" />
     <Content Include="Content\start-splash.png" />
     <Content Include="Content\win.png" />
+    <Content Include="datas.txt" />
     <Content Include="PlayersHistoric.xml">
       <SubType>Designer</SubType>
     </Content>

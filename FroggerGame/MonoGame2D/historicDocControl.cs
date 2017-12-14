@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Windows.Graphics.Display;
-using Windows.UI.ViewManagement;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace MonoGame2D
@@ -25,15 +18,16 @@ namespace MonoGame2D
             List<PlayerDatas> historics = new List<PlayerDatas>();
             List<PlayerDatas> historicsToReturn = new List<PlayerDatas>();
             // insere ou atualiza
-            if (existThePlayer(PlayerToInsert))
+            /*if (existThePlayer(PlayerToInsert))
             {
                 editPalyerHistoric(PlayerToInsert);
             }
             else
             {
                 addPlayerToHistoric(PlayerToInsert);
-            }
+            }*/
             historics = getPlayersHistoric();
+            historics.Add(PlayerToInsert);
             historics = sort(historics);
             int control;
             if (numberOfTops > historics.Count())
@@ -67,13 +61,13 @@ namespace MonoGame2D
 
         private static void addPlayerToHistoric(PlayerDatas p)
         {
-            byte[] byteArray = Encoding.ASCII.GetBytes("PlayersHistoric.xml");
-            MemoryStream stream = new MemoryStream(byteArray);
             XElement x = new XElement("player");
             x.Add(new XAttribute("name", p.getName()));
             x.Add(new XAttribute("points", p.getPoints().ToString()));
             XElement xml = XElement.Load("PlayersHistoric.xml");
             xml.Add(x);
+            byte[] byteArray = Encoding.ASCII.GetBytes(xml.ToString());
+            MemoryStream stream = new MemoryStream(byteArray);
             xml.Save(stream);
         }
 
